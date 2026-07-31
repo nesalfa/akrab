@@ -1,0 +1,59 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+/* ---------------------------------------------------
+   1. KONFIGURASI TEMA UTAMA (Tailwind v4 syntax)
+--------------------------------------------------- */
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+
+    /* Daftarkan warna AKRAB ke sistem Tailwind di sini */
+    --color-akrab-primary: #6A4C93;
+    /* Ungu Utama */
+    --color-akrab-accent: #FFCA3A;
+    /* Kuning Fokus */
+    --color-akrab-pink: #FFF0F5;
+    /* Pink Lembut Latar */
+    --color-akrab-dark: #1A1A1A;
+    /* Teks Kontras */
+}
+
+/* ---------------------------------------------------
+   2. GLOBAL BASE STYLES & AKSESIBILITAS WCAG
+--------------------------------------------------- */
+@layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+
+    /* Indikator Fokus Global untuk elemen non-navigasi */
+    *:focus-visible {
+        outline: 3px solid var(--color-akrab-accent);
+        outline-offset: 3px;
+    }
+}
+
+/* ---------------------------------------------------
+   3. KELAS KUSTOM NAVIGASI (Berdasarkan Request Kamu)
+--------------------------------------------------- */
+@layer components {
+
+    /* Kelas penanda halaman aktif (Stay Latar Belakang Pink) */
+    .nav-link-akrab.active-page {
+        background-color: var(--color-akrab-pink) !important;
+        color: var(--color-akrab-primary) !important;
+        border: 2px solid transparent !important;
+        /* Mencegah pergeseran tata letak layout */
+    }
+
+    /* Kriteria WCAG Level AA: Elemen yang sedang difokus/diklik muncul border kuning tegas */
+    .nav-link-akrab:focus,
+    .nav-link-akrab:active {
+        outline: none !important;
+        border: 2px solid var(--color-akrab-accent) !important;
+        border-radius: 8px !important;
+        background-color: var(--color-akrab-pink) !important;
+    }
+}
