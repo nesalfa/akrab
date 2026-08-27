@@ -550,8 +550,6 @@
         }
     </style>
 
-    <a href="#main-content" class="skip-link">Lewati ke konten utama</a>
-
     <div>
         {{-- ================= Breadcrumb (tidak diubah) ================= --}}
         <nav aria-label="Jalur navigasi">
@@ -775,389 +773,390 @@
                     <aside class="col-lg-4">
                         {{--
                         Widget Progress — sekarang sumber datanya dari
-                                    ModuleController::show() ($totalModules,
-                                    $completedModulesCount), yang diambil dari kolom
-                                    users.completed_modules. Render awal (saat
-                                    halaman pertama dimuat) sudah langsung benar dari
-                                    server; JS di bawah cuma meng-update angka ini
-                                    SETELAH user menuntaskan Post-Test, tanpa reload
-                                    halaman.
-                                --}}
-                                @php
-                                    $progressPct = $totalModules > 0 ? (int) round(($completedModulesCount / $totalModules) * 100) : 0;
-                                @endphp
-                                <div class="card sidebar-card border-0 shadow-sm mb-4" id="progress-widget"
-                                     data-total="{{ $totalModules }}" data-completed="{{ $completedModulesCount }}">
-                                    <div class="sidebar-card-header">
-                                        <i class="bi bi-bar-chart-line-fill" aria-hidden="true"></i> Progress Belajarmu
-                                    </div>
-                                    <div class="progress-widget-body">
-                                        <div class="d-flex justify-content-between align-items-baseline mb-2">
-                                            <span id="progress-label" class="small" style="color: var(--text-light);">
-                                                {{ $completedModulesCount }} dari {{ $totalModules }} modul selesai
-                                            </span>
-                                            <span id="progress-percent" class="fw-bold" style="color: var(--primary-color);">{{ $progressPct }}%</span>
-                                        </div>
-                                        <div class="progress-akrab" role="progressbar" id="progress-bar-track"
-                                             aria-label="Progress belajar keseluruhan" aria-valuenow="{{ $progressPct }}" aria-valuemin="0" aria-valuemax="100">
-                                            <div class="progress-akrab-fill" id="progress-bar-fill" style="width: {{ $progressPct }}%;"></div>
-                                        </div>
-                                        <p class="small mt-3 mb-0" style="color: var(--text-light);">
-                                            <i class="bi bi-cloud-check-fill" aria-hidden="true"></i>
-                                            Progres tersimpan ke akunmu.
-                                        </p>
+                        ModuleController::show() ($totalModules,
+                        $completedModulesCount), yang diambil dari kolom
+                        users.completed_modules. Render awal (saat
+                        halaman pertama dimuat) sudah langsung benar dari
+                        server; JS di bawah cuma meng-update angka ini
+                        SETELAH user menuntaskan Post-Test, tanpa reload
+                        halaman.
+                        --}}
+                        @php
+                            $progressPct = $totalModules > 0 ? (int) round(($completedModulesCount / $totalModules) * 100) : 0;
+                        @endphp
+                        <div class="card sidebar-card border-0 shadow-sm mb-4" id="progress-widget"
+                            data-total="{{ $totalModules }}" data-completed="{{ $completedModulesCount }}">
+                            <div class="sidebar-card-header">
+                                <i class="bi bi-bar-chart-line-fill" aria-hidden="true"></i> Progress Belajarmu
+                            </div>
+                            <div class="progress-widget-body">
+                                <div class="d-flex justify-content-between align-items-baseline mb-2">
+                                    <span id="progress-label" class="small" style="color: var(--text-light);">
+                                        {{ $completedModulesCount }} dari {{ $totalModules }} modul selesai
+                                    </span>
+                                    <span id="progress-percent" class="fw-bold"
+                                        style="color: var(--primary-color);">{{ $progressPct }}%</span>
+                                </div>
+                                <div class="progress-akrab" role="progressbar" id="progress-bar-track"
+                                    aria-label="Progress belajar keseluruhan" aria-valuenow="{{ $progressPct }}"
+                                    aria-valuemin="0" aria-valuemax="100">
+                                    <div class="progress-akrab-fill" id="progress-bar-fill" style="width: {{ $progressPct }}%;">
                                     </div>
                                 </div>
-
-                                @if($glossary->count() > 0)
-                                    <div class="card sidebar-card border-0 shadow-sm">
-                                        <div class="sidebar-card-header">
-                                            <i class="bi bi-book-half" aria-hidden="true"></i> Kamus Kata (Glosarium)
-                                        </div>
-                                        <div class="card-body p-0">
-                                            <div class="accordion accordion-flush" id="glossaryAccordion">
-                                                @foreach($glossary as $term)
-                                                    <div class="accordion-item border-bottom">
-                                                        <h3 class="accordion-header">
-                                                            <button class="accordion-button accordion-button-custom collapsed"
-                                                                    type="button" data-bs-toggle="collapse"
-                                                                    data-bs-target="#glossary-{{ $term->id }}"
-                                                                    aria-expanded="false">
-                                                                {{ $term->term }}
-                                                            </button>
-                                                        </h3>
-                                                        <div id="glossary-{{ $term->id }}" class="accordion-collapse collapse"
-                                                             data-bs-parent="#glossaryAccordion">
-                                                            <div class="accordion-body small py-3 px-3" style="color: var(--text-light);">
-                                                                <p class="mb-0">{{ $term->definition }}</p>
-                                                                @if($term->example ?? null)
-                                                                    <p class="mb-0 mt-2 fst-italic">Contoh: {{ $term->example }}</p>
-                                                                @endif
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                @endforeach
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endif
-                            </aside>
+                                <p class="small mt-3 mb-0" style="color: var(--text-light);">
+                                    <i class="bi bi-cloud-check-fill" aria-hidden="true"></i>
+                                    Progres tersimpan ke akunmu.
+                                </p>
+                            </div>
                         </div>
+
+                        @if($glossary->count() > 0)
+                            <div class="card sidebar-card border-0 shadow-sm">
+                                <div class="sidebar-card-header">
+                                    <i class="bi bi-book-half" aria-hidden="true"></i> Kamus Kata (Glosarium)
+                                </div>
+                                <div class="card-body p-0">
+                                    <div class="accordion accordion-flush" id="glossaryAccordion">
+                                        @foreach($glossary as $term)
+                                            <div class="accordion-item border-bottom">
+                                                <h3 class="accordion-header">
+                                                    <button class="accordion-button accordion-button-custom collapsed" type="button"
+                                                        data-bs-toggle="collapse" data-bs-target="#glossary-{{ $term->id }}"
+                                                        aria-expanded="false">
+                                                        {{ $term->term }}
+                                                    </button>
+                                                </h3>
+                                                <div id="glossary-{{ $term->id }}" class="accordion-collapse collapse"
+                                                    data-bs-parent="#glossaryAccordion">
+                                                    <div class="accordion-body small py-3 px-3" style="color: var(--text-light);">
+                                                        <p class="mb-0">{{ $term->definition }}</p>
+                                                        @if($term->example ?? null)
+                                                            <p class="mb-0 mt-2 fst-italic">Contoh: {{ $term->example }}</p>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    </aside>
+                </div>
             @endif
 
-                {{-- ================= Ruang Aman AKRAB ================= --}}
-                <div class="help-banner">
-                    <div class="help-icon" aria-hidden="true">
-                        <i class="bi bi-shield-fill-check"></i>
-                    </div>
-                    <div class="help-text">
-                        <h2>Ruang Aman AKRAB</h2>
-                        <p>Bingung, takut, atau menghadapi masalah terkait kesehatan tubuhmu? Tim kami siap membantu.</p>
-                    </div>
-                    <div class="help-actions">
-                        <button type="button" class="btn-akrab-accent"
-                                onclick="alert('Fitur Tanya Ahli via Isyarat segera aktif!')">
-                            <i class="bi bi-chat-dots-fill" aria-hidden="true"></i> Tanya Ahli
-                        </button>
-                        <button type="button" class="btn-akrab-danger"
-                                onclick="alert('Hubungi layanan kontak darurat tepercaya terdekat.')">
-                            <i class="bi bi-exclamation-octagon-fill" aria-hidden="true"></i> Bantuan Darurat
-                        </button>
-                    </div>
+            {{-- ================= Ruang Aman AKRAB ================= --}}
+            <div class="help-banner">
+                <div class="help-icon" aria-hidden="true">
+                    <i class="bi bi-shield-fill-check"></i>
                 </div>
+                <div class="help-text">
+                    <h2>Ruang Aman AKRAB</h2>
+                    <p>Bingung, takut, atau menghadapi masalah terkait kesehatan tubuhmu? Tim kami siap membantu.</p>
+                </div>
+                <div class="help-actions">
+                    <button type="button" class="btn-akrab-accent"
+                        onclick="alert('Fitur Tanya Ahli via Isyarat segera aktif!')">
+                        <i class="bi bi-chat-dots-fill" aria-hidden="true"></i> Tanya Ahli
+                    </button>
+                    <button type="button" class="btn-akrab-danger"
+                        onclick="alert('Hubungi layanan kontak darurat tepercaya terdekat.')">
+                        <i class="bi bi-exclamation-octagon-fill" aria-hidden="true"></i> Bantuan Darurat
+                    </button>
+                </div>
+            </div>
 
-                {{-- ================= FAQ ================= --}}
-                @if(($faq ?? collect())->count() > 0)
-                    <section class="faq-section" aria-labelledby="faq-heading">
-                        <h2 id="faq-heading" class="sidebar-card-header" style="border-radius: 0; margin: 0;">
-                            <i class="bi bi-patch-question-fill" aria-hidden="true"></i> Pertanyaan Umum
-                        </h2>
-                        <div class="accordion accordion-flush" id="faqAccordion">
-                            @foreach($faq as $item)
-                                <div class="accordion-item border-bottom">
-                                    <h3 class="accordion-header">
-                                        <button class="accordion-button accordion-button-custom collapsed"
-                                                type="button" data-bs-toggle="collapse"
-                                                data-bs-target="#faq-{{ $item->id }}"
-                                                aria-expanded="false">
-                                            {{ $item->question }}
-                                        </button>
-                                    </h3>
-                                    <div id="faq-{{ $item->id }}" class="accordion-collapse collapse"
-                                         data-bs-parent="#faqAccordion">
-                                        <div class="accordion-body small py-3 px-4" style="color: var(--text-light);">
-                                            {{ $item->answer }}
-                                        </div>
+            {{-- ================= FAQ ================= --}}
+            @if(($faq ?? collect())->count() > 0)
+                <section class="faq-section" aria-labelledby="faq-heading">
+                    <h2 id="faq-heading" class="sidebar-card-header" style="border-radius: 0; margin: 0;">
+                        <i class="bi bi-patch-question-fill" aria-hidden="true"></i> Pertanyaan Umum
+                    </h2>
+                    <div class="accordion accordion-flush" id="faqAccordion">
+                        @foreach($faq as $item)
+                            <div class="accordion-item border-bottom">
+                                <h3 class="accordion-header">
+                                    <button class="accordion-button accordion-button-custom collapsed" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#faq-{{ $item->id }}" aria-expanded="false">
+                                        {{ $item->question }}
+                                    </button>
+                                </h3>
+                                <div id="faq-{{ $item->id }}" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body small py-3 px-4" style="color: var(--text-light);">
+                                        {{ $item->answer }}
                                     </div>
                                 </div>
-                            @endforeach
-                        </div>
-                    </section>
-                @endif
-
-                {{-- ================= Navigasi Modul ================= --}}
-                <nav aria-label="Navigasi antar modul" class="card content-card border-0 shadow-sm">
-                    <div class="card-body p-3">
-                        <div class="d-flex flex-column flex-sm-row justify-content-between gap-2">
-                            @if($prevModule)
-                                <a href="{{ route('module.show', $prevModule->slug) }}" class="btn-akrab-outline">
-                                    <i class="bi bi-arrow-left" aria-hidden="true"></i> {{ $prevModule->title }}
-                                </a>
-                            @else
-                                <button class="btn-akrab-outline" disabled>
-                                    <i class="bi bi-arrow-left" aria-hidden="true"></i> Modul Awal
-                                </button>
-                            @endif
-
-                            @if($nextModule)
-                                <a href="{{ route('module.show', $nextModule->slug) }}" class="btn-akrab-primary">
-                                    {{ $nextModule->title }} <i class="bi bi-arrow-right" aria-hidden="true"></i>
-                                </a>
-                            @else
-                                <button class="btn-akrab-accent" disabled>
-                                    <i class="bi bi-check-circle-fill" aria-hidden="true"></i> Materi Selesai!
-                                </button>
-                            @endif
-                        </div>
+                            </div>
+                        @endforeach
                     </div>
-                </nav>
-            </div>
+                </section>
+            @endif
+
+            {{-- ================= Navigasi Modul ================= --}}
+            <nav aria-label="Navigasi antar modul" class="card content-card border-0 shadow-sm">
+                <div class="card-body p-3">
+                    <div class="d-flex flex-column flex-sm-row justify-content-between gap-2">
+                        @if($prevModule)
+                            <a href="{{ route('module.show', $prevModule->slug) }}" class="btn-akrab-outline">
+                                <i class="bi bi-arrow-left" aria-hidden="true"></i> {{ $prevModule->title }}
+                            </a>
+                        @else
+                            <button class="btn-akrab-outline" disabled>
+                                <i class="bi bi-arrow-left" aria-hidden="true"></i> Modul Awal
+                            </button>
+                        @endif
+
+                        @if($nextModule)
+                            <a href="{{ route('module.show', $nextModule->slug) }}" class="btn-akrab-primary">
+                                {{ $nextModule->title }} <i class="bi bi-arrow-right" aria-hidden="true"></i>
+                            </a>
+                        @else
+                            <button class="btn-akrab-accent" disabled>
+                                <i class="bi bi-check-circle-fill" aria-hidden="true"></i> Materi Selesai!
+                            </button>
+                        @endif
+                    </div>
+                </div>
+            </nav>
         </div>
+    </div>
 
-        {{-- ================= Modal Sukses Kuis ================= --}}
-        <div class="modal fade" id="quizSuccessModal" tabindex="-1" aria-labelledby="quizSuccessModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content" style="border-radius: 22px; border: none;">
-                    <div class="modal-body text-center p-4 p-md-5">
-                        <div class="mx-auto mb-3 d-flex align-items-center justify-content-center"
-                             style="width: 72px; height: 72px; border-radius: 50%; background-color: var(--bg-pink);">
-                            <i class="bi bi-trophy-fill" style="font-size: 2rem; color: var(--primary-color);" aria-hidden="true"></i>
-                        </div>
-                        <h2 class="h4 fw-bold mb-2" style="color: var(--primary-color);" id="quizSuccessModalLabel">Selamat!</h2>
-                        <p id="quizSuccessModalBody" class="mb-4" style="color: var(--text-light);"></p>
-                        <button type="button" class="btn-akrab-primary" data-bs-dismiss="modal">
-                            <i class="bi bi-check-lg" aria-hidden="true"></i> Oke, Mengerti!
-                        </button>
+    {{-- ================= Modal Sukses Kuis ================= --}}
+    <div class="modal fade" id="quizSuccessModal" tabindex="-1" aria-labelledby="quizSuccessModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="border-radius: 22px; border: none;">
+                <div class="modal-body text-center p-4 p-md-5">
+                    <div class="mx-auto mb-3 d-flex align-items-center justify-content-center"
+                        style="width: 72px; height: 72px; border-radius: 50%; background-color: var(--bg-pink);">
+                        <i class="bi bi-trophy-fill" style="font-size: 2rem; color: var(--primary-color);"
+                            aria-hidden="true"></i>
                     </div>
+                    <h2 class="h4 fw-bold mb-2" style="color: var(--primary-color);" id="quizSuccessModalLabel">Selamat!
+                    </h2>
+                    <p id="quizSuccessModalBody" class="mb-4" style="color: var(--text-light);"></p>
+                    <button type="button" class="btn-akrab-primary" data-bs-dismiss="modal">
+                        <i class="bi bi-check-lg" aria-hidden="true"></i> Oke, Mengerti!
+                    </button>
                 </div>
             </div>
         </div>
+    </div>
 
-        {{-- ================= Skrip Kuis ================= --}}
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content || '';
+    {{-- ================= Skrip Kuis ================= --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content || '';
 
-                // ---------- PRE-TEST ----------
-                // Jawaban tetap DIKIRIM ke server (untuk data riset pre/post-test —
-                // lihat migration quiz_attempts), tapi hasilnya SENGAJA tidak
-                // dipakai untuk apa pun di UI: tidak ada reveal benar/salah, tidak
-                // ada modal, tidak menyentuh progres. Lihat catatan panjang di
-                // komentar Blade dekat section Pre-Test soal alasannya.
-                const pretestBtn = document.getElementById('btn-submit-pretest');
-                if (pretestBtn) {
-                    const pretestSection = document.getElementById('pretest-section');
-                    const pretestAlert = document.getElementById('pretest-alert');
-                    const pretestDoneNote = document.getElementById('pretest-done-note');
+            // ---------- PRE-TEST ----------
+            // Jawaban tetap DIKIRIM ke server (untuk data riset pre/post-test —
+            // lihat migration quiz_attempts), tapi hasilnya SENGAJA tidak
+            // dipakai untuk apa pun di UI: tidak ada reveal benar/salah, tidak
+            // ada modal, tidak menyentuh progres. Lihat catatan panjang di
+            // komentar Blade dekat section Pre-Test soal alasannya.
+            const pretestBtn = document.getElementById('btn-submit-pretest');
+            if (pretestBtn) {
+                const pretestSection = document.getElementById('pretest-section');
+                const pretestAlert = document.getElementById('pretest-alert');
+                const pretestDoneNote = document.getElementById('pretest-done-note');
 
-                    pretestBtn.addEventListener('click', function () {
-                        const groups = pretestSection.querySelectorAll('.quiz-options');
-                        let allAnswered = true;
-
-                        groups.forEach((group) => {
-                            const card = group.closest('.quiz-card');
-                            const checked = group.querySelector('input[type="radio"]:checked');
-                            if (!checked) {
-                                allAnswered = false;
-                                card.classList.add('quiz-card-missing');
-                            } else {
-                                card.classList.remove('quiz-card-missing');
-                            }
-                        });
-
-                        if (!allAnswered) {
-                            pretestAlert.classList.remove('d-none');
-                            pretestAlert.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                            return;
-                        }
-
-                        pretestAlert.classList.add('d-none');
-
-                        // Kunci pilihan (tidak boleh diubah lagi), tanpa menandai benar/salah
-                        groups.forEach((group) => {
-                            group.querySelectorAll('input[type="radio"]').forEach((input) => {
-                                input.disabled = true;
-                            });
-                        });
-
-                        pretestBtn.classList.add('d-none');
-                        pretestDoneNote.classList.remove('d-none');
-
-                        // Arahkan ke materi tepat setelah Pre-Test (elemen berikutnya)
-                        const nextEl = pretestSection.nextElementSibling;
-                        if (nextEl) {
-                            nextEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        }
-
-                        // Kirim jawaban ke server untuk data riset (type: 'pre').
-                        // "Fire and forget" secara sengaja: kalau request gagal
-                        // (mis. koneksi putus), alur belajar user TIDAK diblokir —
-                        // UI sudah terlanjur lanjut ke materi. Kegagalan pengiriman
-                        // cuma berarti baris data riset untuk pertanyaan itu hilang,
-                        // bukan pengalaman belajarnya yang terganggu.
-                        groups.forEach((group) => {
-                            const quizId = group.dataset.quizId;
-                            const checked = group.querySelector('input[type="radio"]:checked');
-                            if (!checked) return;
-
-                            fetch('/api/quiz/submit', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'X-CSRF-TOKEN': csrfToken,
-                                },
-                                body: JSON.stringify({
-                                    quiz_id: quizId,
-                                    selected_option_id: checked.dataset.optionId,
-                                    type: 'pre',
-                                }),
-                            }).catch(() => {
-                                /* diamkan — lihat catatan "fire and forget" di atas */
-                            });
-                        });
-                    });
-                }
-
-                // ---------- POST-TEST ----------
-                const submitBtn = document.getElementById('btn-submit-quiz');
-                if (!submitBtn) return; // tidak ada kuis di modul ini
-
-                const alertBox = document.getElementById('quiz-alert');
-                const reviewNote = document.getElementById('quiz-review-note');
-                const moduleSlug = @json($module->slug);
-                const moduleLabel = @json('Modul ' . $module->order . ': ' . $module->title);
-
-                function updateProgressWidget(completedCount, total) {
-                    const widget = document.getElementById('progress-widget');
-                    if (!widget) return;
-
-                    const pct = total > 0 ? Math.round((completedCount / total) * 100) : 0;
-
-                    document.getElementById('progress-label').textContent = `${completedCount} dari ${total} modul selesai`;
-                    document.getElementById('progress-percent').textContent = `${pct}%`;
-
-                    const fill = document.getElementById('progress-bar-fill');
-                    fill.style.width = `${pct}%`;
-                    document.getElementById('progress-bar-track').setAttribute('aria-valuenow', String(pct));
-                }
-
-                // Menandai modul selesai sekarang tersimpan ke akun lewat server
-                // (kolom users.completed_modules), BUKAN localStorage lagi —
-                // konsisten di semua perangkat yang dipakai user untuk login.
-                async function markModuleComplete() {
-                    try {
-                        const res = await fetch(`/api/modules/${moduleSlug}/complete`, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-CSRF-TOKEN': csrfToken,
-                            },
-                        });
-
-                        if (!res.ok) throw new Error('Gagal menandai modul selesai');
-
-                        const data = await res.json();
-                        updateProgressWidget(data.completed_modules_count, data.total_modules);
-                    } catch (err) {
-                        // Progres gagal tersimpan ke server (mis. koneksi putus).
-                        // Tidak memblokir alur user (modal sukses tetap muncul di
-                        // bawah), tapi widget sidebar TIDAK di-update supaya tidak
-                        // menampilkan angka yang sebenarnya belum tersimpan.
-                        console.warn('Progres modul gagal tersimpan ke server:', err);
-                    }
-                }
-
-                submitBtn.addEventListener('click', async function () {
-                    const quizGroups = document.querySelectorAll('.quiz-options');
-                    const answers = [];
+                pretestBtn.addEventListener('click', function () {
+                    const groups = pretestSection.querySelectorAll('.quiz-options');
                     let allAnswered = true;
 
-                    quizGroups.forEach((group) => {
+                    groups.forEach((group) => {
                         const card = group.closest('.quiz-card');
                         const checked = group.querySelector('input[type="radio"]:checked');
-
                         if (!checked) {
                             allAnswered = false;
                             card.classList.add('quiz-card-missing');
                         } else {
                             card.classList.remove('quiz-card-missing');
-                            answers.push({
-                                quizId: group.dataset.quizId,
-                                optionId: checked.dataset.optionId,
-                                group: group,
-                            });
                         }
                     });
 
                     if (!allAnswered) {
-                        alertBox.classList.remove('d-none');
-                        alertBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        pretestAlert.classList.remove('d-none');
+                        pretestAlert.scrollIntoView({ behavior: 'smooth', block: 'center' });
                         return;
                     }
 
-                    alertBox.classList.add('d-none');
-                    submitBtn.disabled = true;
-                    submitBtn.innerHTML = '<i class="bi bi-hourglass-split" aria-hidden="true"></i> Memeriksa…';
+                    pretestAlert.classList.add('d-none');
 
-                    try {
-                        const results = await Promise.all(answers.map((a) =>
-                            fetch('/api/quiz/submit', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'X-CSRF-TOKEN': csrfToken,
-                                },
-                                body: JSON.stringify({ quiz_id: a.quizId, selected_option_id: a.optionId, type: 'post' }),
-                            }).then((res) => res.json())
-                        ));
-
-                        results.forEach((data, i) => {
-                            const { group, optionId } = answers[i];
-                            const correctId = data.correct_option ? String(data.correct_option.id) : null;
-
-                            group.querySelectorAll('.quiz-option-label').forEach((label) => {
-                                const input = label.querySelector('input');
-                                input.disabled = true;
-
-                                const icon = label.querySelector('.quiz-review-icon');
-                                const optId = String(label.dataset.optionId);
-
-                                if (optId === correctId) {
-                                    label.classList.add('is-review-correct');
-                                    icon.classList.add('bi-check-circle-fill');
-                                } else if (optId === String(optionId)) {
-                                    label.classList.add('is-review-wrong');
-                                    icon.classList.add('bi-x-circle-fill');
-                                }
-                            });
+                    // Kunci pilihan (tidak boleh diubah lagi), tanpa menandai benar/salah
+                    groups.forEach((group) => {
+                        group.querySelectorAll('input[type="radio"]').forEach((input) => {
+                            input.disabled = true;
                         });
+                    });
 
-                        reviewNote.classList.remove('d-none');
-                        submitBtn.classList.add('d-none');
+                    pretestBtn.classList.add('d-none');
+                    pretestDoneNote.classList.remove('d-none');
 
-                        await markModuleComplete();
+                    // Arahkan ke materi tepat setelah Pre-Test (elemen berikutnya)
+                    const nextEl = pretestSection.nextElementSibling;
+                    if (nextEl) {
+                        nextEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
 
-                        document.getElementById('quizSuccessModalBody').textContent =
-                            `Selamat, kamu berhasil menyelesaikan ${moduleLabel}!`;
-                        new bootstrap.Modal(document.getElementById('quizSuccessModal')).show();
-                    } catch (err) {
-                        submitBtn.disabled = false;
-                        submitBtn.innerHTML = '<i class="bi bi-send-check-fill" aria-hidden="true"></i> Ayo Kumpulkan!';
-                        alertBox.classList.remove('d-none');
-                        alertBox.innerHTML =
-                            '<i class="bi bi-wifi-off" aria-hidden="true"></i><span>Gagal terhubung ke server. Coba lagi ya.</span>';
+                    // Kirim jawaban ke server untuk data riset (type: 'pre').
+                    // "Fire and forget" secara sengaja: kalau request gagal
+                    // (mis. koneksi putus), alur belajar user TIDAK diblokir —
+                    // UI sudah terlanjur lanjut ke materi. Kegagalan pengiriman
+                    // cuma berarti baris data riset untuk pertanyaan itu hilang,
+                    // bukan pengalaman belajarnya yang terganggu.
+                    groups.forEach((group) => {
+                        const quizId = group.dataset.quizId;
+                        const checked = group.querySelector('input[type="radio"]:checked');
+                        if (!checked) return;
+
+                        fetch('/api/quiz/submit', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': csrfToken,
+                            },
+                            body: JSON.stringify({
+                                quiz_id: quizId,
+                                selected_option_id: checked.dataset.optionId,
+                                type: 'pre',
+                            }),
+                        }).catch(() => {
+                            /* diamkan — lihat catatan "fire and forget" di atas */
+                        });
+                    });
+                });
+            }
+
+            // ---------- POST-TEST ----------
+            const submitBtn = document.getElementById('btn-submit-quiz');
+            if (!submitBtn) return; // tidak ada kuis di modul ini
+
+            const alertBox = document.getElementById('quiz-alert');
+            const reviewNote = document.getElementById('quiz-review-note');
+            const moduleSlug = @json($module->slug);
+            const moduleLabel = @json('Modul ' . $module->order . ': ' . $module->title);
+
+            function updateProgressWidget(completedCount, total) {
+                const widget = document.getElementById('progress-widget');
+                if (!widget) return;
+
+                const pct = total > 0 ? Math.round((completedCount / total) * 100) : 0;
+
+                document.getElementById('progress-label').textContent = `${completedCount} dari ${total} modul selesai`;
+                document.getElementById('progress-percent').textContent = `${pct}%`;
+
+                const fill = document.getElementById('progress-bar-fill');
+                fill.style.width = `${pct}%`;
+                document.getElementById('progress-bar-track').setAttribute('aria-valuenow', String(pct));
+            }
+
+            // Menandai modul selesai sekarang tersimpan ke akun lewat server
+            // (kolom users.completed_modules), BUKAN localStorage lagi —
+            // konsisten di semua perangkat yang dipakai user untuk login.
+            async function markModuleComplete() {
+                try {
+                    const res = await fetch(`/api/modules/${moduleSlug}/complete`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': csrfToken,
+                        },
+                    });
+
+                    if (!res.ok) throw new Error('Gagal menandai modul selesai');
+
+                    const data = await res.json();
+                    updateProgressWidget(data.completed_modules_count, data.total_modules);
+                } catch (err) {
+                    // Progres gagal tersimpan ke server (mis. koneksi putus).
+                    // Tidak memblokir alur user (modal sukses tetap muncul di
+                    // bawah), tapi widget sidebar TIDAK di-update supaya tidak
+                    // menampilkan angka yang sebenarnya belum tersimpan.
+                    console.warn('Progres modul gagal tersimpan ke server:', err);
+                }
+            }
+
+            submitBtn.addEventListener('click', async function () {
+                const quizGroups = document.querySelectorAll('.quiz-options');
+                const answers = [];
+                let allAnswered = true;
+
+                quizGroups.forEach((group) => {
+                    const card = group.closest('.quiz-card');
+                    const checked = group.querySelector('input[type="radio"]:checked');
+
+                    if (!checked) {
+                        allAnswered = false;
+                        card.classList.add('quiz-card-missing');
+                    } else {
+                        card.classList.remove('quiz-card-missing');
+                        answers.push({
+                            quizId: group.dataset.quizId,
+                            optionId: checked.dataset.optionId,
+                            group: group,
+                        });
                     }
                 });
+
+                if (!allAnswered) {
+                    alertBox.classList.remove('d-none');
+                    alertBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    return;
+                }
+
+                alertBox.classList.add('d-none');
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="bi bi-hourglass-split" aria-hidden="true"></i> Memeriksa…';
+
+                try {
+                    const results = await Promise.all(answers.map((a) =>
+                        fetch('/api/quiz/submit', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': csrfToken,
+                            },
+                            body: JSON.stringify({ quiz_id: a.quizId, selected_option_id: a.optionId, type: 'post' }),
+                        }).then((res) => res.json())
+                    ));
+
+                    results.forEach((data, i) => {
+                        const { group, optionId } = answers[i];
+                        const correctId = data.correct_option ? String(data.correct_option.id) : null;
+
+                        group.querySelectorAll('.quiz-option-label').forEach((label) => {
+                            const input = label.querySelector('input');
+                            input.disabled = true;
+
+                            const icon = label.querySelector('.quiz-review-icon');
+                            const optId = String(label.dataset.optionId);
+
+                            if (optId === correctId) {
+                                label.classList.add('is-review-correct');
+                                icon.classList.add('bi-check-circle-fill');
+                            } else if (optId === String(optionId)) {
+                                label.classList.add('is-review-wrong');
+                                icon.classList.add('bi-x-circle-fill');
+                            }
+                        });
+                    });
+
+                    reviewNote.classList.remove('d-none');
+                    submitBtn.classList.add('d-none');
+
+                    await markModuleComplete();
+
+                    document.getElementById('quizSuccessModalBody').textContent =
+                        `Selamat, kamu berhasil menyelesaikan ${moduleLabel}!`;
+                    new bootstrap.Modal(document.getElementById('quizSuccessModal')).show();
+                } catch (err) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i class="bi bi-send-check-fill" aria-hidden="true"></i> Ayo Kumpulkan!';
+                    alertBox.classList.remove('d-none');
+                    alertBox.innerHTML =
+                        '<i class="bi bi-wifi-off" aria-hidden="true"></i><span>Gagal terhubung ke server. Coba lagi ya.</span>';
+                }
             });
-        </script>
+        });
+    </script>
 @endsection

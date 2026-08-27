@@ -66,7 +66,7 @@ class AuthenticatedSessionController extends Controller
 
         return Auth::user()->isAdmin()
             ? redirect()->intended(route('admin.dashboard'))
-            : redirect()->intended(route('module.show', 'mengenal-tubuh-kita'));
+            : redirect()->intended(route('belajar'));
     }
 
     public function destroy(Request $request): RedirectResponse
@@ -78,4 +78,5 @@ class AuthenticatedSessionController extends Controller
 
         return redirect('/');
     }
+
 }

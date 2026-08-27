@@ -18,7 +18,7 @@
                 </p>
                 <p class="mx-auto mb-4" style="color: var(--text-light); max-width: 700px; font-size: 1.1rem;">
                     Ruang belajar kesehatan reproduksi yang <strong>aman, ramah,</strong> dan <strong>inklusif</strong> bagi
-                    remaja Tuli.
+                    remaja.
                 </p>
                 <div class="d-flex justify-content-center gap-3">
                     <!-- Tombol 1: Mulai Belajar (Background Ungu, Tulisan Putih, Klik: Border Kuning) -->
@@ -36,7 +36,6 @@
                     </a>
                 </div>
 
-                <!-- Tambahkan style pendukung ini di bawahnya atau di dalam tag <style> app.blade Anda -->
                 <style>
                     /* Tombol Mulai Belajar */
                     .cst-btn-ungu:hover {
@@ -81,11 +80,6 @@
                         border-color: var(--primary-color) !important;
                     }
 
-                    /* Override outline fokus global (kuning) khusus di sini.
-           Alasan: kartu ini berlatar hampir putih (#FDFBFF), dan kuning
-           (--accent-color) di atas latar terang gagal kontras WCAG untuk
-           fokus (rasio ~1.5:1, minimum 3:1) — sudah pernah saya cek waktu
-           perbaiki halaman modul. Ungu tua lolos (6.8:1) di latar ini. */
                     .module-start-card:focus-visible {
                         outline: 3px solid var(--primary-hover) !important;
                         outline-offset: 3px !important;
@@ -149,7 +143,7 @@
     <section class="mb-5 mt-5">
         <div class="text-center mb-5">
             <h2 class="display-6 fw-bold text-dark mb-2">Fitur AKRAB</h2>
-            <p class="text-muted fs-5">Dirancang khusus untuk remaja Tuli dengan pendekatan inklusif dan aksesibel</p>
+            <p class="text-muted fs-5">Dirancang khusus untuk remaja dengan pendekatan inklusif dan aksesibel</p>
         </div>
 
         <div class="row g-4">
@@ -217,110 +211,31 @@
     </section>
 
     <!-- SECTION 4: Siap Untuk Mulai Belajar Callout Banner -->
+    <!-- SECTION 4: Jaring Pengaman (Glosarium & Pendamping) -->
     <section class="mb-5 pt-4">
-        <div class="text-center py-5">
-            <h2 class="display-6 fw-bold text-dark mb-3">Siap Untuk Mulai Belajar?</h2>
-            <p class="text-muted fs-5 mx-auto mb-4" style="max-width: 750px;">
-                Akses 15 modul pembelajaran lengkap tentang kesehatan reproduksi yang dirancang khusus untuk remaja Tuli.
-            </p>
-            <div class="d-flex justify-content-center gap-3 flex-wrap">
-                <a href="{{ route('belajar') }}" class="btn btn-accent btn-lg text-decoration-none">
-                    Mulai Belajar Sekarang
-                </a>
-                <a href="{{ route('tentang') }}"
-                    class="btn btn-lg text-decoration-none d-inline-flex align-items-center justify-content-center cst-btn-bantuan"
-                    style="background-color: #FFFFFF; color: var(--primary-color); border: 2px solid var(--primary-color); font-weight: 600; border-radius: 10px; min-height: 48px; transition: all 0.2s;">
-                    Ruang Pendamping
-                </a>
+        <div class="card border-0" style="background-color: #F8F5FC; border-radius: 24px;">
+            <div class="card-body text-center py-5 px-4 px-md-5">
+                <h2 class="display-6 fw-bold text-dark mb-3">Ada yang Masih Membingungkan?</h2>
+                <p class="text-muted fs-5 mx-auto mb-4" style="max-width: 750px; line-height: 1.6;">
+                    Jangan khawatir! Temukan arti kata-kata baru seputar tubuhmu di <strong>Glosarium</strong>.
+                    Bagi orang tua dan guru, silakan kunjungi <strong>Ruang Pendamping</strong> untuk panduan selengkapnya.
+                </p>
+                <div class="d-flex justify-content-center gap-3 flex-wrap">
+                    <!-- Tombol Glosarium (Menggunakan style ungu yang sama) -->
+                    <a href="{{ route('glosarium') }}"
+                        class="btn btn-lg text-decoration-none d-inline-flex align-items-center justify-content-center cst-btn-ungu"
+                        style="background-color: var(--primary-color); color: #FFFFFF; font-weight: 700; border-radius: 10px; min-height: 48px; transition: all 0.2s;">
+                        <i class="bi bi-journal-text me-2 fs-5" aria-hidden="true"></i> Buka Glosarium
+                    </a>
+
+                    <!-- Tombol Ruang Pendamping (Menggunakan style outline/bantuan) -->
+                    <a href="{{ route('bantuan') }}"
+                        class="btn btn-lg text-decoration-none d-inline-flex align-items-center justify-content-center cst-btn-bantuan"
+                        style="background-color: #FFFFFF; color: var(--primary-color); border: 2px solid var(--primary-color); font-weight: 600; border-radius: 10px; min-height: 48px; transition: all 0.2s;">
+                        <i class="bi bi-people me-2 fs-5" aria-hidden="true"></i> Ruang Pendamping
+                    </a>
+                </div>
             </div>
         </div>
     </section>
-
-    <!-- SECTION 5: Footer Komplit Tiga Kolom -->
-    @section('additional_css')
-        <style>
-            /* Menyembunyikan footer bawaan layout app.blade.php khusus di halaman beranda */
-            body>footer {
-                display: none !important;
-            }
-
-            /* Desain Footer Tiga Kolom */
-            .custom-footer {
-                background-color: #FAFAFA;
-                border-top: 1px solid #EAEAEA;
-                padding: 4rem 0 3rem 0;
-                margin-top: 5rem;
-                color: #4A4A4A;
-            }
-
-            .custom-footer h4 {
-                color: var(--text-dark);
-                font-size: 1.1rem;
-                margin-bottom: 1.25rem;
-            }
-
-            .custom-footer-links a {
-                color: #555555;
-                text-decoration: none;
-                display: block;
-                margin-bottom: 0.75rem;
-                font-size: 0.95rem;
-            }
-
-            .custom-footer-links a:hover {
-                color: var(--primary-color);
-                text-decoration: underline;
-            }
-        </style>
-    @endsection
-
-    </div> <!-- Penutup container bawaan agar footer bisa melebar full screen -->
-
-    <footer class="custom-footer">
-        <div class="container">
-            <div class="row g-4">
-                <!-- Kolom 1: Branding -->
-                <div class="col-md-5">
-                    <div class="d-flex align-items-center gap-2 mb-3 text-dark fw-bold fs-4"
-                        style="color: var(--primary-color) !important;">
-                        <i class="bi bi-balloon-heart-fill" aria-hidden="true"></i> AKRAB
-                    </div>
-                    <p class="small text-muted mb-3" style="line-height: 1.5;">
-                        Akses Kesehatan Reproduksi Remaja yang Adaptif dan Bersahabat
-                    </p>
-                    <p class="small text-muted" style="line-height: 1.5;">
-                        Ruang belajar kesehatan reproduksi yang aman, ramah, dan inklusif bagi remaja.
-                    </p>
-                </div>
-
-                <!-- Kolom 2: Tautan Cepat -->
-                <div class="col-md-3 custom-footer-links">
-                    <h4 class="fw-bold">Tautan Cepat</h4>
-                    <a href="{{ route('belajar') }}">Mulai Belajar</a>
-                    <a href="{{ route('tentang') }}">Ruang Pendamping</a>
-                    <a href="{{ route('bantuan') }}">Cara Mencari Bantuan</a>
-                    <a href="{{ route('tentang') }}">Pernyataan Aksesibilitas</a>
-                </div>
-
-                <!-- Kolom 3: Kontak Darurat -->
-                <div class="col-md-4">
-                    <h4 class="fw-bold">Kontak Darurat</h4>
-                    <ul class="list-unstyled mb-0" style="font-size: 0.95rem;">
-                        <li class="mb-2.5 d-flex align-items-center gap-2">
-                            <i class="bi bi-telephone" aria-hidden="true"></i> Polisi: <strong>110</strong>
-                        </li>
-                        <li class="mb-2.5 d-flex align-items-center gap-2">
-                            <i class="bi bi-telephone-plus" aria-hidden="true"></i> Ambulans: <strong>118 / 119</strong>
-                        </li>
-                        <li class="mb-0 d-flex align-items-center gap-2">
-                            <i class="bi bi-envelope" aria-hidden="true"></i> Email: <a href="mailto:bantuan@akrab.id"
-                                style="color: #555555; text-decoration: none;"><strong>bantuan@akrab.id</strong></a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <div> <!-- Pembuka tag container pembantu untuk menyeimbangkan penutup div section layout app -->
 @endsection

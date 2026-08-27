@@ -32,7 +32,7 @@ class Quiz extends Model
      */
     public function options()
     {
-        return $this->hasMany(QuizOption::class)->orderBy('order');
+        return $this->hasMany(QuizOption::class, 'quiz_id', 'id')->orderBy('order', 'asc');
     }
 
     /**

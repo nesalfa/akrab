@@ -267,6 +267,34 @@
             margin: 0;
         }
 
+        /* ---------- FOOTER STYLES ---------- */
+        .custom-footer {
+            background-color: var(--primary-hover);
+            border-top: 1px solid #EAEAEA;
+            padding: 4rem 0 3rem 0;
+            margin-top: 1rem; /* UBAH DI SINI: dari 5rem menjadi 1rem (atau hapus baris ini) */
+            color: #FAFAFA;
+        }
+
+        .custom-footer h4 {
+            color: #FAFAFA;
+            font-size: 1.1rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .custom-footer-links a {
+            color: #FAFAFA;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.75rem;
+            font-size: 0.95rem;
+        }
+
+        .custom-footer-links a:hover {
+            color: var(--accent-color);
+            text-decoration: underline;
+        }
+
         /* Kustomisasi Responsif Mobile & Tablet */
         @media (max-width: 991.98px) {
             .navbar-collapse {
@@ -297,13 +325,7 @@
             }
         }
 
-        /* Main Container: Ditingkatkan agar konten menggunakan lebar web semestinya.
-           CATATAN PERBAIKAN: sebelumnya `padding: 3.5rem 0;` (56px atas & bawah).
-           Nilai atas dikecilkan supaya jarak navbar -> konten (breadcrumb, dsb.)
-           tidak terasa kosong/jauh di halaman-halaman yang headernya langsung
-           dimulai dari atas (mis. halaman modul). Bagian bawah tetap dibuat
-           lebih lega sebagai jarak napas sebelum footer. Berlaku ke SEMUA
-           halaman karena ini selector elemen `main`, bukan class. */
+        /* Main Container */
         main {
             min-height: calc(100vh - 200px);
             padding: 1.75rem 0 3.5rem;
@@ -315,11 +337,7 @@
             width: 100%;
         }
 
-        /* ---------- Tombol bersama AKRAB ----------
-           Dipindah ke sini (dari yang sebelumnya cuma didefinisikan lokal
-           di modules/show.blade.php) supaya halaman lain — termasuk
-           login, register, dan admin — bisa pakai gaya tombol yang sama
-           tanpa duplikasi CSS per halaman. */
+        /* ---------- Tombol bersama AKRAB ---------- */
         .btn-akrab-primary,
         .btn-akrab-outline,
         .btn-akrab-accent,
@@ -408,7 +426,6 @@
 <body>
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg sticky-top" aria-label="Navigasi utama">
-        <!-- container-fluid dengan padding lebar kiri-kanan agar navbar menggunakan ruang monitor maksimal -->
         <div class="container-fluid px-3 px-md-5">
             <!-- SISI KIRI: Logo + Tulisan AKRAB -->
             <a class="navbar-brand" href="{{ route('home') }}">
@@ -442,19 +459,14 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link nav-link-akrab {{ Route::is('glosarium') ? 'active-page' : '' }}"
-                                href="#">
-                                <i class="bi bi-journal-text" aria-hidden="true"></i> Glosarium
-                            </a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link nav-link-akrab {{ Route::is('bantuan') ? 'active-page' : '' }}"
                                 href="{{ route('bantuan') }}">
                                 <i class="bi bi-life-preserver" aria-hidden="true"></i> Bantuan
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link nav-link-akrab {{ Route::is('tentang') ? 'active-page' : '' }}" href="#">
+                            <a class="nav-link nav-link-akrab {{ Route::is('tentang') ? 'active-page' : '' }}" 
+                                href="{{ route('tentang') }}">
                                 <i class="bi bi-info-circle" aria-hidden="true"></i> Tentang
                             </a>
                         </li>
@@ -525,13 +537,49 @@
     </main>
 
     <!-- Footer -->
-    <footer>
+    <footer class="custom-footer">
         <div class="container">
-            <h2 class="h4 text-white mb-2">Platform AKRAB</h2>
-            <p>Akses Kesehatan Reproduksi Remaja yang Adaptif dan Bersahabat</p>
-            <p class="small opacity-75">Platform edukasi inklusif yang dirancang khusus untuk remaja Tuli</p>
-            <hr class="my-4 opacity-25">
-            <p class="small">© 2026 | Studi Research and Development WCAG 2.2 Level AA</p>
+            <div class="row g-4">
+                <!-- Kolom 1: Branding -->
+                <div class="col-md-5">
+                    <div class="d-flex align-items-center gap-2 mb-3 text-dark fw-bold fs-4"
+                        style="color: var(--bg-pink) !important;">
+                        <i class="bi bi-balloon-heart-fill" aria-hidden="true"></i> AKRAB
+                    </div>
+                    <p class="small text mb-3" style="line-height: 1.5;">
+                        Akses Kesehatan Reproduksi Remaja yang Adaptif dan Bersahabat
+                    </p>
+                    <p class="small text" style="line-height: 1.5;">
+                        Ruang belajar kesehatan reproduksi yang aman, ramah, dan inklusif bagi remaja.
+                    </p>
+                </div>
+
+                <!-- Kolom 2: Tautan Cepat -->
+                <div class="col-md-3 custom-footer-links">
+                    <h4 class="fw-bold">Tautan Cepat</h4>
+                    <a href="{{ route('belajar') }}">Mulai Belajar</a>
+                    <a href="{{ route('bantuan') }}">Ruang Pendamping</a>
+                    <a href="{{ route('bantuan') }}">Cara Mencari Bantuan</a>
+                    <a href="{{ route('tentang') }}">Pernyataan Aksesibilitas</a>
+                </div>
+
+                <!-- Kolom 3: Kontak Darurat -->
+                <div class="col-md-4">
+                    <h4 class="fw-bold">Kontak Darurat</h4>
+                    <ul class="list-unstyled mb-0" style="font-size: 0.95rem;">
+                        <li class="mb-2.5 d-flex align-items-center gap-2">
+                            <i class="bi bi-telephone" aria-hidden="true"></i> Polisi: <strong>110</strong>
+                        </li>
+                        <li class="mb-2.5 d-flex align-items-center gap-2">
+                            <i class="bi bi-telephone-plus" aria-hidden="true"></i> Ambulans: <strong>118 / 119</strong>
+                        </li>
+                        <li class="mb-0 d-flex align-items-center gap-2">
+                            <i class="bi bi-envelope" aria-hidden="true"></i> Email: <a href="mailto:bantuan@akrab.id"
+                                style="color: #fafafa; text-decoration: none;"><strong>bantuan@akrab.id</strong></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </footer>
 

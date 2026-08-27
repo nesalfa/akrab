@@ -35,8 +35,12 @@
  */
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\PasswordResetController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\ModuleController;
+use App\Http\Controllers\PageController;
+use App\Http\Controllers\GlosariumController;
+use App\Http\Controllers\Admin\AdminController;
 use Illuminate\Support\Facades\Route;
 
 // ================= PUBLIK (tidak perlu login) =================
@@ -46,12 +50,23 @@ Route::get('/', [ModuleController::class, 'home'])->name('home');
 
 // Halaman menu klaster pembelajaran / daftar modul (Menampilkan belajar.blade.php)
 Route::get('/belajar', [ModuleController::class, 'index'])->name('belajar');
-// Route::get('/bantuan', [ModuleController::class, 'index'])->name('bantuan');
 
-// Placeholder — belum ada view aslinya, masih menampilkan home.blade.php
-Route::get('/glosarium', fn() => view('home'))->name('glosarium');
-// Route::get('/bantuan', fn() => view('home'))->name('bantuan');
-Route::get('/tentang', fn() => view('home'))->name('tentang');
+// Halaman informasional — ditangani PageController (dipisah dari
+// ModuleController, lihat diskusi soal pemisahan tanggung jawab controller)
+// Route::get('/glosarium', [PageController::class, 'glosarium'])->name('glosarium');
+
+Route::get('/glosarium', [GlosariumController::class, 'glosarium'])->name('glosarium');
+
+// Halaman Utama / Hub Bantuan
+Route::get('/bantuan', [PageController::class, 'bantuan'])->name('bantuan');
+
+// Sub-halaman Bantuan
+Route::get('rujukan', [PageController::class, 'bantuanRujukan'])->name('rujukan');
+Route::get('tanya-ahli', [PageController::class, 'tanyaAhliCreate'])->name('tanya-ahli');
+Route::post('tanya-ahli', [PageController::class, 'tanyaAhliStore'])->name('tanya-ahli.store');
+Route::get('pendamping', [PageController::class, 'panduanPendamping'])->name('pendamping');
+
+Route::get('/tentang', [PageController::class, 'tentang'])->name('tentang');
 
 // API publik (tidak butuh identitas user untuk berfungsi)
 Route::get('/api/glossary/search', [ModuleController::class, 'searchGlossary']);
@@ -65,6 +80,15 @@ Route::middleware('guest')->group(function () {
 
     Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
     Route::post('/login', [AuthenticatedSessionController::class, 'store']);
+
+    // Lupa Kata Sandi — alur OTP 6 digit lewat email (bukan link reset
+    // bawaan Laravel). Cuma berlaku untuk akun role 'user' (email-based);
+    // admin login pakai kode staf, tidak relevan di sini.
+    Route::get('/forgot-password', [PasswordResetController::class, 'create'])->name('password.request');
+    Route::post('/forgot-password', [PasswordResetController::class, 'store'])->name('password.email');
+
+    Route::get('/reset-password', [PasswordResetController::class, 'showResetForm'])->name('password.reset.form');
+    Route::post('/reset-password', [PasswordResetController::class, 'update'])->name('password.update');
 });
 
 // ================= WAJIB LOGIN =================
@@ -97,9 +121,38 @@ Route::middleware('auth')->group(function () {
 // "Mendaftarkan middleware 'admin'".
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
-    // Masih kerangka minimal — lihat views/admin/dashboard.blade.php
-    Route::get('/', fn() => view('admin.dashboard'))->name('dashboard');
+    Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
+    // Kelola Modul
+    Route::get('/modules', [AdminController::class, 'modulesIndex'])->name('modules');
+
+    /**
+     * PENTING: {module} di URL harus PERSIS namanya "module" (bukan
+     * "modul" atau "id") supaya cocok dengan parameter
+     * `App\Models\Module $module` di method update()/destroy() — Laravel
+     * mencocokkan lewat NAMA parameter, bukan urutan.
+     */
+    Route::post('/modules', [AdminController::class, 'modulesStore'])->name('modules.store');
+    Route::put('/modules/{module}', [AdminController::class, 'update'])->name('modules.update');
+    Route::delete('/modules/{module}', [AdminController::class, 'destroy'])->name('modules.destroy');
+    // Kelola Kuis & Glosarium
+    Route::get('/kuis-glosarium', [AdminController::class, 'kuisGlosariumIndex'])->name('kuis-glosarium');
+    // Rute Kelola Glosarium
+    Route::post('/glosarium', [AdminController::class, 'glosariumStore'])->name('glosarium.store');
+    Route::put('/glosarium/{id}', [AdminController::class, 'glosariumUpdate'])->name('glosarium.update');
+    Route::delete('/glosarium/{id}', [AdminController::class, 'glosariumDestroy'])->name('glosarium.destroy');
+    //  Masuk ke halaman detail soal per modul
+    Route::get('/kuis-glosarium/{module_id}/soal', [AdminController::class, 'kelolaSoal'])->name('kuis-kelola');
+    Route::post('/kuis-glosarium/soal/{module_id}', [AdminController::class, 'storeSoal'])->name('kuis.store');
+    Route::put('/kuis-glosarium/soal/{id}', [AdminController::class, 'updateSoal'])->name('kuis.update');
+    Route::delete('/kuis-glosarium/soal/{id}', [AdminController::class, 'destroySoal'])->name('kuis.destroy');
+
+
 });
+
+
+
+// Rute Tanya Ahli (yang sebelumnya)
+// Route::get('/consultations', ...
 
 /**
  * NOTES:

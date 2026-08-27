@@ -32,7 +32,7 @@ class Module extends Model
      */
     public function quizzes()
     {
-        return $this->hasMany(Quiz::class);
+        return $this->hasMany(Quiz::class, 'module_id', 'id');
     }
 
     /**

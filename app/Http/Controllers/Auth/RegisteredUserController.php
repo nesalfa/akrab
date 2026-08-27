@@ -49,6 +49,6 @@ class RegisteredUserController extends Controller
         // user diarahkan ke sini gara-gara klik card modul saat masih tamu
         // (lihat middleware 'auth' di route module.show), setelah daftar dia
         // balik ke modul yang memang mau dia buka, bukan cuma ke beranda.
-        return redirect()->intended(route('module.show', 'mengenal-tubuh-kita'));
+        return redirect()->intended(route('belajar'));
     }
 }
