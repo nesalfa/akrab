@@ -82,18 +82,45 @@
                 </div>
             </div>
 
-            <!-- Informasi & Daftar Tanya Jawab Publik -->
+            <!-- Informasi & Daftar Tanya Jawab Pribadi -->
             <div class="col-lg-5">
-                <div class="card border-0 shadow-sm p-4 p-md-4 rounded-4 bg-white h-100">
-                    <h3 class="h5 fw-bold text-dark mb-3"><i class="bi bi-lightbulb text-warning me-2"></i>Catatan Penting
-                    </h3>
-                    <ul class="text-muted small ps-3 mb-4" style="line-height: 1.7;">
-                        <li>Pertanyaan yang masuk akan dikurasi dan dijawab oleh tenaga ahli terverifikasi.</li>
-                        <li>Jawaban yang bersifat umum akan dipublikasikan secara anonim agar bisa menjadi pembelajaran
-                            bersama.</li>
-                        <li>Jaga kesopanan dan hindari mencantumkan data pribadi yang sensitif di dalam kotak pertanyaan.
-                        </li>
-                    </ul>
+                <div class="card border-0 shadow-sm p-4 p-md-4 rounded-4 bg-white h-100 d-flex flex-column">
+                    @auth
+                        <h3 class="h5 fw-bold text-dark mb-3"><i class="bi bi-chat-left-text-fill text-primary me-2"></i>Riwayat Pertanyaan Saya</h3>
+                        @if(isset($myConsultations) && $myConsultations->count() > 0)
+                            <div class="overflow-auto mb-3" style="max-height: 360px;">
+                                @foreach($myConsultations as $c)
+                                    <div class="border rounded-3 p-3 mb-3 {{ $c->status === 'answered' ? 'bg-light' : 'bg-white' }}">
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <span class="badge {{ $c->status === 'answered' ? 'bg-success bg-opacity-10 text-success' : 'bg-warning bg-opacity-10 text-warning' }} rounded-pill px-2 py-1 small">
+                                                {{ $c->status === 'answered' ? 'Sudah Dijawab' : 'Menunggu Jawaban' }}
+                                            </span>
+                                            <span class="text-muted small" style="font-size: 0.75rem;">{{ $c->created_at->diffForHumans() }}</span>
+                                        </div>
+                                        <p class="fw-semibold text-dark small mb-2">{{ $c->question }}</p>
+                                        @if($c->status === 'answered')
+                                            <div class="border-top pt-2 mt-2">
+                                                <div class="small fw-bold text-primary mb-1"><i class="bi bi-person-check me-1"></i>Jawaban Tenaga Ahli:</div>
+                                                <p class="text-dark small mb-0" style="line-height: 1.5;">{{ $c->answer }}</p>
+                                            </div>
+                                        @endif
+                                    </div>
+                                @endforeach
+                            </div>
+                        @else
+                            <div class="text-center py-4 text-muted small border rounded-3 mb-3">
+                                <i class="bi bi-chat-dots fs-3 d-block mb-1 text-light"></i>
+                                Belum ada riwayat pertanyaan yang dikirim.
+                            </div>
+                        @endif
+                    @else
+                        <h3 class="h5 fw-bold text-dark mb-3"><i class="bi bi-lightbulb text-warning me-2"></i>Catatan Penting</h3>
+                        <ul class="text-muted small ps-3 mb-4" style="line-height: 1.7;">
+                            <li>Pertanyaan yang masuk akan dikurasi dan dijawab oleh tenaga ahli terverifikasi.</li>
+                            <li>Masuk dengan akun untuk dapat melihat riwayat jawaban atas pertanyaan Anda secara pribadi.</li>
+                            <li>Jaga kesopanan dan hindari mencantumkan data pribadi yang sensitif di dalam kotak pertanyaan.</li>
+                        </ul>
+                    @endauth
 
                     <div class="p-3 rounded-3 bg-light mt-auto border">
                         <div class="fw-semibold text-dark mb-1 small"><i class="bi bi-headset text-primary me-1"></i> Butuh

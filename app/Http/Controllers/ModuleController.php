@@ -151,17 +151,20 @@ class ModuleController extends Controller
         // Cek apakah jawaban user benar
         $isCorrect = $selectedOption->is_correct;
 
-        // Rekam attempt untuk data riset Pre/Post-Test.
-        // module_id diambil dari relasi quiz (quizzes.module_id), tidak perlu
-        // dikirim terpisah dari frontend.
-        \App\Models\QuizAttempt::create([
-            'module_id' => $quiz->module_id,
-            'user_id' => auth()->id(),
-            'quiz_id' => $quiz->id,
-            'selected_option_id' => $selectedOption->id,
-            'is_correct' => $isCorrect,
-            'type' => $validated['type'] ?? 'post',
-        ]);
+        // Rekam attempt untuk data riset Pre/Post-Test secara idempotent.
+        // Satu user + module + type + quiz hanya memiliki 1 jawaban valid (diperbarui jika ada request baru)
+        \App\Models\QuizAttempt::updateOrCreate(
+            [
+                'module_id' => $quiz->module_id,
+                'user_id' => auth()->id(),
+                'quiz_id' => $quiz->id,
+                'type' => $validated['type'] ?? 'post',
+            ],
+            [
+                'selected_option_id' => $selectedOption->id,
+                'is_correct' => $isCorrect,
+            ]
+        );
 
         // Buat feedback message
         if ($isCorrect) {

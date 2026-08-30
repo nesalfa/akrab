@@ -37,21 +37,35 @@ class PageController extends Controller
 
     public function tanyaAhliCreate()
     {
-        return view('tanya-ahli');
+        $myConsultations = collect();
+        if (auth()->check()) {
+            $myConsultations = Consultation::where('user_id', auth()->id())
+                ->latest()
+                ->get();
+        }
+
+        return view('tanya-ahli', compact('myConsultations'));
     }
 
     public function tanyaAhliStore(Request $request)
     {
         // Validasi input dari form
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
+        $rules = [
             'question' => 'required|string|min:5',
-        ]);
+        ];
+
+        if (!auth()->check()) {
+            $rules['name'] = 'required|string|max:255';
+            $rules['email'] = 'nullable|email|max:255';
+        }
+
+        $validated = $request->validate($rules);
 
         // Simpan data ke tabel consultations
         Consultation::create([
-            'name' => $validated['name'],
-            'email' => $request->email ?? null, // Ambil email jika ada/diisi
+            'user_id' => auth()->id() ?? null,
+            'name' => auth()->check() ? auth()->user()->name : $validated['name'],
+            'email' => auth()->check() ? auth()->user()->email : ($request->email ?? null),
             'question' => $validated['question'],
             'status' => 'pending', // Status otomatis pending agar masuk antrean admin
         ]);

@@ -140,13 +140,25 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::post('/glosarium', [AdminController::class, 'glosariumStore'])->name('glosarium.store');
     Route::put('/glosarium/{id}', [AdminController::class, 'glosariumUpdate'])->name('glosarium.update');
     Route::delete('/glosarium/{id}', [AdminController::class, 'glosariumDestroy'])->name('glosarium.destroy');
-    //  Masuk ke halaman detail soal per modul
+    // Masuk ke halaman detail soal per modul
     Route::get('/kuis-glosarium/{module_id}/soal', [AdminController::class, 'kelolaSoal'])->name('kuis-kelola');
     Route::post('/kuis-glosarium/soal/{module_id}', [AdminController::class, 'storeSoal'])->name('kuis.store');
     Route::put('/kuis-glosarium/soal/{id}', [AdminController::class, 'updateSoal'])->name('kuis.update');
     Route::delete('/kuis-glosarium/soal/{id}', [AdminController::class, 'destroySoal'])->name('kuis.destroy');
 
+    // Pesan Tanya Ahli
+    Route::get('/consultations', [AdminController::class, 'consultationsIndex'])->name('consultations');
+    Route::post('/consultations/{id}/answer', [AdminController::class, 'consultationsAnswer'])->name('consultations.answer');
 
+    // Progres Belajar Anak
+    Route::get('/progress', [AdminController::class, 'progressIndex'])->name('progress');
+    Route::get('/progress/export/rekap', [AdminController::class, 'progressExportRekap'])->name('progress.export.rekap');
+    Route::get('/progress/{id}/export', [AdminController::class, 'progressExportDetail'])->name('progress.export.detail');
+    Route::get('/progress/{id}', [AdminController::class, 'progressShow'])->name('progress.show');
+
+    // Profil Admin
+    Route::get('/profile', [AdminController::class, 'profile'])->name('profile');
+    Route::put('/profile', [AdminController::class, 'updateProfile'])->name('profile.update');
 });
 
 

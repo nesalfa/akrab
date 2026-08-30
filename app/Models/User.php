@@ -61,8 +61,53 @@ class User extends Authenticatable
     }
 
     /**
-     * Cek apakah modul (berdasarkan slug) sudah pernah diselesaikan
-     * (Post-Test-nya sudah disubmit) oleh user ini.
+     * Ambil koleksi quiz_attempts yang sudah dideduplikasi.
+     * Mengambil 1 percobaan terbaru per kombinasi module_id + quiz_id + type.
+     */
+    public function validQuizAttempts()
+    {
+        return $this->quizAttempts
+            ->sortByDesc('id')
+            ->unique(function ($item) {
+                return $item->module_id . '-' . $item->quiz_id . '-' . $item->type;
+            })
+            ->values();
+    }
+
+    /**
+     * Hitung status modul pengerjaan anak: 'not_started', 'in_progress', atau 'completed'.
+     * 'completed': Semua soal pre-test dan post-test modul telah dijawab lengkap (atau terdaftar di completed_modules).
+     * 'in_progress': Sudah ada attempt kuis namun belum lengkap keduanya.
+     * 'not_started': Belum ada attempt sama sekali.
+     */
+    public function getModuleProgressStatus($module, $validAttempts = null): string
+    {
+        if ($validAttempts === null) {
+            $validAttempts = $this->validQuizAttempts();
+        }
+
+        $totalQuestions = $module->quizzes->count();
+        if ($totalQuestions === 0) {
+            return $this->hasCompletedModule($module->slug) ? 'completed' : 'not_started';
+        }
+
+        $modAttempts = $validAttempts->where('module_id', $module->id);
+        $preCount = $modAttempts->where('type', 'pre')->count();
+        $postCount = $modAttempts->where('type', 'post')->count();
+
+        if ($this->hasCompletedModule($module->slug) || ($preCount >= $totalQuestions && $postCount >= $totalQuestions)) {
+            return 'completed';
+        }
+
+        if ($preCount > 0 || $postCount > 0) {
+            return 'in_progress';
+        }
+
+        return 'not_started';
+    }
+
+    /**
+     * Cek apakah modul (berdasarkan slug atau id) sudah selesai.
      */
     public function hasCompletedModule(string $slug): bool
     {
@@ -83,8 +128,27 @@ class User extends Authenticatable
         }
     }
 
-    public function completedModulesCount(): int
+    /**
+     * Hitung jumlah modul aktif yang telah diselesaikan (completed) oleh anak.
+     * Menggunakan getModuleProgressStatus() per modul aktif sebagai single source of truth.
+     */
+    public function completedModulesCount($activeModules = null, $validAttempts = null): int
     {
-        return count($this->completed_modules ?? []);
+        if ($activeModules === null) {
+            $activeModules = Module::with('quizzes')->where('is_active', true)->get();
+        }
+
+        if ($validAttempts === null) {
+            $validAttempts = $this->validQuizAttempts();
+        }
+
+        $completedCount = 0;
+        foreach ($activeModules as $mod) {
+            if ($this->getModuleProgressStatus($mod, $validAttempts) === 'completed') {
+                $completedCount++;
+            }
+        }
+
+        return $completedCount;
     }
 }

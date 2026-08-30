@@ -3,9 +3,9 @@
 @section('title', 'Ringkasan Dashboard - AKRAB Admin')
 
 @section('admin_content')
-    <!-- Baris 1: 4 Kartu Statistik (Poin 2: Sekarang Bisa Diklik!) -->
-    <div class="row g-4 mb-4">
-        <div class="col-md-3">
+    <!-- Baris 1: 4 Kartu Statistik (1 kolom di HP, 2 kolom di Tablet, 4 kolom di Desktop) -->
+    <div class="row g-3 g-md-4 mb-4">
+        <div class="col-12 col-md-6 col-lg-3">
             <a href="{{ route('admin.modules') }}" class="card card-hover border-0 shadow-sm p-3 rounded-4 h-100 bg-white">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
@@ -19,8 +19,8 @@
             </a>
         </div>
 
-        <div class="col-md-3">
-            <a href="#" class="card card-hover border-0 shadow-sm p-3 rounded-4 h-100 bg-white">
+        <div class="col-12 col-md-6 col-lg-3">
+            <a href="{{ route('admin.progress') }}" class="card card-hover border-0 shadow-sm p-3 rounded-4 h-100 bg-white">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
                         <span class="text-muted small fw-semibold text-uppercase">Pengguna Aktif</span>
@@ -33,8 +33,8 @@
             </a>
         </div>
 
-        <div class="col-md-3">
-            <a href="#" class="card card-hover border-0 shadow-sm p-3 rounded-4 h-100 bg-white">
+        <div class="col-12 col-md-6 col-lg-3">
+            <a href="{{ route('admin.progress') }}" class="card card-hover border-0 shadow-sm p-3 rounded-4 h-100 bg-white">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
                         <span class="text-muted small fw-semibold text-uppercase">Rata-Rata Selesai</span>
@@ -47,9 +47,8 @@
             </a>
         </div>
 
-        <div class="col-md-3">
-            <!-- Asumsikan ini route sementara, ubah # menjadi route('admin.consultations') jika sudah siap -->
-            <a href="#" class="card card-hover border-0 shadow-sm p-3 rounded-4 h-100 bg-white">
+        <div class="col-12 col-md-6 col-lg-3">
+            <a href="{{ route('admin.consultations') }}" class="card card-hover border-0 shadow-sm p-3 rounded-4 h-100 bg-white">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
                         <span class="text-muted small fw-semibold text-uppercase">Tanya Ahli Masuk</span>
@@ -70,7 +69,7 @@
             <div class="card border-0 shadow-sm p-4 rounded-4 bg-white h-100">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h3 class="h5 fw-bold text-dark mb-0">Antrean Pertanyaan Terbaru</h3>
-                    <a href="#" class="btn btn-sm btn-light">Lihat Semua</a>
+                    <a href="{{ route('admin.consultations') }}" class="btn btn-sm btn-light">Lihat Semua</a>
                 </div>
 
                 @if($recentConsultations->count() > 0)
@@ -90,8 +89,8 @@
                                         <td><span class="text-muted text-truncate d-inline-block"
                                                 style="max-width: 250px;">{{ $pesan->question }}</span></td>
                                         <td class="text-end">
-                                            <button class="btn btn-sm btn-akrab-primary"
-                                                style="background-color: var(--primary-color); color: white;">Jawab</button>
+                                            <a href="{{ route('admin.consultations', ['status' => 'pending']) }}" class="btn btn-sm btn-akrab-primary"
+                                                style="background-color: var(--primary-color); color: white;">Jawab</a>
                                         </td>
                                     </tr>
                                 @endforeach

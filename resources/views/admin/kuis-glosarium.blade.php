@@ -110,8 +110,7 @@
                                         <td class="text-end">
                                             <!-- Tombol yang mengarah ke halaman baru khusus soal kuis -->
                                             <a href="{{ route('admin.kuis-kelola', $modul->id) }}"
-                                                class="btn btn-sm btn-outline-primary"
-                                                style="color: var(--primary-color); border-color: var(--primary-color);">
+                                                class="btn-akrab-outline">
                                                 <i class="bi bi-list-task me-1"></i> Kelola Soal
                                             </a>
                                         </td>
@@ -277,7 +276,7 @@
                     </div>
                     <div class="modal-footer border-top-0 pt-0">
                         <button type="button" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary rounded-pill px-4">Simpan Perubahan</button>
+                        <button type="submit" class="btn btn-akrab-primary rounded-pill px-4">Simpan Perubahan</button>
                     </div>
                 </form>
             </div>
