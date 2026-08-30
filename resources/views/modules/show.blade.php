@@ -572,7 +572,8 @@
         <div class="content-stream">
             @php
                 $pesanKunci = $contents->firstWhere('type', 'pesan_kunci');
-                $mediaContents = $contents->where('type', '!=', 'pesan_kunci');
+                // Mengecualikan pesan_kunci, subtitle, dan transkrip agar tidak tampil sebagai kartu terpisah
+                $mediaContents = $contents->whereNotIn('type', ['pesan_kunci', 'subtitle', 'transkrip']);
             @endphp
 
             {{-- ================= Pesan Kunci (inline, tidak diubah) ================= --}}
@@ -844,27 +845,6 @@
                     </aside>
                 </div>
             @endif
-
-            {{-- ================= Ruang Aman AKRAB ================= --}}
-            <div class="help-banner">
-                <div class="help-icon" aria-hidden="true">
-                    <i class="bi bi-shield-fill-check"></i>
-                </div>
-                <div class="help-text">
-                    <h2>Ruang Aman AKRAB</h2>
-                    <p>Bingung, takut, atau menghadapi masalah terkait kesehatan tubuhmu? Tim kami siap membantu.</p>
-                </div>
-                <div class="help-actions">
-                    <button type="button" class="btn-akrab-accent"
-                        onclick="alert('Fitur Tanya Ahli via Isyarat segera aktif!')">
-                        <i class="bi bi-chat-dots-fill" aria-hidden="true"></i> Tanya Ahli
-                    </button>
-                    <button type="button" class="btn-akrab-danger"
-                        onclick="alert('Hubungi layanan kontak darurat tepercaya terdekat.')">
-                        <i class="bi bi-exclamation-octagon-fill" aria-hidden="true"></i> Bantuan Darurat
-                    </button>
-                </div>
-            </div>
 
             {{-- ================= FAQ ================= --}}
             @if(($faq ?? collect())->count() > 0)

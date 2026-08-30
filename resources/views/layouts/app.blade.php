@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'AKRAB - Akses Kesehatan Reproduksi Remaja')</title>
 
@@ -459,9 +460,8 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link nav-link-akrab {{ Route::is('bantuan') ? 'active-page' : '' }}"
-                                href="{{ route('bantuan') }}">
-                                <i class="bi bi-life-preserver" aria-hidden="true"></i> Bantuan
+                            <a class="nav-link nav-link-akrab {{ Route::is(['bantuan', 'rujukan', 'tanya-ahli', 'pendamping']) ? 'active-page' : '' }}"
+                            href="{{ route('bantuan') }}"><i class="bi bi-life-preserver" aria-hidden="true"></i> Bantuan
                             </a>
                         </li>
                         <li class="nav-item">
@@ -558,7 +558,6 @@
                 <div class="col-md-3 custom-footer-links">
                     <h4 class="fw-bold">Tautan Cepat</h4>
                     <a href="{{ route('belajar') }}">Mulai Belajar</a>
-                    <a href="{{ route('bantuan') }}">Ruang Pendamping</a>
                     <a href="{{ route('bantuan') }}">Cara Mencari Bantuan</a>
                     <a href="{{ route('tentang') }}">Pernyataan Aksesibilitas</a>
                 </div>
@@ -589,3 +588,4 @@
 </body>
 
 </html>
+

@@ -16,15 +16,29 @@
         <!-- Tata Letak Grid: Otomatis Membentuk 3 Kolom pada Layar Besar -->
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
             @foreach($modules as $module)
+                @php
+                    // Cek apakah modul ini sudah diselesaikan oleh user yang sedang login
+                    // $completedModuleIds dikirim dari Controller berisi array ID modul yang sudah tuntas (post-test submitted)
+                    $isCompleted = isset($completedModuleIds) && in_array($module->id, $completedModuleIds);
+                @endphp
+
                 <div class="col">
                     <a href="{{ route('module.show', $module->slug) }}"
-                        class="learning-card h-100 p-4 d-flex flex-column text-decoration-none">
-                        <!-- Baris Atas Card: Penomoran Modul Berwarna Ungu -->
-                        <div class="mb-3">
+                        class="learning-card h-100 p-4 d-flex flex-column text-decoration-none {{ $isCompleted ? 'completed-card' : '' }}">
+
+                        <!-- Baris Atas Card: Penomoran Modul & Status Selesai -->
+                        <div class="d-flex justify-content-between align-items-center mb-3">
                             <span class="badge rounded-pill px-3 py-1.5 fw-bold text-white shadow-sm animate-badge"
                                 style="background-color: #6A4C93; font-size: 0.8rem;">
                                 Modul {{ $module->order }}
                             </span>
+
+                            @if($isCompleted)
+                                <span class="badge rounded-pill px-2.5 py-1 fw-semibold"
+                                    style="background-color: #E8F5EE; color: #146C43; font-size: 0.75rem;">
+                                    <i class="bi bi-check-circle-fill me-1"></i> Selesai
+                                </span>
+                            @endif
                         </div>
 
                         <!-- Isi Konten Utama Card -->
@@ -36,7 +50,8 @@
                         <!-- Aksi Petunjuk Kaki Card (CTA Bawah) -->
                         <div class="d-flex align-items-center gap-2 fw-bold mt-auto cta-learn-text"
                             style="color: #6A4C93; font-size: 0.95rem;">
-                            <i class="bi bi-book-half"></i> Mulai Belajar
+                            <i class="bi {{ $isCompleted ? 'bi-arrow-repeat' : 'bi-book-half' }}"></i>
+                            {{ $isCompleted ? 'Pelajari Ulang' : 'Mulai Belajar' }}
                         </div>
                     </a>
                 </div>
@@ -44,7 +59,7 @@
         </div>
     </div>
 
-    <!-- Modifikasi Style Tampilan Sesuai Keselarasan Tema Ungu (#6A4C93) -->
+    <!-- Modifikasi Style Tampilan -->
     <style>
         .learning-card {
             border: 1px solid #EAEAEA;
@@ -54,7 +69,13 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.01);
         }
 
-        /* Hover State: Background berubah jadi Pink Lembut bawaan, border & teks menjadi Ungu */
+        /* Jika modul sudah selesai dikerjakan, card otomatis bernuansa pink lembut */
+        .learning-card.completed-card {
+            background-color: var(--bg-pink) !important;
+            border-color: #FBD5E5 !important;
+        }
+
+        /* Hover State */
         .learning-card:hover {
             background-color: var(--bg-pink) !important;
             border-color: #FBD5E5 !important;
@@ -62,7 +83,6 @@
             box-shadow: 0 12px 24px rgba(106, 76, 147, 0.08);
         }
 
-        /* Active & Focus State: Batasan Aksesibilitas WCAG Kuning Aksen */
         .learning-card:focus,
         .learning-card:active {
             outline: none !important;

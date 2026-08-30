@@ -25,7 +25,7 @@
                     <a href="{{ route('belajar') }}"
                         class="btn btn-lg text-decoration-none d-inline-flex align-items-center justify-content-center cst-btn-ungu"
                         style="background-color: var(--primary-color); color: #FFFFFF; font-weight: 700; border-radius: 10px; min-height: 48px; border: 2px solid transparent; transition: all 0.2s;">
-                        Mulai Belajar <i class="bi bi-arrow-right-short fs-4 ms-1" aria-hidden="true"></i>
+                        Mulai Belajar
                     </a>
 
                     <!-- Tombol 2: Cari Bantuan (Warna Putih/Transparent, Hover: Ungu Muda, Klik: BG Pink + Border Kuning) -->
@@ -94,6 +94,16 @@
                     .module-start-card:focus-visible .module-start-arrow {
                         transform: translateX(4px);
                     }
+
+                    /* Mematikan garis/border kuning saat elemen apa pun diklik atau difokuskan */
+                    *,
+                    *:focus,
+                    *:active,
+                    .card:focus,
+                    .card:active {
+                        outline: none !important;
+                        box-shadow: none !important;
+                    }
                 </style>
             </div>
         </div>
@@ -101,7 +111,7 @@
 
     <!-- SECTION 2: Perjalanan Belajarmu / Progress Tracker -->
     <section id="perjalanan-belajar" class="mb-5 py-3">
-        <div class="card p-4 p-md-5" style="border-radius: 24px;">
+        <div class="card p-4 p-md-5 border-0 shadow-sm" style="border-radius: 24px;">
             <div class="row align-items-center g-4">
                 <!-- Sisi Kiri: Lingkaran Progres -->
                 <div class="col-md-3 text-center">
@@ -113,26 +123,30 @@
                         <div class="small text-muted" style="font-size: 11px; line-height: 1.1;">modul selesai</div>
                     </div>
                 </div>
+
                 <!-- Sisi Kanan: Modul Pertama -->
                 <div class="col-md-9">
-                    <h2 class="h3 fw-bold text-dark mb-2">Perjalanan Belajarmu</h2>
+                    <h2 class="h3 fw-bold text-dark mb-3">Perjalanan Belajarmu</h2>
 
-                    <a href="{{ route('register') }}" class="card p-3 mb-4 module-start-card text-decoration-none d-block"
+                    <!-- Logika Auth: Jika belum login ke register, jika sudah login ke route 'belajar' -->
+                    <a href="{{ auth()->check() ? route('belajar') : route('register') }}"
+                        class="card module-start-card text-decoration-none d-block p-4"
                         style="background-color: #FDFBFF; border: 1px solid #EAEAEA; border-radius: 16px;"
-                        aria-label="Mulai modul pertama: Mengenal Tubuhku — belajar bagian-bagian tubuh dan fungsinya, termasuk organ reproduksi">
-                        <div class="card-body p-2">
-                            <span class="badge mb-2 px-3 py-1.5"
-                                style="background-color: var(--bg-pink); color: var(--primary-color); border-radius: 20px; font-weight: 600;">
-                                <i class="bi bi-magic me-1" aria-hidden="true"></i> Mulai dari sini
-                            </span>
-                            <h3 class="h5 fw-bold text-dark my-2 d-flex align-items-center justify-content-between">
-                                Modul 1: Mengenal Tubuhku
-                                <i class="bi bi-arrow-right-short fs-4 module-start-arrow" aria-hidden="true"></i>
-                            </h3>
-                            <p class="text-muted small mb-0">
-                                Belajar tentang bagian-bagian tubuh dan fungsinya, termasuk organ reproduksi
-                            </p>
-                        </div>
+                        aria-label="Mulai modul pertama: Mengenal Tubuhku">
+
+                        <!-- Badge diposisikan agar sejajar rata kiri dengan teks di bawahnya -->
+                        <span class="badge d-inline-block mb-3 px-3 py-2"
+                            style="background-color: var(--bg-pink); color: var(--primary-color); border-radius: 20px; font-weight: 600;">
+                            <i class="bi bi-magic me-1" aria-hidden="true"></i> Mulai dari sini
+                        </span>
+
+                        <h3 class="h5 fw-bold text-dark mb-2 d-flex align-items-center justify-content-between">
+                            Modul 1: Mengenal Tubuh Kita
+                            <i class="bi bi-arrow-right-short fs-4 module-start-arrow" aria-hidden="true"></i>
+                        </h3>
+                        <p class="text-muted small mb-0">
+                            Belajar tentang bagian-bagian tubuh dan fungsinya, termasuk organ reproduksi
+                        </p>
                     </a>
                 </div>
             </div>
@@ -140,6 +154,7 @@
     </section>
 
     <!-- SECTION 3: Fitur AKRAB Grid -->
+    <!-- SECTION 3: Fitur AKRAB Grid (Ikon Ditengahkan) -->
     <section class="mb-5 mt-5">
         <div class="text-center mb-5">
             <h2 class="display-6 fw-bold text-dark mb-2">Fitur AKRAB</h2>
@@ -149,60 +164,60 @@
         <div class="row g-4">
             <!-- Card 1 -->
             <div class="col-md-6 col-lg-3">
-                <div class="card h-100 p-3" style="border-radius: 20px;">
+                <div class="card h-100 p-3 text-center" style="border-radius: 20px;">
                     <div class="card-body">
-                        <div class="d-inline-flex align-items-center justify-content-center mb-3 rounded-3"
+                        <div class="d-inline-flex align-items-center justify-content-center mb-3 rounded-3 mx-auto"
                             style="width: 48px; height: 48px; background-color: var(--bg-pink); color: var(--primary-color);">
                             <i class="bi bi-camera-video fs-4" aria-hidden="true"></i>
                         </div>
                         <h3 class="h5 fw-bold text-dark mb-2">Materi Lengkap</h3>
                         <p class="card-text text-muted small lh-base">
-                            15 modul pembelajaran dengan video bahasa isyarat, infografis, dan kuis interaktif
+                            15 modul pembelajaran dengan media interaktif.
                         </p>
                     </div>
                 </div>
             </div>
             <!-- Card 2 -->
             <div class="col-md-6 col-lg-3">
-                <div class="card h-100 p-3" style="border-radius: 20px;">
+                <div class="card h-100 p-3 text-center" style="border-radius: 20px;">
                     <div class="card-body">
-                        <div class="d-inline-flex align-items-center justify-content-center mb-3 rounded-3"
+                        <div class="d-inline-flex align-items-center justify-content-center mb-3 rounded-3 mx-auto"
                             style="width: 48px; height: 48px; background-color: var(--bg-pink); color: var(--primary-color);">
                             <i class="bi bi-card-text fs-4" aria-hidden="true"></i>
                         </div>
                         <h3 class="h5 fw-bold text-dark mb-2">Ruang Pendamping</h3>
                         <p class="card-text text-muted small lh-base">
-                            Panduan khusus untuk guru, orang tua, dan tenaga kesehatan
+                            Panduan khusus untuk guru, orang tua, dan tenaga kesehatan.
                         </p>
                     </div>
                 </div>
             </div>
             <!-- Card 3 -->
             <div class="col-md-6 col-lg-3">
-                <div class="card h-100 p-3" style="border-radius: 20px;">
+                <div class="card h-100 p-3 text-center" style="border-radius: 20px;">
                     <div class="card-body">
-                        <div class="d-inline-flex align-items-center justify-content-center mb-3 rounded-3"
+                        <div class="d-inline-flex align-items-center justify-content-center mb-3 rounded-3 mx-auto"
                             style="width: 48px; height: 48px; background-color: var(--bg-pink); color: var(--primary-color);">
                             <i class="bi bi-ui-checks-grid fs-4" aria-hidden="true"></i>
                         </div>
                         <h3 class="h5 fw-bold text-dark mb-2">Bantuan Tersedia</h3>
                         <p class="card-text text-muted small lh-base">
-                            Informasi cara mencari bantuan dan layanan yang terverifikasi
+                            Informasi cara mencari bantuan dan layanan yang terverifikasi.
                         </p>
                     </div>
                 </div>
             </div>
             <!-- Card 4 -->
             <div class="col-md-6 col-lg-3">
-                <div class="card h-100 p-3" style="border-radius: 20px;">
+                <div class="card h-100 p-3 text-center" style="border-radius: 20px;">
                     <div class="card-body">
-                        <div class="d-inline-flex align-items-center justify-content-center mb-3 rounded-3"
+                        <div class="d-inline-flex align-items-center justify-content-center mb-3 rounded-3 mx-auto"
                             style="width: 48px; height: 48px; background-color: var(--bg-pink); color: var(--primary-color);">
                             <i class="bi bi-chat-heart fs-4" aria-hidden="true"></i>
                         </div>
                         <h3 class="h5 fw-bold text-dark mb-2">Aksesibilitas Penuh</h3>
                         <p class="card-text text-muted small lh-base">
-                            Sesuaikan ukuran teks, kontras, dan fitur aksesibilitas lainnya
+                            Sesuaikan ukuran teks, kontras, dan fitur aksesibilitas lainnya.
                         </p>
                     </div>
                 </div>
@@ -210,30 +225,69 @@
         </div>
     </section>
 
-    <!-- SECTION 4: Siap Untuk Mulai Belajar Callout Banner -->
-    <!-- SECTION 4: Jaring Pengaman (Glosarium & Pendamping) -->
+    <!-- SECTION 4: Glosarium & Pendamping (Ikon & Judul Bersebelahan) -->
     <section class="mb-5 pt-4">
-        <div class="card border-0" style="background-color: #F8F5FC; border-radius: 24px;">
-            <div class="card-body text-center py-5 px-4 px-md-5">
-                <h2 class="display-6 fw-bold text-dark mb-3">Ada yang Masih Membingungkan?</h2>
-                <p class="text-muted fs-5 mx-auto mb-4" style="max-width: 750px; line-height: 1.6;">
-                    Jangan khawatir! Temukan arti kata-kata baru seputar tubuhmu di <strong>Glosarium</strong>.
-                    Bagi orang tua dan guru, silakan kunjungi <strong>Ruang Pendamping</strong> untuk panduan selengkapnya.
-                </p>
-                <div class="d-flex justify-content-center gap-3 flex-wrap">
-                    <!-- Tombol Glosarium (Menggunakan style ungu yang sama) -->
-                    <a href="{{ route('glosarium') }}"
-                        class="btn btn-lg text-decoration-none d-inline-flex align-items-center justify-content-center cst-btn-ungu"
-                        style="background-color: var(--primary-color); color: #FFFFFF; font-weight: 700; border-radius: 10px; min-height: 48px; transition: all 0.2s;">
-                        <i class="bi bi-journal-text me-2 fs-5" aria-hidden="true"></i> Buka Glosarium
-                    </a>
+        <div class="p-4 p-md-5 text-center">
+            <h2 class="h3 fw-bold text-dark mb-2">Ada yang Masih Membingungkan?</h2>
+            <p class="text-muted mb-4 mx-auto" style="max-width: 650px;">
+                Pilih jalur informasi yang sesuai dengan kebutuhanmu di bawah ini.
+            </p>
 
-                    <!-- Tombol Ruang Pendamping (Menggunakan style outline/bantuan) -->
-                    <a href="{{ route('bantuan') }}"
-                        class="btn btn-lg text-decoration-none d-inline-flex align-items-center justify-content-center cst-btn-bantuan"
-                        style="background-color: #FFFFFF; color: var(--primary-color); border: 2px solid var(--primary-color); font-weight: 600; border-radius: 10px; min-height: 48px; transition: all 0.2s;">
-                        <i class="bi bi-people me-2 fs-5" aria-hidden="true"></i> Ruang Pendamping
-                    </a>
+            <div class="row g-4 justify-content-center text-start">
+                <!-- Kartu Glosarium -->
+                <div class="col-md-6">
+                    <div
+                        class="card h-100 border-0 p-4 rounded-4 shadow-sm bg-white d-flex flex-column justify-content-between">
+                        <div>
+                            <!-- Ikon dan Judul Bersebelahan -->
+                            <div class="d-flex align-items-center gap-3 mb-3">
+                                <div class="d-inline-flex align-items-center justify-content-center rounded-circle flex-shrink-0"
+                                    style="width: 48px; height: 48px; background-color: var(--bg-pink); color: var(--primary-color); font-size: 1.3rem;">
+                                    <i class="bi bi-journal-text" aria-hidden="true"></i>
+                                </div>
+                                <h3 class="h5 fw-bold text-dark mb-0">Kamus Glosarium</h3>
+                            </div>
+                            <p class="text-muted small mb-4" style="line-height: 1.6;">
+                                Temukan arti dan penjelasan dari istilah-istilah seputar tubuh dan kesehatan reproduksi
+                                dengan bahasa yang mudah dipahami.
+                            </p>
+                        </div>
+                        <div>
+                            <a href="{{ route('glosarium') }}"
+                                class="btn btn-akrab-primary w-100 py-2 fw-bold text-decoration-none"
+                                style="border-radius: 12px;">
+                                Buka Glosarium
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kartu Ruang Pendamping -->
+                <div class="col-md-6">
+                    <div
+                        class="card h-100 border-0 p-4 rounded-4 shadow-sm bg-white d-flex flex-column justify-content-between">
+                        <div>
+                            <!-- Ikon dan Judul Bersebelahan -->
+                            <div class="d-flex align-items-center gap-3 mb-3">
+                                <div class="d-inline-flex align-items-center justify-content-center rounded-circle flex-shrink-0"
+                                    style="width: 48px; height: 48px; background-color:var(--bg-pink); color: var(--primary-color); font-size: 1.3rem;">
+                                    <i class="bi bi-people-fill" aria-hidden="true"></i>
+                                </div>
+                                <h3 class="h5 fw-bold text-dark mb-0">Ruang Pendamping</h3>
+                            </div>
+                            <p class="text-muted small mb-4" style="line-height: 1.6;">
+                                Panduan khusus, modul pendampingan, serta informasi penting bagi orang tua dan guru dalam
+                                membersamai remaja.
+                            </p>
+                        </div>
+                        <div>
+                            <a href="{{ route('bantuan') }}"
+                                class="btn btn-akrab-primary w-100 py-2 fw-bold text-decoration-none"
+                                style="border-radius: 12px;">
+                                Kunjungi Ruang Pendamping
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
