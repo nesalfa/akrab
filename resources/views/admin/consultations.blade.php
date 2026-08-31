@@ -25,19 +25,22 @@
     <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
         <div>
             <h1 class="h3 fw-bold text-dark mb-1">Pesan Tanya Ahli</h1>
-            <p class="text-muted small mb-0">Kelola dan jawab pertanyaan masuk dari pengguna seputar kesehatan reproduksi.</p>
+            <p class="text-muted small mb-0">Kelola dan jawab pertanyaan masuk dari pengguna seputar kesehatan reproduksi.
+            </p>
         </div>
     </div>
 
     <!-- Filter & Pencarian -->
     <div class="card border-0 shadow-sm rounded-4 bg-white mb-4">
         <div class="card-body p-3 p-md-4">
-            <form id="consultationFilterForm" method="GET" action="{{ route('admin.consultations') }}" class="row g-3 align-items-center">
+            <form id="consultationFilterForm" method="GET" action="{{ route('admin.consultations') }}"
+                class="row g-3 align-items-center">
                 <div class="col-md-5">
                     <div class="input-group">
                         <span class="input-group-text bg-white border-end-0">
                             <i class="bi bi-search text-muted" id="searchIcon"></i>
-                            <span class="spinner-border spinner-border-sm text-primary d-none" id="searchSpinner" role="status" aria-hidden="true"></span>
+                            <span class="spinner-border spinner-border-sm text-primary d-none" id="searchSpinner"
+                                role="status" aria-hidden="true"></span>
                         </span>
                         <input type="text" id="consultationSearchInput" name="search" class="form-control border-start-0"
                             placeholder="Cari pengirim, email, pertanyaan..." value="{{ request('search') }}"
@@ -46,7 +49,8 @@
                 </div>
 
                 <div class="col-md-4">
-                    <select id="consultationStatusSelect" name="status" class="form-select" aria-label="Filter status pertanyaan">
+                    <select id="consultationStatusSelect" name="status" class="form-select"
+                        aria-label="Filter status pertanyaan">
                         <option value="">Semua Status ({{ $pendingCount + $answeredCount }})</option>
                         <option value="pending" {{ request('status') === 'pending' ? 'selected' : '' }}>
                             Belum Dijawab ({{ $pendingCount }})
@@ -61,7 +65,9 @@
                     <button type="submit" class="btn btn-akrab-primary flex-fill">
                         <i class="bi bi-filter me-1"></i> Filter
                     </button>
-                    <a href="{{ route('admin.consultations') }}" id="btnResetFilter" class="btn btn-light border {{ request('search') || request('status') ? '' : 'd-none' }}" title="Reset filter" aria-label="Reset filter">
+                    <a href="{{ route('admin.consultations') }}" id="btnResetFilter"
+                        class="btn btn-light border {{ request('search') || request('status') ? '' : 'd-none' }}"
+                        title="Reset filter" aria-label="Reset filter">
                         <i class="bi bi-arrow-counterclockwise"></i>
                     </a>
                 </div>
@@ -70,9 +76,12 @@
     </div>
 
     <!-- Alert Notifikasi Live Search Gagal (Aria-live) -->
-    <div id="searchErrorAlert" class="alert alert-warning alert-dismissible fade show rounded-3 mb-4 d-none" role="alert" aria-live="polite">
-        <i class="bi bi-exclamation-triangle-fill me-2"></i> Pencarian otomatis gagal. Silakan coba lagi atau tekan tombol Filter.
-        <button type="button" class="btn-close" onclick="document.getElementById('searchErrorAlert').classList.add('d-none')" aria-label="Tutup"></button>
+    <div id="searchErrorAlert" class="alert alert-warning alert-dismissible fade show rounded-3 mb-4 d-none" role="alert"
+        aria-live="polite">
+        <i class="bi bi-exclamation-triangle-fill me-2"></i> Pencarian otomatis gagal. Silakan coba lagi atau tekan tombol
+        Filter.
+        <button type="button" class="btn-close"
+            onclick="document.getElementById('searchErrorAlert').classList.add('d-none')" aria-label="Tutup"></button>
     </div>
 
     <!-- Container Tabel & Pagination Live Search -->
@@ -89,7 +98,7 @@
                                 <th class="fw-semibold pb-3">Pertanyaan</th>
                                 <th class="fw-semibold pb-3">Tanggal Kirim</th>
                                 <th class="fw-semibold pb-3 text-center">Status</th>
-                                <th class="fw-semibold pb-3 text-end">Aksi</th>
+                                <th class="fw-semibold pb-3 text-center">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -105,7 +114,8 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <span class="text-dark d-inline-block text-truncate" style="max-width: 320px;" title="{{ $item->question }}">
+                                        <span class="text-dark d-inline-block text-truncate" style="max-width: 320px;"
+                                            title="{{ $item->question }}">
                                             {{ $item->question }}
                                         </span>
                                     </td>
@@ -127,8 +137,8 @@
                                     </td>
                                     <td class="text-end">
                                         @if($item->status === 'pending')
-                                            <button type="button" class="btn btn-sm btn-akrab-primary"
-                                                data-bs-toggle="modal" data-bs-target="#answerModal"
+                                            <button type="button" class="btn btn-sm btn-akrab-primary" data-bs-toggle="modal"
+                                                data-bs-target="#answerModal"
                                                 data-action="{{ route('admin.consultations.answer', $item->id) }}"
                                                 data-name="{{ $item->name }}"
                                                 data-created="{{ $item->created_at ? $item->created_at->format('d M Y, H:i') : '—' }}"
@@ -136,13 +146,11 @@
                                                 <i class="bi bi-reply-fill me-1"></i> Jawab
                                             </button>
                                         @else
-                                            <button type="button" class="btn-akrab-outline"
-                                                data-bs-toggle="modal" data-bs-target="#detailModal"
-                                                data-name="{{ $item->name }}"
+                                            <button type="button" class="btn-akrab-outline" data-bs-toggle="modal"
+                                                data-bs-target="#detailModal" data-name="{{ $item->name }}"
                                                 data-email="{{ $item->email ?? '—' }}"
                                                 data-created="{{ $item->created_at ? $item->created_at->format('d M Y, H:i') : '—' }}"
-                                                data-question="{{ $item->question }}"
-                                                data-answer="{{ $item->answer }}"
+                                                data-question="{{ $item->question }}" data-answer="{{ $item->answer }}"
                                                 data-responder="{{ $item->responder->name ?? 'Admin' }}"
                                                 data-answered="{{ $item->answered_at ? $item->answered_at->format('d M Y, H:i') : '—' }}">
                                                 <i class="bi bi-eye me-1"></i> Detail
@@ -188,16 +196,20 @@
                         <div class="p-3 bg-light rounded-3 mb-3 border">
                             <div class="d-flex justify-content-between align-items-center mb-1">
                                 <span class="fw-bold text-dark small" id="modalSenderName">Pengirim</span>
-                                <span class="text-muted small" id="modalQuestionDate" style="font-size: 0.78rem;">Tanggal</span>
+                                <span class="text-muted small" id="modalQuestionDate"
+                                    style="font-size: 0.78rem;">Tanggal</span>
                             </div>
-                            <div class="text-dark small" id="modalQuestionText" style="line-height: 1.6; white-space: pre-wrap;"></div>
+                            <div class="text-dark small" id="modalQuestionText"
+                                style="line-height: 1.6; white-space: pre-wrap;"></div>
                         </div>
 
                         <div class="mb-3">
-                            <label for="answerInput" class="form-label fw-semibold">Jawaban Anda <span class="text-danger">*</span></label>
+                            <label for="answerInput" class="form-label fw-semibold">Jawaban Anda <span
+                                    class="text-danger">*</span></label>
                             <textarea name="answer" id="answerInput" class="form-control" rows="6"
                                 placeholder="Tuliskan jawaban yang ramah, informatif, dan akurat..." required></textarea>
-                            <div class="form-text small">Jawaban ini akan langsung dapat dilihat oleh pengguna yang bertanya.</div>
+                            <div class="form-text small">Jawaban ini akan langsung dapat dilihat oleh pengguna yang
+                                bertanya.</div>
                         </div>
                     </div>
 
@@ -218,7 +230,8 @@
             <div class="modal-content border-0 rounded-4 shadow">
                 <div class="modal-header border-bottom-0 pb-0">
                     <h2 class="modal-title h5 fw-bold mb-0">
-                        <i class="bi bi-chat-left-check-fill me-2" style="color: var(--primary-color);"></i> Detail Tanya Ahli
+                        <i class="bi bi-chat-left-check-fill me-2" style="color: var(--primary-color);"></i> Detail Tanya
+                        Ahli
                     </h2>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
                 </div>
@@ -232,17 +245,20 @@
 
                     <div class="p-3 bg-light rounded-3 mb-3 border">
                         <div class="small text-muted fw-semibold mb-1">Pertanyaan:</div>
-                        <div class="text-dark small" id="detailQuestion" style="line-height: 1.6; white-space: pre-wrap;"></div>
+                        <div class="text-dark small" id="detailQuestion" style="line-height: 1.6; white-space: pre-wrap;">
+                        </div>
                     </div>
 
-                    <div class="p-3 rounded-3 mb-2 border" style="background-color: #F8F4FC; border-color: rgba(106, 76, 147, 0.2) !important;">
+                    <div class="p-3 rounded-3 mb-2 border"
+                        style="background-color: #F8F4FC; border-color: rgba(106, 76, 147, 0.2) !important;">
                         <div class="d-flex justify-content-between align-items-center mb-1">
                             <span class="small fw-bold" style="color: var(--primary-color);">
                                 <i class="bi bi-person-check-fill me-1"></i> Jawaban Ahli:
                             </span>
                             <span class="text-muted small" id="detailAnsweredAt" style="font-size: 0.78rem;"></span>
                         </div>
-                        <div class="text-dark small" id="detailAnswer" style="line-height: 1.6; white-space: pre-wrap;"></div>
+                        <div class="text-dark small" id="detailAnswer" style="line-height: 1.6; white-space: pre-wrap;">
+                        </div>
                         <div class="text-muted small mt-2" style="font-size: 0.75rem;" id="detailResponder"></div>
                     </div>
                 </div>
@@ -357,50 +373,50 @@
                     },
                     signal: currentController.signal
                 })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response not ok: ' + response.status);
-                    }
-                    return response.text();
-                })
-                .then(html => {
-                    // Abaikan respons jika bukan request paling baru
-                    if (currentRequestId !== activeRequestId) {
-                        return;
-                    }
-
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(html, 'text/html');
-                    const newContainer = doc.getElementById('consultationTableContainer');
-
-                    if (newContainer && tableContainer) {
-                        tableContainer.innerHTML = newContainer.innerHTML;
-                        attachPaginationListeners();
-                    }
-
-                    // Update URL browser tanpa reload halaman
-                    window.history.replaceState(null, '', targetUrl.toString());
-                })
-                .catch(err => {
-                    if (err.name === 'AbortError') {
-                        return; // Request dibatalkan secara normal oleh input baru
-                    }
-                    if (errorAlert) {
-                        errorAlert.classList.remove('d-none');
-                    }
-                })
-                .finally(() => {
-                    if (currentRequestId === activeRequestId) {
-                        if (searchIcon && searchSpinner) {
-                            searchIcon.classList.remove('d-none');
-                            searchSpinner.classList.add('d-none');
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response not ok: ' + response.status);
                         }
-                        if (tableContainer) {
-                            tableContainer.style.opacity = '1';
-                            tableContainer.style.pointerEvents = 'auto';
+                        return response.text();
+                    })
+                    .then(html => {
+                        // Abaikan respons jika bukan request paling baru
+                        if (currentRequestId !== activeRequestId) {
+                            return;
                         }
-                    }
-                });
+
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(html, 'text/html');
+                        const newContainer = doc.getElementById('consultationTableContainer');
+
+                        if (newContainer && tableContainer) {
+                            tableContainer.innerHTML = newContainer.innerHTML;
+                            attachPaginationListeners();
+                        }
+
+                        // Update URL browser tanpa reload halaman
+                        window.history.replaceState(null, '', targetUrl.toString());
+                    })
+                    .catch(err => {
+                        if (err.name === 'AbortError') {
+                            return; // Request dibatalkan secara normal oleh input baru
+                        }
+                        if (errorAlert) {
+                            errorAlert.classList.remove('d-none');
+                        }
+                    })
+                    .finally(() => {
+                        if (currentRequestId === activeRequestId) {
+                            if (searchIcon && searchSpinner) {
+                                searchIcon.classList.remove('d-none');
+                                searchSpinner.classList.add('d-none');
+                            }
+                            if (tableContainer) {
+                                tableContainer.style.opacity = '1';
+                                tableContainer.style.pointerEvents = 'auto';
+                            }
+                        }
+                    });
             }
 
             function attachPaginationListeners() {

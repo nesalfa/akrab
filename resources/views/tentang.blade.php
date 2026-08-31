@@ -3,101 +3,58 @@
 @section('title', 'Tentang AKRAB - Platform Edukasi Kesehatan Reproduksi')
 
 @section('content')
-    <style>
-        .hero-tentang {
-            background: linear-gradient(135deg, #FFF0F5 0%, #F3E8FF 100%);
-            border-radius: 24px;
-            padding: 3rem 2rem;
-            margin-bottom: 2.5rem;
-        }
+    <div class="py-2 py-md-4">
+        <!-- Breadcrumb -->
+        <nav aria-label="Jalur navigasi" class="mb-4">
+            <ol class="breadcrumb-pill">
+                <li><a href="{{ route('home') }}"><i class="bi bi-house-door-fill" aria-hidden="true"></i> Beranda</a></li>
+                <li><span class="current" aria-current="page">Tentang AKRAB</span></li>
+            </ol>
+        </nav>
 
-        .badge-a11y {
-            background-color: var(--primary-color, #6A4C93);
-            color: white;
-            font-weight: 600;
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.9rem;
-        }
-
-        .card-feature {
-            border: 2px solid #EEEEEE;
-            border-radius: 16px;
-            padding: 1.75rem;
-            height: 100%;
-            transition: all 0.25s ease;
-            background-color: #FFFFFF;
-        }
-
-        .card-feature:hover {
-            border-color: var(--primary-color, #6A4C93);
-            transform: translateY(-4px);
-            box-shadow: 0 10px 20px rgba(106, 76, 147, 0.08);
-        }
-
-        .icon-box {
-            width: 56px;
-            height: 56px;
-            border-radius: 14px;
-            background-color: #FFF0F5;
-            color: var(--primary-color, #6A4C93);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.75rem;
-            margin-bottom: 1.25rem;
-        }
-
-        .a11y-report-card {
-            background-color: #FFFFFF;
-            border: 2px solid var(--primary-color, #6A4C93);
-            border-radius: 20px;
-            padding: 2rem;
-        }
-    </style>
-
-    <div class="container py-4">
         <!-- Hero Section -->
-        <section class="hero-tentang text-center text-md-start">
-            <div class="row align-items-center g-4">
+        <section class="rounded-4 mb-5 p-4 p-md-5 text-center text-lg-start position-relative overflow-hidden"
+            style="background-color: var(--bg-pink); border: 1px solid #F5D9E4;">
+            <div class="row align-items-center g-4 position-relative z-1">
                 <div class="col-lg-8">
-                    <span class="badge-a11y mb-3">
-                        <i class="bi bi-universal-access" aria-hidden="true"></i> Dirancang Aksesibel (WCAG 2.2 AA)
+                    <span class="badge rounded-pill px-3 py-2 mb-3"
+                        style="background-color: var(--primary-color); color: #FFFFFF; font-weight: 600;">
+                        <i class="bi bi-universal-access me-1" aria-hidden="true"></i> Dirancang Inklusif & Aksesibel
                     </span>
-                    <h1 class="display-5 fw-bold mb-3" style="color: var(--primary-color, #6A4C93);">
+                    <h1 class="display-5 fw-bold mb-3" style="color: var(--primary-color);">
                         Mengenal Platform AKRAB
                     </h1>
-                    <p class="lead text-secondary mb-0" style="line-height: 1.7;">
-                        AKRAB adalah ruang belajar digital inklusif yang menyajikan edukasi kesehatan reproduksi dan seksual
-                        bagi remaja secara aman, akurat, dan mudah dipahami, dengan perhatian khusus bagi remaja Tuli dan
-                        berkebutuhan khusus.
+                    <p class="fs-5 mb-0" style="color: var(--text-light); line-height: 1.7; max-width: 800px;">
+                        AKRAB adalah ruang belajar digital yang menyajikan edukasi kesehatan reproduksi dan seksual
+                        bagi remaja secara aman, akurat, dan mudah dipahami, dengan perhatian khusus bagi remaja.
                     </p>
                 </div>
-                <div class="col-lg-4 text-center">
-                    <i class="bi bi-heart-pulse-fill" style="font-size: 8rem; color: var(--primary-color, #6A4C93);"
-                        aria-hidden="true"></i>
+                <div class="col-lg-4 text-center d-none d-lg-block">
+                    <!-- Icon dekoratif -->
+                    <div class="d-inline-flex align-items-center justify-content-center rounded-circle shadow-sm"
+                        style="width: 160px; height: 160px; background-color: #FFFFFF; color: var(--accent-hover);">
+                        <i class="bi bi-heart-pulse-fill" style="font-size: 5rem;" aria-hidden="true"></i>
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- Misi & Tujuan -->
         <section class="mb-5">
-            <div class="text-center mb-4">
-                <h2 class="fw-bold" style="color: var(--primary-color, #6A4C93);">Tujuan & Komitmen Kami</h2>
-                <p class="text-secondary">Mengapa platform AKRAB hadir untuk teman-teman semua?</p>
+            <div class="text-center mb-5">
+                <h2 class="fw-bold mb-2" style="color: var(--text-dark);">Tujuan & Komitmen Kami</h2>
+                <p style="color: var(--text-light);">Mengapa platform AKRAB hadir untuk teman-teman semua?</p>
             </div>
 
             <div class="row g-4">
                 <div class="col-md-4">
-                    <div class="card-feature">
-                        <div class="icon-box">
-                            <i class="bi bi-shield-check" aria-hidden="true"></i>
+                    <div class="card h-100 border-0 shadow-sm rounded-4 p-4 text-center custom-card-hover">
+                        <div class="d-inline-flex align-items-center justify-content-center rounded-circle mb-3 mx-auto"
+                            style="width: 64px; height: 64px; background-color: var(--bg-pink); color: var(--primary-color);">
+                            <i class="bi bi-shield-check fs-2" aria-hidden="true"></i>
                         </div>
-                        <h3 class="h5 fw-bold mb-2">Informasi Ramah & Aman</h3>
-                        <p class="text-secondary mb-0">
+                        <h3 class="h5 fw-bold mb-3" style="color: var(--text-dark);">Informasi Ramah & Aman</h3>
+                        <p class="small mb-0" style="color: var(--text-light); line-height: 1.6;">
                             Menyediakan materi kesehatan reproduksi tanpa stigma, tabu, atau bahasa yang membingungkan.
                             Semua isi konten tersaring dan ilmiah.
                         </p>
@@ -105,25 +62,27 @@
                 </div>
 
                 <div class="col-md-4">
-                    <div class="card-feature">
-                        <div class="icon-box">
-                            <i class="bi bi-eye-fill" aria-hidden="true"></i>
+                    <div class="card h-100 border-0 shadow-sm rounded-4 p-4 text-center custom-card-hover">
+                        <div class="d-inline-flex align-items-center justify-content-center rounded-circle mb-3 mx-auto"
+                            style="width: 64px; height: 64px; background-color: var(--bg-pink); color: var(--primary-color);">
+                            <i class="bi bi-image-fill fs-2" aria-hidden="true"></i>
                         </div>
-                        <h3 class="h5 fw-bold mb-2">Penyampaian Visual</h3>
-                        <p class="text-secondary mb-0">
+                        <h3 class="h5 fw-bold mb-3" style="color: var(--text-dark);">Penyampaian Visual</h3>
+                        <p class="small mb-0" style="color: var(--text-light); line-height: 1.6;">
                             Mengutamakan pemahaman visual melalui ilustrasi, rangkuman poin-poin jelas, serta struktur teks
-                            yang ramah pembaca Tuli/Ramah Aksesibilitas.
+                            yang ramah pembaca Tuli dan fitur Aksesibilitas.
                         </p>
                     </div>
                 </div>
 
                 <div class="col-md-4">
-                    <div class="card-feature">
-                        <div class="icon-box">
-                            <i class="bi bi-people-fill" aria-hidden="true"></i>
+                    <div class="card h-100 border-0 shadow-sm rounded-4 p-4 text-center custom-card-hover">
+                        <div class="d-inline-flex align-items-center justify-content-center rounded-circle mb-3 mx-auto"
+                            style="width: 64px; height: 64px; background-color: var(--bg-pink); color: var(--primary-color);">
+                            <i class="bi bi-people-fill fs-2" aria-hidden="true"></i>
                         </div>
-                        <h3 class="h5 fw-bold mb-2">Hak Edukasi Setara</h3>
-                        <p class="text-secondary mb-0">
+                        <h3 class="h5 fw-bold mb-3" style="color: var(--text-dark);">Hak Edukasi Setara</h3>
+                        <p class="small mb-0" style="color: var(--text-light); line-height: 1.6;">
                             Memastikan setiap remaja memiliki hak yang sama dalam memahami tubuhnya, menjaga kesehatan, dan
                             membuat keputusan yang bertanggung jawab.
                         </p>
@@ -132,103 +91,154 @@
             </div>
         </section>
 
-        <hr class="my-5" style="border-top: 2px dashed #E0E0E0;">
-
         <!-- Standar Aksesibilitas (WCAG 2.2 AA) -->
         <section class="mb-5">
-            <div class="row align-items-center g-4">
-                <div class="col-lg-6">
-                    <h2 class="fw-bold mb-3" style="color: var(--primary-color, #6A4C93);">
-                        Pernyataan Aksesibilitas
-                    </h2>
-                    <p class="text-secondary mb-3">
-                        Kami berkomitmen untuk terus menjaga kelayakan platform ini agar dapat diakses oleh semua pengguna
-                        tanpa hambatan teknis maupun visual.
-                    </p>
-                    <ul class="list-unstyled">
-                        <li class="d-flex align-items-start gap-2 mb-2">
-                            <i class="bi bi-check-circle-fill text-success fs-5"></i>
-                            <span><strong>Kontras Warna Tinggi:</strong> Memenuhi rasio kontras standar WCAG AA agar nyaman
-                                di mata.</span>
-                        </li>
-                        <li class="d-flex align-items-start gap-2 mb-2">
-                            <i class="bi bi-check-circle-fill text-success fs-5"></i>
-                            <span><strong>Navigasi Keyboard:</strong> Seluruh menu dan tombol dapat diakses sepenuhnya
-                                menggunakan keyboard (tanpa tetikus).</span>
-                        </li>
-                        <li class="d-flex align-items-start gap-2 mb-2">
-                            <i class="bi bi-check-circle-fill text-success fs-5"></i>
-                            <span><strong>Ramah Pembaca Layar (Screen Reader):</strong> Dilengkapi struktur HTML semantik
-                                dan label ARIA yang jelas.</span>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-lg-6">
-                    <div class="p-4 rounded-4" style="background-color: #FAF5FF; border: 1px solid #E9D5FF;">
-                        <h3 class="h5 fw-bold text-dark mb-2">
-                            <i class="bi bi-info-circle-fill text-primary me-2"></i>Catatan Pengembang
-                        </h3>
-                        <p class="small text-secondary mb-0">
-                            Pengembangan platform AKRAB berpedoman pada standar Internasional W3C Web Content Accessibility
-                            Guidelines (WCAG) 2.2 Level AA, dengan fokus perbaikan berkelanjutan berdasarkan masukan
-                            langsung dari pengguna.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Formulir Laporan Kendala Aksesibilitas -->
-        <section class="mb-5">
-            <div class="a11y-report-card">
-                <div class="row align-items-center g-4">
-                    <div class="col-lg-5">
-                        <h2 class="h3 fw-bold mb-2" style="color: var(--primary-color, #6A4C93);">
-                            Laporan Kendala Aksesibilitas
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+                <div class="row g-0">
+                    <div class="col-lg-7 p-4 p-md-5">
+                        <h2 class="h3 fw-bold mb-3" style="color: var(--primary-color);">
+                            Pernyataan Aksesibilitas
                         </h2>
-                        <p class="text-secondary mb-3">
-                            Apakah kamu menemukan tulisan yang sulit dibaca, tombol yang sulit ditekan, atau fitur yang
-                            tidak berfungsi dengan baik? Beritahu kami agar bisa segera diperbaiki!
+                        <p class="mb-4" style="color: var(--text-light); line-height: 1.6;">
+                            Kami berkomitmen untuk terus menjaga kelayakan platform ini agar dapat diakses oleh semua
+                            pengguna
+                            tanpa hambatan teknis maupun visual.
                         </p>
-                        <div class="d-flex align-items-center gap-2 text-muted small">
-                            <i class="bi bi-shield-lock-fill"></i>
-                            <span>Laporan Anda dapat dikirim secara anonim.</span>
+
+                        <div class="d-flex flex-column gap-3">
+                            <div class="d-flex align-items-start gap-3 p-3 rounded-3"
+                                style="background-color: #FAFAFA; border: 1px solid #EAEAEA;">
+                                <i class="bi bi-palette-fill fs-4" style="color: var(--primary-color);"></i>
+                                <div>
+                                    <strong style="color: var(--text-dark);">Kontras Warna Tinggi</strong>
+                                    <div class="small mt-1" style="color: var(--text-light);">Memenuhi rasio kontras standar
+                                        agar tulisan nyaman dibaca dan tidak menyilaukan mata.</div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex align-items-start gap-3 p-3 rounded-3"
+                                style="background-color: #FAFAFA; border: 1px solid #EAEAEA;">
+                                <i class="bi bi-keyboard-fill fs-4" style="color: var(--primary-color);"></i>
+                                <div>
+                                    <strong style="color: var(--text-dark);">Navigasi Keyboard</strong>
+                                    <div class="small mt-1" style="color: var(--text-light);">Seluruh menu, materi, dan kuis
+                                        dapat diakses sepenuhnya menggunakan navigasi keyboard.</div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex align-items-start gap-3 p-3 rounded-3"
+                                style="background-color: #FAFAFA; border: 1px solid #EAEAEA;">
+                                <i class="bi bi-earbuds fs-4" style="color: var(--primary-color);"></i>
+                                <div>
+                                    <strong style="color: var(--text-dark);">Ramah Pembaca Layar</strong>
+                                    <div class="small mt-1" style="color: var(--text-light);">Dilengkapi struktur semantik
+                                        dan deskripsi gambar yang terbaca jelas oleh perangkat Screen Reader.</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="col-lg-7">
-                        @if(session('a11y_success'))
-                            <div class="alert alert-success d-flex align-items-center gap-2" role="alert">
-                                <i class="bi bi-check-circle-fill fs-5"></i>
-                                <div>{{ session('a11y_success') }}</div>
-                            </div>
-                        @endif
-
-                        <form action="#" method="POST" class="needs-validation">
-                            @csrf
-                            <div class="mb-3">
-                                <label for="halaman_kendala" class="form-label fw-semibold">Halaman mana yang
-                                    bermasalah?</label>
-                                <input type="text" class="form-control form-control-lg" id="halaman_kendala" name="halaman"
-                                    placeholder="Contoh: Halaman Kuis, Halaman Belajar Modul 1" required>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="deskripsi_kendala" class="form-label fw-semibold">Jelaskan kendala yang
-                                    dialami</label>
-                                <textarea class="form-control" id="deskripsi_kendala" name="deskripsi" rows="3"
-                                    placeholder="Contoh: Warna tulisan kurang jelas, tombol tidak bisa diklik lewat keyboard..."
-                                    required></textarea>
-                            </div>
-
-                            <button type="submit" class="btn btn-lg fw-bold text-white w-100"
-                                style="background-color: var(--primary-color, #6A4C93); border-radius: 12px;">
-                                <i class="bi bi-send-fill me-2" aria-hidden="true"></i> Kirim Laporan Aksesibilitas
-                            </button>
-                        </form>
+                    <div class="col-lg-5 p-4 p-md-5 d-flex flex-column justify-content-center"
+                        style="background-color: var(--bg-pink);">
+                        <div class="text-center text-lg-start">
+                            <i class="bi bi-patch-check-fill mb-3 d-block"
+                                style="font-size: 3rem; color: var(--primary-color);"></i>
+                            <h3 class="h4 fw-bold text-dark mb-3">Sesuai Standar Internasional</h3>
+                            <p class="text-dark small mb-0" style="line-height: 1.6;">
+                                Pengembangan platform AKRAB berpedoman pada standar Web Content Accessibility Guidelines
+                                (WCAG) 2.2 Level AA.
+                                Kami akan terus melakukan perbaikan berkelanjutan untuk pengalaman belajar yang lebih baik.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
+
+        <!-- Ajakan / Call to Action (Menggantikan Form Laporan) -->
+        <section class="mb-5 text-center">
+            <h2 class="h4 fw-bold mb-3" style="color: var(--text-dark);">Sudah Siap Memulai Perjalanan Belajarmu?</h2>
+            <p class="mb-4" style="color: var(--text-light);">Eksplorasi materi sekarang atau cari bantuan jika kamu
+                memiliki pertanyaan.</p>
+            <div class="d-flex justify-content-center gap-3 flex-wrap">
+                <a href="{{ route('belajar') }}" class="btn btn-akrab-primary btn-lg rounded-pill px-4">
+                    <i class="bi bi-book-half me-2"></i> Mulai Belajar
+                </a>
+                <a href="{{ route('bantuan') }}" class="btn btn-akrab-outline btn-lg rounded-pill px-4"
+                    style="background-color: #FFFFFF;">
+                    <i class="bi bi-life-preserver me-2"></i> Cari Bantuan
+                </a>
+            </div>
+        </section>
     </div>
+@endsection
+
+@section('additional_css')
+    <style>
+        /* Breadcrumb (Sama seperti halaman Tanya Ahli) */
+        .breadcrumb-pill {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .breadcrumb-pill li {
+            display: flex;
+            align-items: center;
+        }
+
+        .breadcrumb-pill li a,
+        .breadcrumb-pill li .current {
+            padding: 0.5rem 1.25rem;
+            border-radius: 999px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .breadcrumb-pill li a {
+            background-color: #FFFFFF;
+            color: var(--primary-color);
+            border: 1px solid #EAEAEA;
+        }
+
+        .breadcrumb-pill li a:hover {
+            background-color: var(--bg-pink);
+            border-color: var(--primary-color);
+        }
+
+        .breadcrumb-pill li:not(:first-child)::before {
+            content: '\F285';
+            font-family: 'bootstrap-icons';
+            margin-right: 0.5rem;
+            color: #A0A0A0;
+            font-size: 0.85rem;
+        }
+
+        .breadcrumb-pill li .current {
+            background-color: var(--primary-color);
+            color: #FFFFFF;
+            border: 1px solid var(--primary-color);
+        }
+
+        /* Hover Effect untuk Card Misi */
+        .custom-card-hover {
+            transition: transform 0.2s ease, border-color 0.2s ease;
+            border: 1px solid transparent !important;
+        }
+
+        .custom-card-hover:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color) !important;
+            box-shadow: 0 10px 20px rgba(106, 76, 147, 0.08) !important;
+        }
+    </style>
 @endsection

@@ -6,7 +6,8 @@
     <!-- Baris 1: 4 Kartu Statistik (1 kolom di HP, 2 kolom di Tablet, 4 kolom di Desktop) -->
     <div class="row g-3 g-md-4 mb-4">
         <div class="col-12 col-md-6 col-lg-3">
-            <a href="{{ route('admin.modules') }}" class="card card-hover border-0 shadow-sm p-3 rounded-4 h-100 bg-white">
+            <a href="{{ route('admin.modules') }}"
+                class="card card-hover border-0 shadow-sm p-3 rounded-4 h-100 bg-white text-decoration-none">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
                         <span class="text-muted small fw-semibold text-uppercase">Total Modul</span>
@@ -20,13 +21,14 @@
         </div>
 
         <div class="col-12 col-md-6 col-lg-3">
-            <a href="{{ route('admin.progress') }}" class="card card-hover border-0 shadow-sm p-3 rounded-4 h-100 bg-white">
+            <a href="{{ route('admin.progress') }}"
+                class="card card-hover border-0 shadow-sm p-3 rounded-4 h-100 bg-white text-decoration-none">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
                         <span class="text-muted small fw-semibold text-uppercase">Pengguna Aktif</span>
                         <h2 class="fw-bold fs-2 text-dark mt-1 mb-0">{{ $totalUsers }}</h2>
                     </div>
-                    <div class="p-3 rounded-4" style="background-color: #E8F0FE; color: #1967D2;">
+                    <div class="p-3 rounded-4" style="background-color: var(--bg-pink); color: var(--primary-color);">
                         <i class="bi bi-people fs-3"></i>
                     </div>
                 </div>
@@ -34,13 +36,14 @@
         </div>
 
         <div class="col-12 col-md-6 col-lg-3">
-            <a href="{{ route('admin.progress') }}" class="card card-hover border-0 shadow-sm p-3 rounded-4 h-100 bg-white">
+            <a href="{{ route('admin.progress') }}"
+                class="card card-hover border-0 shadow-sm p-3 rounded-4 h-100 bg-white text-decoration-none">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
                         <span class="text-muted small fw-semibold text-uppercase">Rata-Rata Selesai</span>
                         <h2 class="fw-bold fs-2 text-dark mt-1 mb-0">{{ $percentSelesai }}%</h2>
                     </div>
-                    <div class="p-3 rounded-4" style="background-color: #E6F4EA; color: #137333;">
+                    <div class="p-3 rounded-4" style="background-color: var(--bg-pink); color: var(--primary-color);">
                         <i class="bi bi-graph-up-arrow fs-3"></i>
                     </div>
                 </div>
@@ -48,13 +51,14 @@
         </div>
 
         <div class="col-12 col-md-6 col-lg-3">
-            <a href="{{ route('admin.consultations') }}" class="card card-hover border-0 shadow-sm p-3 rounded-4 h-100 bg-white">
+            <a href="{{ route('admin.consultations') }}"
+                class="card card-hover border-0 shadow-sm p-3 rounded-4 h-100 bg-white text-decoration-none">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
                         <span class="text-muted small fw-semibold text-uppercase">Tanya Ahli Masuk</span>
                         <h2 class="fw-bold fs-2 text-dark mt-1 mb-0">{{ $pendingConsultations }}</h2>
                     </div>
-                    <div class="p-3 rounded-4" style="background-color: #FEF7E0; color: #B06000;">
+                    <div class="p-3 rounded-4" style="background-color: var(--bg-pink); color: var(--primary-color);">
                         <i class="bi bi-chat-quote fs-3"></i>
                     </div>
                 </div>
@@ -89,7 +93,8 @@
                                         <td><span class="text-muted text-truncate d-inline-block"
                                                 style="max-width: 250px;">{{ $pesan->question }}</span></td>
                                         <td class="text-end">
-                                            <a href="{{ route('admin.consultations', ['status' => 'pending']) }}" class="btn btn-sm btn-akrab-primary"
+                                            <a href="{{ route('admin.consultations', ['status' => 'pending']) }}"
+                                                class="btn btn-sm btn-akrab-primary"
                                                 style="background-color: var(--primary-color); color: white;">Jawab</a>
                                         </td>
                                     </tr>

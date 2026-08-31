@@ -15,7 +15,8 @@
     <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
         <div>
             <h1 class="h3 fw-bold text-dark mb-1">Progres Belajar Anak</h1>
-            <p class="text-muted small mb-0">Pantau perkembangan belajar, kuis evaluasi, dan modul yang diselesaikan oleh anak/pengguna.</p>
+            <p class="text-muted small mb-0">Pantau perkembangan belajar, kuis evaluasi, dan modul yang diselesaikan oleh
+                anak/pengguna.</p>
         </div>
 
         <div class="d-flex gap-2">
@@ -35,12 +36,14 @@
     <!-- Filter & Pencarian -->
     <div class="card border-0 shadow-sm rounded-4 bg-white mb-4">
         <div class="card-body p-3 p-md-4">
-            <form id="progressFilterForm" method="GET" action="{{ route('admin.progress') }}" class="row g-3 align-items-center">
+            <form id="progressFilterForm" method="GET" action="{{ route('admin.progress') }}"
+                class="row g-3 align-items-center">
                 <div class="col-md-6">
                     <div class="input-group">
                         <span class="input-group-text bg-white border-end-0">
                             <i class="bi bi-search text-muted" id="searchIcon"></i>
-                            <span class="spinner-border spinner-border-sm text-primary d-none" id="searchSpinner" role="status" aria-hidden="true"></span>
+                            <span class="spinner-border spinner-border-sm text-primary d-none" id="searchSpinner"
+                                role="status" aria-hidden="true"></span>
                         </span>
                         <input type="text" id="progressSearchInput" name="search" class="form-control border-start-0"
                             placeholder="Cari nama, email, atau username pengguna..." value="{{ request('search') }}"
@@ -49,7 +52,8 @@
                 </div>
 
                 <div class="col-md-4">
-                    <select id="progressModuleSelect" name="module_id" class="form-select" aria-label="Filter modul pembelajaran">
+                    <select id="progressModuleSelect" name="module_id" class="form-select"
+                        aria-label="Filter modul pembelajaran">
                         <option value="">Semua Modul Pembelajaran ({{ $allModules->count() }})</option>
                         @foreach($allModules as $mod)
                             <option value="{{ $mod->id }}" {{ request('module_id') == $mod->id ? 'selected' : '' }}>
@@ -63,7 +67,9 @@
                     <button type="submit" class="btn btn-akrab-primary flex-fill">
                         <i class="bi bi-filter me-1"></i> Filter
                     </button>
-                    <a href="{{ route('admin.progress') }}" id="btnResetFilter" class="btn btn-light border {{ request('search') || request('module_id') ? '' : 'd-none' }}" title="Reset filter" aria-label="Reset filter">
+                    <a href="{{ route('admin.progress') }}" id="btnResetFilter"
+                        class="btn btn-light border {{ request('search') || request('module_id') ? '' : 'd-none' }}"
+                        title="Reset filter" aria-label="Reset filter">
                         <i class="bi bi-arrow-counterclockwise"></i>
                     </a>
                 </div>
@@ -72,9 +78,12 @@
     </div>
 
     <!-- Alert Notifikasi Live Search Gagal (Aria-live) -->
-    <div id="searchErrorAlert" class="alert alert-warning alert-dismissible fade show rounded-3 mb-4 d-none" role="alert" aria-live="polite">
-        <i class="bi bi-exclamation-triangle-fill me-2"></i> Pencarian otomatis gagal. Silakan coba lagi atau tekan tombol Filter.
-        <button type="button" class="btn-close" onclick="document.getElementById('searchErrorAlert').classList.add('d-none')" aria-label="Tutup"></button>
+    <div id="searchErrorAlert" class="alert alert-warning alert-dismissible fade show rounded-3 mb-4 d-none" role="alert"
+        aria-live="polite">
+        <i class="bi bi-exclamation-triangle-fill me-2"></i> Pencarian otomatis gagal. Silakan coba lagi atau tekan tombol
+        Filter.
+        <button type="button" class="btn-close"
+            onclick="document.getElementById('searchErrorAlert').classList.add('d-none')" aria-label="Tutup"></button>
     </div>
 
     <!-- Container Tabel & Pagination Live Search -->
@@ -93,7 +102,7 @@
                                 <th class="fw-semibold pb-3 text-center">Rata-Rata Nilai</th>
                                 <th class="fw-semibold pb-3 text-center">Modul Selesai</th>
                                 <th class="fw-semibold pb-3 text-center">Aktivitas Terakhir</th>
-                                <th class="fw-semibold pb-3 text-end">Aksi</th>
+                                <th class="fw-semibold pb-3 text-center">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -115,7 +124,8 @@
                                     </td>
                                     <td class="text-center">
                                         @if($u->metrics->total_attempts > 0)
-                                            <span class="fw-bold {{ $u->metrics->average_score >= 70 ? 'text-success' : ($u->metrics->average_score >= 50 ? 'text-warning' : 'text-danger') }}">
+                                            <span
+                                                class="fw-bold {{ $u->metrics->average_score >= 70 ? 'text-success' : ($u->metrics->average_score >= 50 ? 'text-warning' : 'text-danger') }}">
                                                 {{ $u->metrics->average_score }}%
                                             </span>
                                         @else
@@ -123,7 +133,8 @@
                                         @endif
                                     </td>
                                     <td class="text-center">
-                                        <span class="badge {{ $u->metrics->completed_count >= $totalActiveModules && $totalActiveModules > 0 ? 'bg-success' : 'bg-primary' }} bg-opacity-10 text-{{ $u->metrics->completed_count >= $totalActiveModules && $totalActiveModules > 0 ? 'success' : 'primary' }} px-3 py-2 rounded-pill fw-semibold">
+                                        <span
+                                            class="badge {{ $u->metrics->completed_count >= $totalActiveModules && $totalActiveModules > 0 ? 'bg-success' : 'bg-primary' }} bg-opacity-10 text-{{ $u->metrics->completed_count >= $totalActiveModules && $totalActiveModules > 0 ? 'success' : 'primary' }} px-3 py-2 rounded-pill fw-semibold">
                                             {{ $u->metrics->completed_count }} / {{ $totalActiveModules }} Modul
                                         </span>
                                     </td>
@@ -134,7 +145,7 @@
                                     </td>
                                     <td class="text-end">
                                         <a href="{{ route('admin.progress.show', $u->id) }}" class="btn-akrab-outline">
-                                            <i class="bi bi-eye me-1"></i> Detail Progres
+                                            Detail
                                         </a>
                                     </td>
                                 </tr>
@@ -160,7 +171,8 @@
     </div>
 
     <!-- Modal Pemilihan Modul untuk Ekspor Rekap -->
-    <div class="modal fade" id="selectModuleModal" tabindex="-1" aria-labelledby="selectModuleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="selectModuleModal" tabindex="-1" aria-labelledby="selectModuleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content rounded-4 border-0 shadow">
                 <form method="GET" action="{{ route('admin.progress.export.rekap') }}">
@@ -172,10 +184,12 @@
                     </div>
                     <div class="modal-body py-4">
                         <p class="text-muted small mb-3">
-                            Pilih modul pembelajaran yang ingin diunduh rekap nilainya. File Excel akan berisi perbandingan nilai Pre-Test dan Post-Test per anak untuk modul terpilih.
+                            Pilih modul pembelajaran yang ingin diunduh rekap nilainya. File Excel akan berisi perbandingan
+                            nilai Pre-Test dan Post-Test per anak untuk modul terpilih.
                         </p>
                         <div class="mb-3">
-                            <label for="export_module_id" class="form-label fw-semibold text-dark">Pilih Modul Pembelajaran <span class="text-danger">*</span></label>
+                            <label for="export_module_id" class="form-label fw-semibold text-dark">Pilih Modul Pembelajaran
+                                <span class="text-danger">*</span></label>
                             <select name="module_id" id="export_module_id" class="form-select" required>
                                 <option value="" disabled selected>-- Pilih salah satu modul --</option>
                                 @foreach($allModules as $mod)
@@ -273,56 +287,56 @@
                     },
                     signal: currentController.signal
                 })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response not ok: ' + response.status);
-                    }
-                    return response.text();
-                })
-                .then(html => {
-                    // Abaikan respons jika bukan request paling baru
-                    if (currentRequestId !== activeRequestId) {
-                        return;
-                    }
-
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(html, 'text/html');
-                    const newContainer = doc.getElementById('progressTableContainer');
-
-                    if (newContainer && tableContainer) {
-                        tableContainer.innerHTML = newContainer.innerHTML;
-                        attachPaginationListeners();
-                    }
-
-                    // Sinkronisasi hidden search input pada modal ekspor
-                    const exportModalSearch = document.querySelector('#selectModuleModal input[name="search"]');
-                    if (exportModalSearch) {
-                        exportModalSearch.value = searchVal;
-                    }
-
-                    // Update URL browser tanpa reload
-                    window.history.replaceState(null, '', targetUrl.toString());
-                })
-                .catch(err => {
-                    if (err.name === 'AbortError') {
-                        return; // Request dibatalkan secara normal oleh input baru
-                    }
-                    if (errorAlert) {
-                        errorAlert.classList.remove('d-none');
-                    }
-                })
-                .finally(() => {
-                    if (currentRequestId === activeRequestId) {
-                        if (searchIcon && searchSpinner) {
-                            searchIcon.classList.remove('d-none');
-                            searchSpinner.classList.add('d-none');
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response not ok: ' + response.status);
                         }
-                        if (tableContainer) {
-                            tableContainer.style.opacity = '1';
-                            tableContainer.style.pointerEvents = 'auto';
+                        return response.text();
+                    })
+                    .then(html => {
+                        // Abaikan respons jika bukan request paling baru
+                        if (currentRequestId !== activeRequestId) {
+                            return;
                         }
-                    }
-                });
+
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(html, 'text/html');
+                        const newContainer = doc.getElementById('progressTableContainer');
+
+                        if (newContainer && tableContainer) {
+                            tableContainer.innerHTML = newContainer.innerHTML;
+                            attachPaginationListeners();
+                        }
+
+                        // Sinkronisasi hidden search input pada modal ekspor
+                        const exportModalSearch = document.querySelector('#selectModuleModal input[name="search"]');
+                        if (exportModalSearch) {
+                            exportModalSearch.value = searchVal;
+                        }
+
+                        // Update URL browser tanpa reload
+                        window.history.replaceState(null, '', targetUrl.toString());
+                    })
+                    .catch(err => {
+                        if (err.name === 'AbortError') {
+                            return; // Request dibatalkan secara normal oleh input baru
+                        }
+                        if (errorAlert) {
+                            errorAlert.classList.remove('d-none');
+                        }
+                    })
+                    .finally(() => {
+                        if (currentRequestId === activeRequestId) {
+                            if (searchIcon && searchSpinner) {
+                                searchIcon.classList.remove('d-none');
+                                searchSpinner.classList.add('d-none');
+                            }
+                            if (tableContainer) {
+                                tableContainer.style.opacity = '1';
+                                tableContainer.style.pointerEvents = 'auto';
+                            }
+                        }
+                    });
             }
 
             function attachPaginationListeners() {

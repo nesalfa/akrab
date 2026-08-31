@@ -65,6 +65,7 @@
         .sidebar-nav-container::-webkit-scrollbar {
             width: 4px;
         }
+
         .sidebar-nav-container::-webkit-scrollbar-thumb {
             background: rgba(255, 255, 255, 0.2);
             border-radius: 4px;
@@ -110,6 +111,11 @@
             font-weight: 500;
             margin-bottom: 0.25rem;
             transition: all 0.2s ease;
+
+            /* Tambahan kode untuk mencegah teks turun */
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .sidebar-link:hover,
@@ -379,13 +385,13 @@
         <div class="sidebar-nav-container">
             <a href="{{ route('admin.dashboard') }}"
                 class="sidebar-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-                <i class="bi bi-grid-1x2-fill"></i> Ringkasan (Dashboard)
+                <i class="bi bi-grid-1x2-fill"></i> Dashboard
             </a>
 
             <div class="sidebar-section-title">Manajemen Konten</div>
             <a href="{{ route('admin.modules') }}"
                 class="sidebar-link {{ request()->routeIs('admin.modules*') ? 'active' : '' }}">
-                <i class="bi bi-book"></i> Kelola Modul & Isi
+                <i class="bi bi-book"></i> Kelola Modul
             </a>
             <a href="{{ route('admin.kuis-glosarium') }}"
                 class="sidebar-link {{ request()->routeIs('admin.kuis*') || request()->routeIs('admin.glosarium*') ? 'active' : '' }}">
@@ -421,7 +427,8 @@
                 </a>
                 <ul class="dropdown-menu dropdown-menu-dark text-small shadow w-100 mb-2"
                     aria-labelledby="dropdownUser">
-                    <li><a class="dropdown-item {{ request()->routeIs('admin.profile') ? 'active' : '' }}" href="{{ route('admin.profile') }}"><i class="bi bi-person me-2"></i>Ubah Profil</a></li>
+                    <li><a class="dropdown-item {{ request()->routeIs('admin.profile') ? 'active' : '' }}"
+                            href="{{ route('admin.profile') }}"><i class="bi bi-person me-2"></i>Ubah Profil</a></li>
                     <li>
                         <hr class="dropdown-divider border-light border-opacity-25">
                     </li>
@@ -447,7 +454,8 @@
                 </button>
                 <div>
                     <h1 class="h4 fw-bold mb-0 text-dark">Halo, {{ auth()->user()->name ?? 'Admin' }}</h1>
-                    <p class="text-muted small mb-0 d-none d-sm-block">Pantau perkembangan belajar dan interaksi platform hari ini.</p>
+                    <p class="text-muted small mb-0 d-none d-sm-block">Pantau perkembangan belajar dan interaksi
+                        platform hari ini.</p>
                 </div>
             </div>
         </div>

@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Glossary;
 use App\Models\Module;
+use App\Models\QuizAttempt;
+use App\Models\Question;
+use App\Models\Quiz;
+use App\Models\QuizOption;
 use Illuminate\Http\Request;
 
 class ModuleController extends Controller
@@ -14,13 +19,39 @@ class ModuleController extends Controller
      */
     public function home()
     {
-        // Ambil semua modul aktif dari DB untuk kebutuhan section di Beranda
         $modules = Module::where('is_active', true)->orderBy('order')->get();
         $modulesGrouped = $modules->groupBy('section');
+
+        $completedModulesCount = 0;
+        $latestModule = null;
+        $totalModules = Module::where('is_active', true)->count(); // Hitung total modul aktif
+
+        if (auth()->check()) {
+            $user = auth()->user();
+
+            // Hitung total modul selesai
+            $completedModulesCount = method_exists($user, 'completedModulesCount') ? $user->completedModulesCount() : 0;
+
+            // Cari aktivitas attempt kuis terakhir
+            $latestAttempt = QuizAttempt::where('user_id', $user->id)
+                ->latest('updated_at')
+                ->first();
+
+            if ($latestAttempt) {
+                $latestModule = Module::find($latestAttempt->module_id);
+            }
+        }
+
+        // Hitung persentase progress keseluruhan (misal: selesai 2 dari 15 = 13%)
+        $progressPct = $totalModules > 0 ? (int) round(($completedModulesCount / $totalModules) * 100) : 0;
 
         return view('home', [
             'modules' => $modules,
             'modulesGrouped' => $modulesGrouped,
+            'completedModulesCount' => $completedModulesCount,
+            'latestModule' => $latestModule,
+            'totalModules' => $totalModules,
+            'progressPct' => $progressPct, // Kirim ke view home.blade.php
         ]);
     }
 
@@ -31,12 +62,26 @@ class ModuleController extends Controller
      */
     public function index()
     {
-        // Ambil semua modul aktif langsung dari database secara urut tanpa pembagian klaster
         $modules = Module::where('is_active', true)
             ->orderBy('order', 'asc')
             ->get();
 
-        return view('belajar', compact('modules'));
+        // Ambil daftar ID modul yang sudah diselesaikan user untuk menandai card berwarna pink
+        $completedModuleIds = [];
+        if (auth()->check()) {
+            $user = auth()->user();
+            // Mengambil ID modul dari quiz_attempts dengan tipe 'post'
+            $completedModuleIds = QuizAttempt::where('user_id', $user->id)
+                ->where('type', 'post')
+                ->pluck('module_id')
+                ->unique()
+                ->toArray();
+        }
+
+        return view('belajar', [
+            'modules' => $modules,
+            'completedModuleIds' => $completedModuleIds,
+        ]);
     }
 
     /**
@@ -53,54 +98,45 @@ class ModuleController extends Controller
      */
     public function show($slug)
     {
-        // Cari modul berdasarkan slug
         $module = Module::where('slug', $slug)
             ->where('is_active', true)
-            ->firstOrFail(); // Jika tidak ketemu, throw 404 error
+            ->firstOrFail();
 
-        // Ambil semua konten modul, urutkan berdasarkan 'order'
-        $contents = $module->moduleContent()
-            ->orderBy('order')
-            ->get();
+        $contents = $module->moduleContent()->orderBy('order')->get();
+        $quizzes = $module->quizzes()->with('options')->orderBy('order')->get();
+        $glossary = $module->glossary()->orderBy('order')->get();
+        $faq = $module->faq()->orderBy('order')->get();
 
-        // Ambil semua kuis beserta pilihan jawaban, urutkan berdasarkan 'order'
-        $quizzes = $module->quizzes()
-            ->with('options')
-            ->orderBy('order')
-            ->get();
-
-        // Ambil semua glosarium
-        $glossary = $module->glossary()
-            ->orderBy('order')
-            ->get();
-
-        // Ambil FAQ untuk modul ini
-        $faq = $module->faq()
-            ->orderBy('order')
-            ->get();
-
-        // Cari modul sebelumnya (prev)
         $prevModule = Module::where('section', $module->section)
             ->where('order', '<', $module->order)
             ->where('is_active', true)
             ->orderBy('order', 'desc')
             ->first();
 
-        // Cari modul selanjutnya (next)
         $nextModule = Module::where('section', $module->section)
             ->where('order', '>', $module->order)
             ->where('is_active', true)
             ->orderBy('order')
             ->first();
 
-        // Data progress untuk sidebar — dihitung dari kolom users.completed_modules,
-        // BUKAN localStorage lagi.
         $user = auth()->user();
         $totalModules = Module::where('is_active', true)->count();
         $completedModulesCount = $user ? $user->completedModulesCount() : 0;
         $isThisModuleCompleted = $user ? $user->hasCompletedModule($module->slug) : false;
 
-        // Pass semua data ke view
+        // AMBIL RIWAYAT JAWABAN KUIS USER DI MODUL INI
+        $preAttempts = collect();
+        $postAttempts = collect();
+
+        if ($user) {
+            $userAttempts = QuizAttempt::where('user_id', $user->id)
+                ->where('module_id', $module->id)
+                ->get();
+
+            $preAttempts = $userAttempts->where('type', 'pre')->keyBy('quiz_id');
+            $postAttempts = $userAttempts->where('type', 'post')->keyBy('quiz_id');
+        }
+
         return view('modules.show', [
             'module' => $module,
             'contents' => $contents,
@@ -112,6 +148,8 @@ class ModuleController extends Controller
             'totalModules' => $totalModules,
             'completedModulesCount' => $completedModulesCount,
             'isThisModuleCompleted' => $isThisModuleCompleted,
+            'preAttempts' => $preAttempts, // Kirim ke blade
+            'postAttempts' => $postAttempts, // Kirim ke blade
         ]);
     }
 
@@ -142,8 +180,8 @@ class ModuleController extends Controller
         ]);
 
         // Ambil quiz & pilihan yang dipilih user
-        $quiz = \App\Models\Quiz::find($validated['quiz_id']);
-        $selectedOption = \App\Models\QuizOption::find($validated['selected_option_id']);
+        $quiz = Quiz::find($validated['quiz_id']);
+        $selectedOption = QuizOption::find($validated['selected_option_id']);
 
         // Ambil jawaban yang benar
         $correctOption = $quiz->options()->where('is_correct', true)->first();
@@ -153,7 +191,7 @@ class ModuleController extends Controller
 
         // Rekam attempt untuk data riset Pre/Post-Test secara idempotent.
         // Satu user + module + type + quiz hanya memiliki 1 jawaban valid (diperbarui jika ada request baru)
-        \App\Models\QuizAttempt::updateOrCreate(
+        QuizAttempt::updateOrCreate(
             [
                 'module_id' => $quiz->module_id,
                 'user_id' => auth()->id(),
@@ -227,7 +265,7 @@ class ModuleController extends Controller
         }
 
         // Cari glossary items yang cocok dengan term
-        $results = \App\Models\Glossary::where('term', 'LIKE', '%' . $query . '%')
+        $results = Glossary::where('term', 'LIKE', '%' . $query . '%')
             ->orWhere('definition', 'LIKE', '%' . $query . '%')
             ->limit(10)
             ->get();
@@ -257,7 +295,7 @@ class ModuleController extends Controller
         $anonymousId = session()->getId();
 
         // Simpan pertanyaan
-        \App\Models\Question::create([
+        Question::create([
             'module_id' => $validated['module_id'],
             'question_text' => $validated['question_text'],
             'status' => 'pending',

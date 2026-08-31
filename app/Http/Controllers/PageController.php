@@ -44,7 +44,14 @@ class PageController extends Controller
                 ->get();
         }
 
-        return view('tanya-ahli', compact('myConsultations'));
+        // TAMBAHAN BARU: Ambil pertanyaan anonim yang sudah dijawab
+        $publicConsultations = Consultation::whereNull('user_id')
+            ->where('status', 'answered')
+            ->latest('updated_at')
+            ->get();
+
+        // Pastikan $publicConsultations ditambahkan ke dalam compact()
+        return view('tanya-ahli', compact('myConsultations', 'publicConsultations'));
     }
 
     public function tanyaAhliStore(Request $request)

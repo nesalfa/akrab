@@ -80,7 +80,7 @@
                                     <th class="fw-semibold pb-3">Judul Modul</th>
                                     <th class="fw-semibold pb-3 text-center">Jumlah Soal</th>
                                     <th class="fw-semibold pb-3 text-center">Status Kuis</th>
-                                    <th class="fw-semibold pb-3 text-end">Aksi</th>
+                                    <th class="fw-semibold pb-3 text-center">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -109,9 +109,8 @@
                                         </td>
                                         <td class="text-end">
                                             <!-- Tombol yang mengarah ke halaman baru khusus soal kuis -->
-                                            <a href="{{ route('admin.kuis-kelola', $modul->id) }}"
-                                                class="btn-akrab-outline">
-                                                <i class="bi bi-list-task me-1"></i> Kelola Soal
+                                            <a href="{{ route('admin.kuis-kelola', $modul->id) }}" class="btn-akrab-outline">
+                                                Kelola Soal
                                             </a>
                                         </td>
                                     </tr>
@@ -148,7 +147,7 @@
                                 <tr>
                                     <th class="fw-semibold pb-3" style="width: 25%;">Kata / Istilah</th>
                                     <th class="fw-semibold pb-3">Penjelasan (Definisi)</th>
-                                    <th class="fw-semibold pb-3 text-end" style="width: 120px;">Aksi</th>
+                                    <th class="fw-semibold pb-3 text-center" style="width: 120px;">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>

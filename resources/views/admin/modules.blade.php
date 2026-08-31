@@ -26,13 +26,15 @@
     @endif
 
     <!-- Header Halaman -->
-    <div class="d-flex flex-column flex-md-row justify-content-between align-items-stretch align-items-md-center gap-3 mb-4">
+    <div
+        class="d-flex flex-column flex-md-row justify-content-between align-items-stretch align-items-md-center gap-3 mb-4">
         <div>
             <h1 class="h3 fw-bold text-dark mb-1">Kelola Modul & Isi</h1>
             <p class="text-muted small mb-0">Tambah, ubah, atau hapus modul pembelajaran di platform AKRAB.</p>
         </div>
         <div class="flex-shrink-0">
-            <button type="button" class="btn-akrab-primary w-100" style="min-width: 190px; max-width: 230px;" data-bs-toggle="modal" data-bs-target="#addModuleModal" aria-label="Tambah Modul Baru">
+            <button type="button" class="btn-akrab-primary w-100" style="min-width: 190px; max-width: 230px;"
+                data-bs-toggle="modal" data-bs-target="#addModuleModal" aria-label="Tambah Modul Baru">
                 <i class="bi bi-plus-lg"></i>
                 <span>Tambah Modul Baru</span>
             </button>
@@ -59,7 +61,7 @@
                             <th class="fw-semibold pb-3" style="width: 56px;">No.</th>
                             <th class="fw-semibold pb-3">Judul Modul</th>
                             <th class="fw-semibold pb-3">Status</th>
-                            <th class="fw-semibold pb-3 text-end">Aksi</th>
+                            <th class="fw-semibold pb-3 text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>

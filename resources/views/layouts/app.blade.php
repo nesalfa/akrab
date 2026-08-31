@@ -420,6 +420,20 @@
             border-radius: 22px;
             background-color: #FFFFFF;
         }
+
+        /* Mematikan paksa BORDER kuning pada menu navigasi yang sedang aktif */
+        .navbar-nav .nav-link.active,
+        .navbar-nav .nav-link:active,
+        .navbar-nav .nav-link:focus,
+        .navbar a.active {
+            border-color: transparent !important;
+            border: none !important;
+            outline: none !important;
+            box-shadow: none !important;
+        }
+</style>
+
+        
     </style>
     @yield('additional_css')
 </head>

@@ -77,23 +77,6 @@
             top: 1rem;
         }
 
-        /* ---------- Focus indicator (area terang) ---------- */
-        a:focus-visible,
-        button:focus-visible,
-        input:focus-visible,
-        .accordion-button:focus-visible,
-        .quiz-option-label:focus-within {
-            outline: 3px solid var(--primary-hover);
-            outline-offset: 2px;
-            border-radius: 8px;
-        }
-
-        /* ---------- Focus indicator di atas latar ungu gelap ---------- */
-        .module-header-card :focus-visible {
-            outline: 3px solid var(--accent-color);
-            outline-offset: 2px;
-        }
-
         /* ---------- Breadcrumb pill ---------- */
         .breadcrumb-pill {
             list-style: none;
@@ -631,6 +614,10 @@
                         </div>
 
                         @foreach($quizzes as $index => $quiz)
+                            @php
+                                $preAttempt = $preAttempts->firstWhere('quiz_id', $quiz->id);
+                                $preAnswerId = $preAttempt ? $preAttempt->selected_option_id : null;
+                            @endphp
                             <div class="card quiz-card border-0 mb-4" data-quiz-card>
                                 <div class="card-body p-4">
                                     <fieldset>
@@ -640,9 +627,9 @@
 
                                         <div class="quiz-options d-flex flex-column gap-2" data-quiz-id="{{ $quiz->id }}">
                                             @foreach($quiz->options as $option)
-                                                <label class="quiz-option-label" data-option-id="{{ $option->id }}">
+                                                <label class="quiz-option-label">
                                                     <input type="radio" name="pretest_quiz_{{ $quiz->id }}" value="{{ $option->id }}"
-                                                        class="quiz-option-input" data-option-id="{{ $option->id }}">
+                                                        class="quiz-option-input" data-option-id="{{ $option->id }}" {{ $preAnswerId == $option->id ? 'checked' : '' }} {{ $preAttempt ? 'disabled' : '' }}>
                                                     <span class="quiz-option-text">
                                                         <strong>{{ $option->label }}.</strong> {{ $option->text }}
                                                     </span>
@@ -654,18 +641,30 @@
                             </div>
                         @endforeach
 
-                        <div class="text-center mt-2">
-                            <button type="button" id="btn-submit-pretest" class="btn-akrab-primary">
-                                <i class="bi bi-send-check-fill" aria-hidden="true"></i> Ayo Kumpulkan!
-                            </button>
-                        </div>
-
-                        <div id="pretest-done-note" class="mt-4 d-none" aria-live="polite" role="status">
-                            <div class="quiz-feedback is-correct">
-                                <i class="bi bi-arrow-down-circle-fill" aria-hidden="true"></i>
-                                <span>Sip, jawabanmu sudah tercatat! Yuk lanjut pelajari materinya di bawah ini.</span>
+                        {{-- Jika belum ada riwayat jawaban pre-test --}}
+                        @if($preAttempts->isEmpty())
+                            <div class="text-center mt-2">
+                                <button type="button" id="btn-submit-pretest" class="btn-akrab-primary">
+                                    <i class="bi bi-send-check-fill" aria-hidden="true"></i> Ayo Kumpulkan!
+                                </button>
                             </div>
-                        </div>
+
+                            {{-- Elemen pesan sukses (awalnya disembunyikan, JS akan menampilkannya) --}}
+                            <div id="pretest-done-note" class="mt-4 d-none" aria-live="polite" role="status">
+                                <div class="quiz-feedback is-correct">
+                                    <i class="bi bi-arrow-down-circle-fill" aria-hidden="true"></i>
+                                    <span>Sip, jawabanmu sudah tercatat! Yuk lanjut pelajari materinya.</span>
+                                </div>
+                            </div>
+                        @else
+                            {{-- Jika riwayat sudah ada, langsung tampilkan pesan tanpa tombol --}}
+                            <div class="mt-4" aria-live="polite" role="status">
+                                <div class="quiz-feedback is-correct">
+                                    <i class="bi bi-arrow-down-circle-fill" aria-hidden="true"></i>
+                                    <span>Sip, jawabanmu sudah tercatat! Yuk lanjut pelajari materinya.</span>
+                                </div>
+                            </div>
+                        @endif
                     </div>
                 </section>
             @endif
@@ -726,6 +725,12 @@
                                 </div>
 
                                 @foreach($quizzes as $index => $quiz)
+                                    @php
+                                        $hasPostAttempt = $postAttempts->has($quiz->id);
+                                        $postAnswerId = $hasPostAttempt ? $postAttempts[$quiz->id]->selected_option_id : null;
+                                        $isCorrect = $hasPostAttempt ? $postAttempts[$quiz->id]->is_correct : false;
+                                        $correctOptionId = $quiz->options->where('is_correct', true)->first()->id ?? null;
+                                    @endphp
                                     <div class="card quiz-card border-0 mb-4" data-quiz-card>
                                         <div class="card-body p-4">
                                             <fieldset>
@@ -735,13 +740,31 @@
 
                                                 <div class="quiz-options d-flex flex-column gap-2" data-quiz-id="{{ $quiz->id }}">
                                                     @foreach($quiz->options as $option)
-                                                        <label class="quiz-option-label" data-option-id="{{ $option->id }}">
+                                                        @php
+                                                            $labelClass = '';
+                                                            $iconClass = 'd-none';
+
+                                                            // Logika pewarnaan riwayat (jika sudah dikerjakan)
+                                                            if ($hasPostAttempt) {
+                                                                if ($option->id == $correctOptionId) {
+                                                                    $labelClass = 'is-review-correct';
+                                                                    $iconClass = 'bi-check-circle-fill text-success';
+                                                                } elseif ($option->id == $postAnswerId && !$isCorrect) {
+                                                                    $labelClass = 'is-review-wrong';
+                                                                    $iconClass = 'bi-x-circle-fill text-danger';
+                                                                }
+                                                            }
+                                                        @endphp
+                                                        <label class="quiz-option-label {{ $labelClass }}"
+                                                            data-option-id="{{ $option->id }}">
                                                             <input type="radio" name="quiz_{{ $quiz->id }}" value="{{ $option->id }}"
-                                                                class="quiz-option-input" data-option-id="{{ $option->id }}">
+                                                                class="quiz-option-input" data-option-id="{{ $option->id }}" {{ $postAnswerId == $option->id ? 'checked' : '' }} {{ $hasPostAttempt ? 'disabled' : '' }}>
                                                             <span class="quiz-option-text">
                                                                 <strong>{{ $option->label }}.</strong> {{ $option->text }}
                                                             </span>
-                                                            <i class="bi quiz-review-icon" aria-hidden="true"></i>
+                                                            <i class="bi quiz-review-icon {{ $iconClass }}"
+                                                                style="{{ $hasPostAttempt ? 'display:inline-block;' : '' }}"
+                                                                aria-hidden="true"></i>
                                                         </label>
                                                     @endforeach
                                                 </div>
@@ -750,20 +773,22 @@
                                     </div>
                                 @endforeach
 
-                                <div class="text-center mt-2">
-                                    <button type="button" id="btn-submit-quiz" class="btn-akrab-primary">
-                                        <i class="bi bi-send-check-fill" aria-hidden="true"></i> Ayo Kumpulkan!
-                                    </button>
-                                </div>
+                                {{-- Jika belum ada riwayat jawaban post-test, tampilkan tombol submit --}}
+                                @if($postAttempts->isEmpty())
+                                    <div class="text-center mt-2">
+                                        <button type="button" id="btn-submit-quiz" class="btn-akrab-primary">
+                                            <i class="bi bi-send-check-fill" aria-hidden="true"></i> Ayo Kumpulkan!
+                                        </button>
+                                    </div>
+                                @endif
 
-                                <div id="quiz-review-note" class="mt-4 d-none" aria-live="polite" role="status">
+                                {{-- Jika sudah ada riwayat post-test, pastikan catatan review ini langsung muncul --}}
+                                <div id="quiz-review-note" class="mt-4 {{ $postAttempts->isNotEmpty() ? '' : 'd-none' }}"
+                                    aria-live="polite" role="status">
                                     <div class="quiz-feedback is-correct">
                                         <i class="bi bi-check2-circle" aria-hidden="true"></i>
                                         <span>
-                                            Kuis sudah dinilai. Jawaban yang benar ditandai
-                                            <i class="bi bi-check-circle-fill" aria-hidden="true"></i> hijau,
-                                            yang keliru ditandai <i class="bi bi-x-circle-fill" aria-hidden="true"></i> merah
-                                            pada pilihan di atas.
+                                            Selamat! Modul ini sudah selesai dipelajari.
                                         </span>
                                     </div>
                                 </div>
@@ -939,9 +964,12 @@
                 const pretestAlert = document.getElementById('pretest-alert');
                 const pretestDoneNote = document.getElementById('pretest-done-note');
 
-                pretestBtn.addEventListener('click', function () {
+                pretestBtn.addEventListener('click', async function () {
+                    if (pretestBtn.disabled) return; // Cegah double klik
+
                     const groups = pretestSection.querySelectorAll('.quiz-options');
                     let allAnswered = true;
+                    const answers = [];
 
                     groups.forEach((group) => {
                         const card = group.closest('.quiz-card');
@@ -951,6 +979,10 @@
                             card.classList.add('quiz-card-missing');
                         } else {
                             card.classList.remove('quiz-card-missing');
+                            answers.push({
+                                quizId: group.dataset.quizId,
+                                optionId: checked.dataset.optionId
+                            });
                         }
                     });
 
@@ -961,49 +993,58 @@
                     }
 
                     pretestAlert.classList.add('d-none');
+                    pretestBtn.disabled = true;
+                    pretestBtn.innerHTML = '<i class="bi bi-hourglass-split" aria-hidden="true"></i> Menyimpan...';
 
-                    // Kunci pilihan (tidak boleh diubah lagi), tanpa menandai benar/salah
+                    // Kunci pilihan
                     groups.forEach((group) => {
                         group.querySelectorAll('input[type="radio"]').forEach((input) => {
                             input.disabled = true;
                         });
                     });
 
-                    pretestBtn.classList.add('d-none');
-                    pretestDoneNote.classList.remove('d-none');
+                    try {
+                        // Kirim data dan paksa JS melempar error jika server menolak (error 500)
+                        await Promise.all(answers.map((a) =>
+                            fetch('/api/quiz/submit', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': csrfToken,
+                                    'Accept': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    quiz_id: a.quizId,
+                                    selected_option_id: a.optionId,
+                                    type: 'pre',
+                                }),
+                            }).then(res => {
+                                if (!res.ok) throw new Error('Server menolak request');
+                                return res.json();
+                            })
+                        ));
 
-                    // Arahkan ke materi tepat setelah Pre-Test (elemen berikutnya)
-                    const nextEl = pretestSection.nextElementSibling;
-                    if (nextEl) {
-                        nextEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
+                        // Sukses! Hilangkan tombol dan munculkan tulisan
+                        pretestBtn.classList.add('d-none');
+                        pretestDoneNote.classList.remove('d-none');
 
-                    // Kirim jawaban ke server untuk data riset (type: 'pre').
-                    // "Fire and forget" secara sengaja: kalau request gagal
-                    // (mis. koneksi putus), alur belajar user TIDAK diblokir —
-                    // UI sudah terlanjur lanjut ke materi. Kegagalan pengiriman
-                    // cuma berarti baris data riset untuk pertanyaan itu hilang,
-                    // bukan pengalaman belajarnya yang terganggu.
-                    groups.forEach((group) => {
-                        const quizId = group.dataset.quizId;
-                        const checked = group.querySelector('input[type="radio"]:checked');
-                        if (!checked) return;
-
-                        fetch('/api/quiz/submit', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-CSRF-TOKEN': csrfToken,
-                            },
-                            body: JSON.stringify({
-                                quiz_id: quizId,
-                                selected_option_id: checked.dataset.optionId,
-                                type: 'pre',
-                            }),
-                        }).catch(() => {
-                            /* diamkan — lihat catatan "fire and forget" di atas */
+                        const nextEl = pretestSection.nextElementSibling;
+                        if (nextEl) {
+                            nextEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                    } catch (err) {
+                        console.error('Gagal menyimpan Pre-Test:', err);
+                        pretestBtn.disabled = false;
+                        pretestBtn.innerHTML = '<i class="bi bi-send-check-fill" aria-hidden="true"></i> Ayo Kumpulkan!';
+                        alert('Gagal terhubung ke server. Silakan coba lagi.');
+                        
+                        // Buka kunci lagi karena gagal
+                        groups.forEach((group) => {
+                            group.querySelectorAll('input[type="radio"]').forEach((input) => {
+                                input.disabled = false;
+                            });
                         });
-                    });
+                    }
                 });
             }
 
@@ -1057,6 +1098,8 @@
             }
 
             submitBtn.addEventListener('click', async function () {
+                // KUNCI PENTING: Cegah klik berkali-kali!
+                if (submitBtn.disabled) return;
                 const quizGroups = document.querySelectorAll('.quiz-options');
                 const answers = [];
                 let allAnswered = true;

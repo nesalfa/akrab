@@ -113,39 +113,80 @@
     <section id="perjalanan-belajar" class="mb-5 py-3">
         <div class="card p-4 p-md-5 border-0 shadow-sm" style="border-radius: 24px;">
             <div class="row align-items-center g-4">
-                <!-- Sisi Kiri: Lingkaran Progres -->
+                <!-- Sisi Kiri: Lingkaran Progres SVG (Elegan & Mengikuti Progres) -->
                 <div class="col-md-3 text-center">
                     <div class="d-inline-flex flex-column align-items-center justify-content-center position-relative shadow-sm rounded-circle bg-light"
-                        style="width: 140px; height: 140px; border: 12px solid #F0F2F5;">
-                        <div class="fs-2 fw-bold text-dark mb-0">
-                            <span style="color: var(--primary-color);">0</span><span class="fs-5 text-muted">/15</span>
+                        style="width: 140px; height: 140px;">
+
+                        <!-- SVG Circular Progress Bar -->
+                        <svg class="position-absolute" width="140" height="140" viewBox="0 0 140 140"
+                            style="transform: rotate(-90deg);">
+                            <!-- Lingkaran Background (Abu-abu terang) -->
+                            <circle cx="70" cy="70" r="58" stroke="#F0F2F5" stroke-width="12" fill="none"></circle>
+
+                            <!-- Lingkaran Indikator Ungu yang Berjalan Sesuai Persentase -->
+                            @php
+                                $radius = 58;
+                                $circumference = 2 * pi() * $radius;
+                                $pct = $progressPct ?? 0;
+                                $strokeDashoffset = $circumference - ($pct / 100) * $circumference;
+                            @endphp
+                            <circle cx="70" cy="70" r="{{ $radius }}" stroke="var(--primary-color)" stroke-width="12"
+                                fill="none" stroke-dasharray="{{ $circumference }}"
+                                stroke-dashoffset="{{ $strokeDashoffset }}" stroke-linecap="round"
+                                style="transition: stroke-dashoffset 0.6s ease-in-out;">
+                            </circle>
+                        </svg>
+
+                        <!-- Konten di dalam lingkaran -->
+                        <div class="fs-2 fw-bold text-dark mb-0 z-1">
+                            <span style="color: var(--primary-color);">{{ $completedModulesCount ?? 0 }}</span><span
+                                class="fs-5 text-muted">/{{ $totalModules ?? 15 }}</span>
                         </div>
-                        <div class="small text-muted" style="font-size: 11px; line-height: 1.1;">modul selesai</div>
+                        <div class="small text-muted z-1" style="font-size: 11px; line-height: 1.1;">modul selesai</div>
                     </div>
                 </div>
 
-                <!-- Sisi Kanan: Modul Pertama -->
+                <!-- Sisi Kanan: Dinamis Berdasarkan Progres Terakhir -->
                 <div class="col-md-9">
                     <h2 class="h3 fw-bold text-dark mb-3">Perjalanan Belajarmu</h2>
 
-                    <!-- Logika Auth: Jika belum login ke register, jika sudah login ke route 'belajar' -->
-                    <a href="{{ auth()->check() ? route('belajar') : route('register') }}"
-                        class="card module-start-card text-decoration-none d-block p-4"
-                        style="background-color: #FDFBFF; border: 1px solid #EAEAEA; border-radius: 16px;"
-                        aria-label="Mulai modul pertama: Mengenal Tubuhku">
+                    @php
+                        // Logika: Jika user sudah login dan punya riwayat modul terakhir, arahkan ke modul itu. 
+                        // Jika belum ada / belum login, arahkan ke modul pertama atau halaman register.
+                        $hasStarted = isset($latestModule) && ($completedModulesCount ?? 0) > 0;
+                        $targetUrl = auth()->check()
+                            ? (isset($latestModule) ? route('module.show', $latestModule->slug) : route('module.show', 1))
+                            : route('register');
+                    @endphp
 
-                        <!-- Badge diposisikan agar sejajar rata kiri dengan teks di bawahnya -->
+                    <a href="{{ $targetUrl }}" class="card module-start-card text-decoration-none d-block p-4"
+                        style="background-color: #FDFBFF; border: 1px solid #EAEAEA; border-radius: 16px;"
+                        aria-label="Lanjutkan perjalanan belajar">
+
+                        <!-- Badge Berubah Dinamis -->
                         <span class="badge d-inline-block mb-3 px-3 py-2"
                             style="background-color: var(--bg-pink); color: var(--primary-color); border-radius: 20px; font-weight: 600;">
-                            <i class="bi bi-magic me-1" aria-hidden="true"></i> Mulai dari sini
+                            @if($hasStarted)
+                                Progres Terakhirmu
+                            @else
+                                Mulai dari sini
+                            @endif
                         </span>
 
                         <h3 class="h5 fw-bold text-dark mb-2 d-flex align-items-center justify-content-between">
-                            Modul 1: Mengenal Tubuh Kita
-                            <i class="bi bi-arrow-right-short fs-4 module-start-arrow" aria-hidden="true"></i>
+                            @if(isset($latestModule))
+                                Modul {{ $latestModule->order }}: {{ $latestModule->title }}
+                            @else
+                                Modul 1: Mengenal Tubuh Kita
+                            @endif
                         </h3>
                         <p class="text-muted small mb-0">
-                            Belajar tentang bagian-bagian tubuh dan fungsinya, termasuk organ reproduksi
+                            @if(isset($latestModule))
+                                {{ $latestModule->description }}
+                            @else
+                                Belajar tentang bagian-bagian tubuh dan fungsinya, termasuk organ reproduksi
+                            @endif
                         </p>
                     </a>
                 </div>
