@@ -213,7 +213,7 @@
                         </div>
                         <h3 class="h5 fw-bold text-dark mb-2">Materi Lengkap</h3>
                         <p class="card-text text-muted small lh-base">
-                            15 modul pembelajaran dengan media interaktif.
+                            15 modul pembelajaran yang mudah dimengerti.
                         </p>
                     </div>
                 </div>
@@ -256,9 +256,9 @@
                             style="width: 48px; height: 48px; background-color: var(--bg-pink); color: var(--primary-color);">
                             <i class="bi bi-chat-heart fs-4" aria-hidden="true"></i>
                         </div>
-                        <h3 class="h5 fw-bold text-dark mb-2">Aksesibilitas Penuh</h3>
+                        <h3 class="h5 fw-bold text-dark mb-2">Aksesibilitas</h3>
                         <p class="card-text text-muted small lh-base">
-                            Sesuaikan ukuran teks, kontras, dan fitur aksesibilitas lainnya.
+                            Sesuaikan ukuran teks, kontras, dan jarak antar baris.
                         </p>
                     </div>
                 </div>
@@ -322,7 +322,7 @@
                             </p>
                         </div>
                         <div>
-                            <a href="{{ route('bantuan') }}"
+                            <a href="{{ route('pendamping') }}"
                                 class="btn btn-akrab-primary w-100 py-2 fw-bold text-decoration-none"
                                 style="border-radius: 12px;">
                                 Kunjungi Ruang Pendamping

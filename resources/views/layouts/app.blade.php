@@ -19,14 +19,26 @@
     <!-- Custom CSS untuk AKRAB (UI/UX & Aksesibilitas WCAG) -->
     <style>
         :root {
-            /* Tema Warna Baru: Ungu, Kuning, Pink */
-            --primary-color: #6A4C93;
+            /* ===== Token Warna Dasar (Brand) — TIDAK berubah di mode kontras ===== */
             --primary-hover: #543A75;
             --accent-color: #FFCA3A;
             --accent-hover: #E5B534;
             --bg-pink: #FFF0F5;
+            /* khusus aksen teks brand di footer */
+
+            /* ===== Token Adaptif — nilainya DIGANTI otomatis saat mode Kontras Tinggi aktif ===== */
+            --primary-color: #6A4C93;
+            --bg-page: #FAFAFA;
+            --bg-surface: #FFFFFF;
+            --surface-hover: #FFF0F5;
             --text-dark: #1A1A1A;
             --text-light: #4A4A4A;
+            --border-subtle: #EEEEEE;
+            --text-on-primary: #FFFFFF;
+
+            /* ===== Token Konstan — SENGAJA tidak ikut berubah di mode kontras ===== */
+            --text-on-accent: #1A1A1A;
+            /* teks di atas --accent-color (kuning), selalu gelap */
         }
 
         /* Global Styles */
@@ -39,10 +51,9 @@
             font-family: 'Inter', sans-serif;
             color: var(--text-dark);
             line-height: 1.6;
-            background-color: #FAFAFA;
+            background-color: var(--bg-page);
         }
 
-        /* Accessibility: Indikator Fokus Keyboard (Wajib WCAG) */
         *:focus {
             outline: 3px solid var(--accent-color) !important;
             outline-offset: 3px !important;
@@ -50,8 +61,8 @@
 
         /* Header & Navigasi */
         .navbar {
-            background-color: #FFFFFF;
-            border-bottom: 2px solid #EEEEEE;
+            background-color: var(--bg-surface);
+            border-bottom: 2px solid var(--border-subtle);
             padding: 0.85rem 0;
         }
 
@@ -64,7 +75,6 @@
             gap: 12px;
         }
 
-        /* Frame lingkaran untuk logo AKRAB */
         .brand-logo-frame {
             width: 44px;
             height: 44px;
@@ -75,7 +85,7 @@
             align-items: center;
             justify-content: center;
             border: 2px solid var(--primary-color);
-            background-color: #FFFFFF;
+            background-color: var(--bg-surface);
             box-shadow: 0 2px 6px rgba(106, 76, 147, 0.15);
         }
 
@@ -85,7 +95,6 @@
             object-fit: cover;
         }
 
-        /* Nav Collapse Flex Layout */
         .navbar-collapse {
             display: flex;
             align-items: center;
@@ -93,11 +102,9 @@
             width: 100%;
         }
 
-        /* Grup menu navigasi utama (sisi kanan bagian 1) */
         .nav-menu-list {
             display: flex;
             flex-direction: row !important;
-            /* Memaksa sejajar horizontal di layar desktop */
             align-items: center;
             gap: 0.5rem;
             margin: 0;
@@ -116,33 +123,28 @@
             gap: 8px;
             border: 2px solid transparent !important;
             white-space: nowrap;
-            /* Mencegah teks menu patah menjadi dua baris */
         }
 
-        /* Efek saat kursor diarahkan (Hover): Latar Belakang Pink */
         .nav-link:hover {
-            background-color: var(--bg-pink) !important;
+            background-color: var(--surface-hover) !important;
             color: var(--primary-color) !important;
             border-color: transparent !important;
         }
 
-        /* Border KUNING bertahan secara permanen ketika menu aktif/terpilih */
         .nav-link-akrab.active-page {
             border-color: var(--accent-color) !important;
             color: var(--primary-color) !important;
             font-weight: 700;
             background-color: transparent !important;
-            /* Latar pink hilang saat aktif, digantikan border kuning */
         }
 
-        /* Grup Masuk/Daftar (sisi kanan bagian 2) */
         .nav-auth-group {
             display: flex;
             align-items: center;
             gap: 0.75rem;
             margin-left: 1.5rem;
             padding-left: 1.5rem;
-            border-left: 2px solid #EEEEEE;
+            border-left: 2px solid var(--border-subtle);
         }
 
         .btn-nav-outline {
@@ -164,12 +166,12 @@
         .btn-nav-outline:hover,
         .btn-nav-outline:focus {
             background-color: var(--primary-color);
-            color: #FFFFFF;
+            color: var(--text-on-primary);
         }
 
         .btn-nav-solid {
             background-color: var(--accent-color);
-            color: var(--text-dark);
+            color: var(--text-on-accent);
             font-weight: 700;
             padding: 0.5rem 1.2rem;
             border-radius: 10px;
@@ -187,10 +189,10 @@
         .btn-nav-solid:focus {
             background-color: var(--accent-hover);
             border-color: var(--accent-hover);
-            color: var(--text-dark);
+            color: var(--text-on-accent);
         }
 
-        /* ---------- Profil (tampil kalau sudah login) ---------- */
+        /* ---------- Profil ---------- */
         .profile-toggle {
             display: inline-flex;
             align-items: center;
@@ -206,12 +208,11 @@
         .profile-toggle:hover,
         .profile-toggle:focus-visible,
         .profile-toggle[aria-expanded="true"] {
-            background-color: var(--bg-pink);
+            background-color: var(--surface-hover);
             border-color: var(--primary-color);
         }
 
         .profile-toggle::after {
-            /* Panah dropdown Bootstrap dibiarkan, cuma diberi warna senada */
             color: var(--primary-color);
         }
 
@@ -221,7 +222,7 @@
             min-width: 34px;
             border-radius: 50%;
             background-color: var(--primary-color);
-            color: #FFFFFF;
+            color: var(--text-on-primary);
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -240,7 +241,7 @@
         .profile-dropdown-menu {
             min-width: 230px;
             border-radius: 16px;
-            border: 1px solid #EEEEEE;
+            border: 1px solid var(--border-subtle);
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
             padding: 0.5rem 0;
             margin-top: 0.5rem;
@@ -254,7 +255,7 @@
 
         .profile-dropdown-menu .dropdown-item:hover,
         .profile-dropdown-menu .dropdown-item:focus {
-            background-color: var(--bg-pink);
+            background-color: var(--surface-hover);
             color: var(--primary-color);
         }
 
@@ -268,12 +269,12 @@
             margin: 0;
         }
 
-        /* ---------- FOOTER STYLES ---------- */
+        /* ---------- FOOTER STYLES (tidak diubah — kontrasnya sudah aman di kedua mode) ---------- */
         .custom-footer {
             background-color: var(--primary-hover);
             border-top: 1px solid #EAEAEA;
             padding: 4rem 0 3rem 0;
-            margin-top: 1rem; /* UBAH DI SINI: dari 5rem menjadi 1rem (atau hapus baris ini) */
+            margin-top: 1rem;
             color: #FAFAFA;
         }
 
@@ -319,7 +320,7 @@
                 margin-left: 0;
                 padding-left: 0;
                 border-left: none;
-                border-top: 2px solid #EEEEEE;
+                border-top: 2px solid var(--border-subtle);
                 padding-top: 1rem;
                 margin-top: 1rem;
                 width: 100%;
@@ -334,7 +335,6 @@
 
         .container {
             max-width: 1280px;
-            /* Diubah dari 1000px agar layout halaman lapang dan rapi */
             width: 100%;
         }
 
@@ -359,7 +359,7 @@
 
         .btn-akrab-primary {
             background-color: var(--primary-color);
-            color: #FFFFFF;
+            color: var(--text-on-primary);
             border-color: var(--primary-color);
         }
 
@@ -378,14 +378,14 @@
 
         .btn-akrab-outline:hover,
         .btn-akrab-outline:focus-visible {
-            background-color: var(--bg-pink);
-            color: var(--primary-hover);
-            border-color: var(--primary-hover);
+            background-color: var(--surface-hover);
+            color: var(--primary-color);
+            border-color: var(--primary-color);
         }
 
         .btn-akrab-accent {
             background-color: var(--accent-color);
-            color: var(--text-dark);
+            color: var(--text-on-accent);
             border-color: var(--accent-color);
         }
 
@@ -393,7 +393,7 @@
         .btn-akrab-accent:focus-visible {
             background-color: var(--accent-hover);
             border-color: var(--accent-hover);
-            color: var(--text-dark);
+            color: var(--text-on-accent);
         }
 
         .btn-akrab-danger {
@@ -416,12 +416,11 @@
         }
 
         .auth-card {
-            border: 1px solid #EFE7F3;
+            border: 1px solid var(--border-subtle);
             border-radius: 22px;
-            background-color: #FFFFFF;
+            background-color: var(--bg-surface);
         }
 
-        /* Mematikan paksa BORDER kuning pada menu navigasi yang sedang aktif */
         .navbar-nav .nav-link.active,
         .navbar-nav .nav-link:active,
         .navbar-nav .nav-link:focus,
@@ -431,14 +430,27 @@
             outline: none !important;
             box-shadow: none !important;
         }
-</style>
 
-        
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--primary-color);
+            color: white;
+            padding: 8px;
+            z-index: 100;
+            transition: top 0.2s;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
     </style>
     @yield('additional_css')
 </head>
 
 <body>
+    <a href="#main-content" class="skip-link">Lanjut ke konten utama</a>
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg sticky-top" aria-label="Navigasi utama">
         <div class="container-fluid px-3 px-md-5">
@@ -462,25 +474,28 @@
                     <!-- Menu Utama -->
                     <ul class="navbar-nav nav-menu-list">
                         <li class="nav-item">
-                            <a class="nav-link nav-link-akrab {{ request()->url() == route('home') && !request()->getQueryString() ? 'active-page' : '' }}"
-                                href="{{ route('home') }}">
+                            <!-- Ditambahkan pengecekan untuk rute glosarium atau halaman lain yang jadi bagian dari Beranda -->
+                            <a class="nav-link nav-link-akrab {{ Route::is(['home', 'glosarium*']) || request()->is('/') ? 'active-page' : '' }}"
+                                href="{{ route('home') }}" {!! Route::is(['home', 'glosarium*']) || request()->is('/') ? 'aria-current="page"' : '' !!}>
                                 <i class="bi bi-house-door" aria-hidden="true"></i> Beranda
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link nav-link-akrab {{ Route::is('belajar') ? 'active-page' : '' }}"
-                                href="{{ route('belajar') }}">
+                            <!-- Ditambahkan pengecekan untuk rute module.* (halaman detail modul) -->
+                            <a class="nav-link nav-link-akrab {{ Route::is(['belajar', 'module.*']) || request()->is('belajar*') ? 'active-page' : '' }}"
+                                href="{{ route('belajar') }}" {!! Route::is(['belajar', 'module.*']) || request()->is('belajar*') ? 'aria-current="page"' : '' !!}>
                                 <i class="bi bi-book" aria-hidden="true"></i> Belajar
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link nav-link-akrab {{ Route::is(['bantuan', 'rujukan', 'tanya-ahli', 'pendamping']) ? 'active-page' : '' }}"
-                            href="{{ route('bantuan') }}"><i class="bi bi-life-preserver" aria-hidden="true"></i> Bantuan
+                            <a class="nav-link nav-link-akrab {{ Route::is(['bantuan', 'rujukan', 'tanya-ahli', 'pendamping']) || request()->is('bantuan*') ? 'active-page' : '' }}"
+                                href="{{ route('bantuan') }}" {!! Route::is(['bantuan', 'rujukan', 'tanya-ahli', 'pendamping']) || request()->is('bantuan*') ? 'aria-current="page"' : '' !!}>
+                                <i class="bi bi-life-preserver" aria-hidden="true"></i> Bantuan
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link nav-link-akrab {{ Route::is('tentang') ? 'active-page' : '' }}" 
-                                href="{{ route('tentang') }}">
+                            <a class="nav-link nav-link-akrab {{ Route::is('tentang') || request()->is('tentang*') ? 'active-page' : '' }}"
+                                href="{{ route('tentang') }}" {!! Route::is('tentang') || request()->is('tentang*') ? 'aria-current="page"' : '' !!}>
                                 <i class="bi bi-info-circle" aria-hidden="true"></i> Tentang
                             </a>
                         </li>
@@ -497,21 +512,25 @@
                             </a>
                         @else
                             <div class="dropdown">
-                                <button class="profile-toggle dropdown-toggle" type="button"
-                                        id="profileMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                <button class="profile-toggle dropdown-toggle" type="button" id="profileMenuButton"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
                                     <span class="profile-avatar" aria-hidden="true">
                                         <i class="bi bi-person-fill"></i>
                                     </span>
                                     <span class="profile-name d-none d-lg-inline">{{ auth()->user()->name }}</span>
                                 </button>
-                                <ul class="dropdown-menu dropdown-menu-end profile-dropdown-menu" aria-labelledby="profileMenuButton">
+                                <ul class="dropdown-menu dropdown-menu-end profile-dropdown-menu"
+                                    aria-labelledby="profileMenuButton">
                                     <li class="px-3 py-2">
-                                        <div class="fw-bold" style="color: var(--text-dark);">{{ auth()->user()->name }}</div>
+                                        <div class="fw-bold" style="color: var(--text-dark);">{{ auth()->user()->name }}
+                                        </div>
                                         <div class="small" style="color: var(--text-light);">
                                             {{ auth()->user()->isAdmin() ? auth()->user()->username : auth()->user()->email }}
                                         </div>
                                     </li>
-                                    <li><hr class="dropdown-divider"></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
                                     @if(auth()->user()->isAdmin())
                                         <li>
                                             <a class="dropdown-item" href="{{ route('admin.dashboard') }}">
@@ -521,11 +540,14 @@
                                     @else
                                         <li>
                                             <a class="dropdown-item" href="{{ route('belajar') }}">
-                                                <i class="bi bi-journal-bookmark me-2" aria-hidden="true"></i> Materi Belajar
+                                                <i class="bi bi-journal-bookmark me-2" aria-hidden="true"></i> Materi
+                                                Belajar
                                             </a>
                                         </li>
                                     @endif
-                                    <li><hr class="dropdown-divider"></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
                                     <li>
                                         <form method="POST" action="{{ route('logout') }}">
                                             @csrf
@@ -584,7 +606,8 @@
                             <i class="bi bi-telephone" aria-hidden="true"></i> Polisi: <strong>110</strong>
                         </li>
                         <li class="mb-2.5 d-flex align-items-center gap-2">
-                            <i class="bi bi-telephone-plus" aria-hidden="true"></i> Ambulans: <strong>118 / 119</strong>
+                            <i class="bi bi-telephone-plus" aria-hidden="true"></i> Ambulans: <strong>118 /
+                                119</strong>
                         </li>
                         <li class="mb-0 d-flex align-items-center gap-2">
                             <i class="bi bi-envelope" aria-hidden="true"></i> Email: <a href="mailto:bantuan@akrab.id"
@@ -599,7 +622,7 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     @yield('additional_js')
+    @include('partials.accessibility-widget')
 </body>
 
 </html>
-

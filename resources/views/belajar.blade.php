@@ -13,6 +13,25 @@
             </p>
         </div>
 
+        <!-- Banner Notifikasi Login -->
+        @guest
+            <div class="alert mb-5 rounded-4 border-0 shadow-sm d-flex align-items-center p-4"
+                style="background-color: var(--bg-pink); border-left: 6px solid var(--primary-color) !important;">
+                <div class="d-none d-sm-block">
+                    <i class="bi bi-shield-lock-fill me-4" style="font-size: 2.5rem; color: var(--primary-color);"></i>
+                </div>
+                <div>
+                    <h5 class="fw-bold mb-1" style="color: var(--primary-color);">Akses Materi Terkunci</h5>
+                    <p class="mb-0 text-dark" style="font-size: 0.95rem;">
+                        Kamu sedang dalam mode tamu. Silakan <a href="{{ route('login') }}" class="fw-bold"
+                            style="color: var(--primary-color);">Masuk</a> atau <a href="{{ route('register') }}"
+                            class="fw-bold" style="color: var(--primary-color);">Daftar</a> secara gratis untuk mulai mengakses
+                        materi dan menyimpan progres belajarmu.
+                    </p>
+                </div>
+            </div>
+        @endguest
+
         <!-- Tata Letak Grid: Otomatis Membentuk 3 Kolom pada Layar Besar -->
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
             @foreach($modules as $module)

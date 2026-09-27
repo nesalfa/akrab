@@ -46,7 +46,7 @@
                         </div>
                         <h3 class="h4 fw-bold text-dark mb-2">1. TOLAK</h3>
                         <p class="text-muted small mb-0">
-                            Katakan <strong>"TIDAK!"</strong> dengan suara tegas dan tunjukkan gestur penolakan yang jelas.
+                            Ucapkan, isyaratkan, atau tunjukkan penolakan dengan tegas.
                             Jangan takut untuk membela diri.
                         </p>
                     </div>
@@ -83,65 +83,90 @@
         <!-- Kontak & Layanan Rujukan -->
         <h2 class="h4 fw-bold text-dark mb-4"> Layanan Pengaduan & Darurat</h2>
         <div class="row g-4 mb-5">
-            <!-- SAPPA 129 -->
-            <div class="col-md-6">
-                <div class="contact-card h-100 p-4 p-md-5 rounded-4 d-flex flex-column justify-content-between"
+            <!-- SAPA 129 (Kartu Horizontal Penuh) -->
+            <div class="col-12">
+                <div class="contact-card p-4 p-md-5 rounded-4"
                     style="background-color: #FFF9E8; border: 1px solid #F5D98A;">
-                    <div class="mb-4">
-                        <!-- BUNGKUSAN FLEX UNTUK IKON & JUDUL BERSEBELAHAN -->
-                        <div class="d-flex align-items-center gap-3 mb-3">
-                            <div class="d-inline-flex align-items-center justify-content-center bg-white rounded-circle shadow-sm flex-shrink-0"
-                                style="width: 50px; height: 50px; color: var(--primary-color); font-size: 1.5rem;">
-                                <i class="bi bi-shield-check"></i>
+                    <div class="row g-4 align-items-center">
+                        <!-- Kolom Kiri: Penjelasan Layanan -->
+                        <div class="col-lg-6">
+                            <div class="d-flex align-items-center gap-3 mb-3">
+                                <div class="d-inline-flex align-items-center justify-content-center bg-white rounded-circle shadow-sm flex-shrink-0"
+                                    style="width: 50px; height: 50px; color: var(--primary-color); font-size: 1.5rem;">
+                                    <i class="bi bi-shield-check"></i>
+                                </div>
+                                <h3 class="h4 fw-bold text-dark mb-0">KEMENPPPA (SAPA 129)</h3>
                             </div>
-                            <h3 class="h4 fw-bold text-dark mb-0">KEMENPPPA (SAPA 129)</h3>
+                            <p class="text-muted mb-0">
+                                Layanan Sahabat Perempuan dan Anak. Hubungi layanan ini untuk pelaporan kekerasan fisik,
+                                mental,
+                                atau seksual. Privasi terjamin.
+                            </p>
                         </div>
 
-                        <p class="text-muted mb-0">
-                            Layanan Sahabat Perempuan dan Anak. Hubungi layanan ini untuk pelaporan kekerasan fisik, mental,
-                            atau seksual. Privasi terjamin.
-                        </p>
-                    </div>
-                    <div class="d-flex flex-column gap-2">
-                        <div class="d-flex flex-column flex-sm-row gap-2">
-                            <a href="tel:129" class="btn btn-contact-outline flex-grow-1">
-                                <i class="bi bi-telephone-fill me-1"></i> Telepon 129
-                            </a>
-                            <a href="https://wa.me/62811129129" target="_blank" class="btn btn-contact-outline flex-grow-1">
-                                <i class="bi bi-whatsapp me-1"></i> WhatsApp
-                            </a>
+                        <!-- Kolom Kanan: Tombol Aksi -->
+                        <div class="col-lg-6">
+                            <!-- Baris Tombol Suara & Web -->
+                            <div class="d-flex flex-column flex-sm-row gap-3 mb-3">
+                                <a href="tel:129" class="btn btn-contact-outline flex-grow-1 py-2">
+                                    <i class="bi bi-telephone-fill me-2"></i> Telepon 129
+                                </a>
+                                <a href="https://laporsapa129.kemenpppa.go.id/lapor" target="_blank"
+                                    class="btn btn-contact-outline flex-grow-1 py-2">
+                                    <i class="bi bi-globe me-2"></i> Web Pengaduan
+                                </a>
+                            </div>
+
+                            <!-- Kotak Khusus Akses Tuli (Banner Horizontal) -->
+                            <div class="p-3 rounded-4 d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3 shadow-sm"
+                                style="background-color: #E8F4FA; border: 1px solid #BEE1F4;">
+                                <div>
+                                    <div class="d-flex align-items-center gap-2 mb-1">
+                                        <i class="bi bi-chat-dots-fill" style="color: #0056B3; font-size: 1.1rem;"></i>
+                                        <span class="fw-bold" style="color: #0056B3; font-size: 0.95rem;">Layanan Tanpa
+                                            Suara</span>
+                                    </div>
+                                    <p class="text-dark small mb-0" style="line-height: 1.4;">Untuk teman Tuli atau situasi
+                                        tidak bisa menelepon.</p>
+                                </div>
+                                <a href="https://wa.me/62811129129" target="_blank"
+                                    class="btn fw-bold px-4 py-2 text-nowrap d-flex align-items-center justify-content-center gap-2"
+                                    style="background-color: #25D366; color: white; border-radius: 999px; transition: transform 0.2s;">
+                                    <i class="bi bi-whatsapp fs-5"></i> Chat WA 129
+                                </a>
+                            </div>
                         </div>
-                        <a href="https://laporsapa129.kemenpppa.go.id/lapor" target="_blank"
-                            class="btn btn-contact-outline w-100">
-                            <i class="bi bi-globe me-1"></i> Website Pengaduan
-                        </a>
                     </div>
                 </div>
             </div>
 
-            <!-- Darurat 112 -->
-            <div class="col-md-6">
-                <div class="contact-card h-100 p-4 p-md-5 rounded-4 d-flex flex-column justify-content-between"
+            <!-- Darurat 112 (Kartu Horizontal Penuh) -->
+            <div class="col-12">
+                <div class="contact-card p-4 p-md-5 rounded-4"
                     style="background-color: #FFF9E8; border: 1px solid #F5D98A;">
-                    <div class="mb-4">
-                        <!-- BUNGKUSAN FLEX UNTUK IKON & JUDUL BERSEBELAHAN -->
-                        <div class="d-flex align-items-center gap-3 mb-3">
-                            <div class="d-inline-flex align-items-center justify-content-center bg-white rounded-circle shadow-sm flex-shrink-0"
-                                style="width: 50px; height: 50px; color: var(--primary-color); font-size: 1.5rem;">
-                                <i class="bi bi-truck-front-fill"></i>
+                    <div class="row g-4 align-items-center">
+                        <!-- Kolom Kiri -->
+                        <div class="col-lg-8">
+                            <div class="d-flex align-items-center gap-3 mb-3">
+                                <div class="d-inline-flex align-items-center justify-content-center bg-white rounded-circle shadow-sm flex-shrink-0"
+                                    style="width: 50px; height: 50px; color: var(--primary-color); font-size: 1.5rem;">
+                                    <i class="bi bi-truck-front-fill"></i>
+                                </div>
+                                <h3 class="h4 fw-bold text-dark mb-0">Layanan Darurat 112</h3>
                             </div>
-                            <h3 class="h4 fw-bold text-dark mb-0">Layanan Darurat 112</h3>
+                            <p class="text-muted mb-0">
+                                Nomor panggilan darurat nasional (bebas pulsa). Menghubungkan ke instansi terkait seperti
+                                ambulan, polisi, pemadam kebakaran, dan SAR.
+                            </p>
                         </div>
 
-                        <p class="text-muted mb-0">
-                            Nomor panggilan darurat nasional (bebas pulsa). Hubungi untuk respons cepat dari kepolisian,
-                            ambulans, atau tim penyelamat.
-                        </p>
-                    </div>
-                    <div>
-                        <a href="tel:112" class="btn btn-contact-outline w-100 py-2">
-                            <i class="bi bi-telephone-outbound-fill me-1"></i> Panggil 112 Sekarang
-                        </a>
+                        <!-- Kolom Kanan -->
+                        <div class="col-lg-4 text-lg-end">
+                            <a href="tel:112" class="btn btn-contact-outline w-100 py-3" style="border-width: 3px;">
+                                <i class="bi bi-telephone-outbound-fill me-2 fs-5"></i> <span class="fw-bold fs-5">Panggil
+                                    112</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

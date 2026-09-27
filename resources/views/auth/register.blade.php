@@ -300,6 +300,7 @@
             });
         });
     </script>
+    @include('partials.accessibility-widget')
 </body>
 
 </html>
