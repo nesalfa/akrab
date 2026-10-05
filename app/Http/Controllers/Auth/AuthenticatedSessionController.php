@@ -15,51 +15,46 @@ class AuthenticatedSessionController extends Controller
         return view('auth.login');
     }
 
-    /**
-     * SATU form untuk user & admin (portal login-nya tetap sama, sesuai
-     * permintaan). Nama field inputnya `login` (bukan `email` atau
-     * `username` langsung) karena field ini dobel-fungsi: bisa diisi
-     * email (user) ATAU kode staf seperti "P1234" (admin).
-     *
-     * Logika pembeda role — PERSIS seperti yang diminta:
-     * - Isian `login` berformat email valid -> dicoba login sebagai
-     *   role 'user', dicocokkan ke kolom `email`.
-     * - Isian `login` BUKAN format email (mis. "P1234") -> dicoba login
-     *   sebagai role 'admin', dicocokkan ke kolom `username`.
-     *
-     * Kondisi `role` disertakan LANGSUNG di dalam Auth::attempt(), bukan
-     * cuma dicek belakangan setelah login berhasil. Artinya: kalaupun ada
-     * baris di tabel users yang emailnya kebetulan cocok tapi role-nya
-     * 'admin' (harusnya tidak mungkin terjadi kalau alur pembuatan akun
-     * diikuti dengan benar), tetap tidak akan bisa login lewat jalur
-     * email — pemisahannya ditegakkan di level query database.
-     */
     public function store(Request $request): RedirectResponse
     {
         $credentials = $request->validate([
-            'login' => ['required', 'string'],
+            'phone_number' => ['required', 'string'],
             'password' => ['required', 'string'],
         ]);
 
-        $isEmailFormat = filter_var($credentials['login'], FILTER_VALIDATE_EMAIL) !== false;
         $remember = $request->boolean('remember');
+        $loginInput = $credentials['phone_number'];
+        $password = $credentials['password'];
 
-        $attempt = $isEmailFormat
-            ? Auth::attempt([
-                'email' => $credentials['login'],
-                'password' => $credentials['password'],
-                'role' => 'user',
-            ], $remember)
-            : Auth::attempt([
-                'username' => $credentials['login'],
-                'password' => $credentials['password'],
+        // Skenario 1: Coba login sebagai Remaja (User) menggunakan Nomor HP
+        $attempt = Auth::attempt([
+            'phone_number' => $loginInput,
+            'password' => $password,
+            'role' => 'user',
+        ], $remember);
+
+        // Skenario 2: Jika gagal, coba login sebagai Admin menggunakan Username (misal: P1234)
+        if (!$attempt) {
+            $attempt = Auth::attempt([
+                'username' => $loginInput,
+                'password' => $password,
                 'role' => 'admin',
             ], $remember);
+        }
+
+        // Skenario 3: Jika masih gagal, coba login sebagai Admin menggunakan Nomor HP (jika admin diset pakai no HP)
+        if (!$attempt) {
+            $attempt = Auth::attempt([
+                'phone_number' => $loginInput,
+                'password' => $password,
+                'role' => 'admin',
+            ], $remember);
+        }
 
         if (!$attempt) {
             return back()
-                ->withErrors(['login' => 'Username/email atau kata sandi yang kamu masukkan salah.'])
-                ->onlyInput('login');
+                ->withErrors(['phone_number' => 'Identitas atau kata sandi yang kamu masukkan salah.'])
+                ->onlyInput('phone_number');
         }
 
         $request->session()->regenerate();
@@ -78,5 +73,4 @@ class AuthenticatedSessionController extends Controller
 
         return redirect('/');
     }
-
 }

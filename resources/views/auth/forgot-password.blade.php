@@ -119,10 +119,10 @@
             <i class="bi bi-key-fill" style="font-size: 3.5rem; color: var(--primary-color);" aria-hidden="true"></i>
             <h1 class="h3 fw-bold mt-2 mb-1" style="color: var(--primary-color);">Lupa Kata Sandi?</h1>
             <p class="text-secondary small mb-0">
-                Masukkan email akunmu.
+                Masukkan Nomor HP akunmu.
             </p>
             <p class="text-secondary small mb-0">
-                Kami kirim kode OTP 6 digit untuk reset kata sandi.
+                Kami kirim kode OTP 6 digit ke Email Pendamping terdaftar.
             </p>
         </div>
 
@@ -142,11 +142,11 @@
             @csrf
 
             <div class="mb-3">
-                <label for="email_input" class="form-label fw-semibold">Email</label>
-                <input type="email" id="email_input" name="email"
-                    class="form-control @error('email') is-invalid @enderror" placeholder="Contoh: nama@email.com"
-                    value="{{ old('email') }}" required autocomplete="email" autofocus>
-                @error('email')
+                <label for="phone_number_input" class="form-label fw-semibold">Nomor HP</label>
+                <input type="text" inputmode="numeric" pattern="[0-9]*" id="phone_number_input" name="phone_number"
+                    class="form-control @error('phone_number') is-invalid @enderror" placeholder="Contoh: 081234567890"
+                    value="{{ old('phone_number') }}" autocomplete="tel" required autofocus>
+                @error('phone_number')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>

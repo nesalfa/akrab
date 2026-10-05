@@ -41,6 +41,7 @@ use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\GlosariumController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 // ================= PUBLIK (tidak perlu login) =================
@@ -113,6 +114,9 @@ Route::middleware('auth')->group(function () {
     // API: Tandai modul selesai (dipanggil setelah Post-Test disubmit)
     // Request: POST /api/modules/{slug}/complete
     Route::post('/api/modules/{slug}/complete', [ModuleController::class, 'completeModule'])->name('modules.complete');
+
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
 });
 
 // ================= KHUSUS ADMIN =================

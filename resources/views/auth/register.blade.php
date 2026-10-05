@@ -32,7 +32,6 @@
             padding: 1rem;
         }
 
-        /* Standar Aksesibilitas: Indikator Fokus */
         *:focus-visible {
             outline: 3px solid var(--primary-hover) !important;
             outline-offset: 2px !important;
@@ -49,7 +48,7 @@
         }
 
         .form-label {
-            margin-bottom: 0.5rem; /* Perbaikan jarak label */
+            margin-bottom: 0.5rem; 
         }
 
         .form-control {
@@ -68,7 +67,6 @@
             border-color: #C7365F;
         }
         
-        /* Styling Khusus Input Group Kata Sandi */
         .input-group .form-control {
             border-right: none;
         }
@@ -105,7 +103,6 @@
             font-size: 0.8rem;
         }
 
-        /* Tombol Utama Diperbarui ke Warna Ungu */
         .btn-submit {
             background-color: var(--primary-color);
             color: #FFFFFF;
@@ -188,7 +185,7 @@
             <i class="bi bi-person-plus-fill" style="font-size: 3.5rem; color: var(--primary-color);"
                 aria-hidden="true"></i>
             <h1 class="h3 fw-bold mt-2 mb-1" style="color: var(--primary-color);">Daftar Keanggotaan</h1>
-            <p class="text-secondary small">Silakan masukkan identitas Anda</p>
+            <p class="text-secondary small">Silakan masukkan identitas kamu</p>
         </div>
 
         @if ($errors->any())
@@ -218,16 +215,35 @@
                 @enderror
             </div>
 
+            <!-- Input Nomor HP Ditambahkan -->
             <div class="mb-3">
-                <label for="email_input" class="form-label fw-semibold">Email</label>
+                <label for="phone_number_input" class="form-label fw-semibold">Nomor HP</label>
+                <input type="text"
+                       inputmode="numeric" pattern="[0-9]*"
+                       id="phone_number_input"
+                       name="phone_number"
+                       class="form-control @error('phone_number') is-invalid @enderror"
+                       placeholder="Contoh: 081234567890"
+                       value="{{ old('phone_number') }}"
+                       required
+                       autocomplete="tel">
+                @error('phone_number')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <!-- Label Email Diperbarui -->
+            <div class="mb-3">
+                <label for="email_input" class="form-label fw-semibold">Email Pendamping Terpercaya</label>
                 <input type="email"
                        id="email_input"
                        name="email"
                        class="form-control @error('email') is-invalid @enderror"
-                       placeholder="Contoh: nama@email.com"
+                       placeholder="Contoh: pendamping@email.com"
                        value="{{ old('email') }}"
                        required
                        autocomplete="email">
+                <div class="form-text mt-1 text-muted">Boleh email kamu sendiri, orang tua, atau guru (digunakan jika lupa kata sandi).</div>
                 @error('email')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
@@ -255,7 +271,6 @@
                 @enderror
             </div>
 
-            <!-- Teks dan Ikon Tombol Diperbarui -->
             <button type="submit" class="btn-submit">
                 <i class="bi bi-person-plus-fill fs-5" aria-hidden="true"></i> Daftar
             </button>
@@ -275,7 +290,6 @@
         </div>
     </div>
 
-    <!-- Script Tampilkan/Sembunyikan Kata Sandi -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const togglePassword = document.getElementById('togglePassword');

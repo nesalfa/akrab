@@ -531,6 +531,14 @@
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('profile.edit') }}">
+                                            <i class="bi bi-person-badge me-2" aria-hidden="true"></i> Profil Saya
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
                                     @if(auth()->user()->isAdmin())
                                         <li>
                                             <a class="dropdown-item" href="{{ route('admin.dashboard') }}">

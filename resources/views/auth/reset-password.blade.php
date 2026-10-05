@@ -72,13 +72,12 @@
             text-align: center;
         }
 
-        /* ---------- Toggle lihat/sembunyikan kata sandi ---------- */
         .password-field-wrapper {
             position: relative;
         }
 
         .password-field-wrapper .form-control {
-            padding-right: 3rem; /* beri ruang buat tombol mata supaya teks tidak ketiban */
+            padding-right: 3rem;
         }
 
         .password-toggle-btn {
@@ -159,7 +158,7 @@
         <div class="text-center mb-4">
             <i class="bi bi-shield-lock-fill" style="font-size: 3.5rem; color: var(--primary-color);" aria-hidden="true"></i>
             <h1 class="h3 fw-bold mt-2 mb-1" style="color: var(--primary-color);">Masukkan Kode OTP</h1>
-            <p class="text-secondary small mb-0">Cek email kamu, lalu masukkan kode 6 digit dan kata sandi baru.</p>
+            <p class="text-secondary small mb-0">Cek Email Pendamping kamu, lalu masukkan kode 6 digit dan kata sandi baru.</p>
         </div>
 
         @if ($errors->any())
@@ -179,13 +178,13 @@
         <form method="POST" action="{{ route('password.update') }}" novalidate>
             @csrf
 
-            <input type="hidden" name="email" value="{{ old('email', $email) }}">
+            <input type="hidden" name="phone_number" value="{{ old('phone_number', $phone_number) }}">
 
             <div class="mb-3">
-                <label class="form-label fw-semibold">Email</label>
-                <input type="text" class="form-control" value="{{ old('email', $email) }}" disabled>
+                <label class="form-label fw-semibold">Nomor HP Terdaftar</label>
+                <input type="text" class="form-control" value="{{ old('phone_number', $phone_number) }}" disabled>
                 <div class="form-text">
-                    Salah email?
+                    Salah nomor?
                     <a href="{{ route('password.request') }}" style="color: var(--primary-color); font-weight: 600;">Ulangi dari awal</a>.
                 </div>
             </div>
@@ -210,19 +209,6 @@
                 @enderror
             </div>
 
-            {{-- Tombol "Kirim Ulang Kode" TIDAK ditaruh di sini lagi — lihat
-                 catatan di bawah dekat penutup </form>. HTML tidak
-                 mendukung <form> di dalam <form> (nested form): kalau
-                 dipaksa, browser mengabaikan form bagian dalam dan
-                 tombolnya malah ikut ke-submit sebagai bagian form LUAR
-                 (form ganti password) — itu sebabnya sebelumnya klik
-                 "Kirim Ulang Kode" malah memicu error "otp field is
-                 required" / "password field is required". --}}
-
-            {{-- PERBAIKAN: toggle mata untuk lihat/sembunyikan kata sandi.
-                 Pola: input type="password" diubah jadi type="text" lewat JS
-                 saat tombol mata diklik, ikon & aria-label ikut berubah
-                 supaya pengguna screen reader juga tahu statusnya. --}}
             <div class="mb-3">
                 <label for="password_input" class="form-label fw-semibold">Kata Sandi Baru</label>
                 <div class="password-field-wrapper">
@@ -273,15 +259,11 @@
             </button>
         </form>
 
-        {{-- Form "Kirim Ulang Kode" — SIBLING dari form utama di atas
-             (bukan lagi nested di dalamnya), supaya submit-nya benar-benar
-             ke route('password.email') sendiri, bukan ketiban form
-             ganti-password. --}}
         <div class="mb-3 mt-3 text-center">
             <span class="text-muted small">Tidak menerima kode atau sudah kedaluwarsa?</span><br>
             <form method="POST" action="{{ route('password.email') }}" class="d-inline mt-1">
                 @csrf
-                <input type="hidden" name="email" value="{{ old('email', $email) }}">
+                <input type="hidden" name="phone_number" value="{{ old('phone_number', $phone_number) }}">
                 <button type="submit" class="btn btn-link btn-sm p-0 fw-semibold text-decoration-none"
                         style="color: var(--primary-color);">
                     <i class="bi bi-arrow-repeat" aria-hidden="true"></i> Kirim Ulang Kode
@@ -297,8 +279,6 @@
     </div>
 
     <script>
-        // Toggle lihat/sembunyikan kata sandi — berlaku untuk semua field
-        // yang punya tombol .password-toggle-btn (password baru & konfirmasi).
         document.querySelectorAll('.password-toggle-btn').forEach((btn) => {
             btn.addEventListener('click', function () {
                 const input = document.getElementById(this.dataset.toggleTarget);

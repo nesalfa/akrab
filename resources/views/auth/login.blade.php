@@ -32,7 +32,6 @@
             padding: 1rem;
         }
 
-        /* Standar Aksesibilitas: Indikator Fokus */
         *:focus-visible {
             outline: 3px solid var(--primary-hover) !important;
             outline-offset: 2px !important;
@@ -50,7 +49,6 @@
 
         .form-label {
             margin-bottom: 0.5rem;
-            /* Perbaikan jarak label */
         }
 
         .form-control {
@@ -69,7 +67,6 @@
             border-color: #C7365F;
         }
 
-        /* Styling Khusus Input Group Kata Sandi */
         .input-group .form-control {
             border-right: none;
         }
@@ -123,7 +120,6 @@
             color: var(--primary-hover);
         }
 
-        /* Tombol Utama - Warna Ungu */
         .btn-submit {
             background-color: var(--primary-color);
             color: #FFFFFF;
@@ -224,11 +220,12 @@
             @csrf
 
             <div class="mb-3">
-                <label for="login" class="form-label fw-semibold">Email</label>
-                <input type="text" id="login" name="login" class="form-control @error('login') is-invalid @enderror"
-                    placeholder="Contoh: nama@email.com" value="{{ old('login') }}" autocomplete="username" required
-                    autofocus>
-                @error('login')
+                <label for="phone_number" class="form-label fw-semibold">Nomor HP</label>
+                <input type="text" id="phone_number" name="phone_number"
+                    class="form-control @error('phone_number') is-invalid @enderror" placeholder="Contoh: 0822********"
+                    value="{{ old('phone_number') }}" autocomplete="tel" required autofocus>
+
+                @error('phone_number')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
@@ -241,7 +238,7 @@
 
                 <div class="input-group">
                     <input type="password" id="password_input" name="password" class="form-control"
-                        placeholder="Masukkan kata sandi" required autocomplete="current-password">
+                        placeholder="Masukkan kata sandimu" required autocomplete="current-password">
                     <button class="btn btn-outline-secondary btn-toggle-password" type="button" id="togglePassword"
                         aria-label="Tampilkan kata sandi">
                         <i class="bi bi-eye-slash" aria-hidden="true"></i>
@@ -249,7 +246,6 @@
                 </div>
             </div>
 
-            <!-- Teks dan Ikon Tombol Diperbarui -->
             <button type="submit" class="btn-submit">
                 Masuk <i class="bi bi-box-arrow-in-right fs-5" aria-hidden="true"></i>
             </button>
@@ -269,7 +265,6 @@
         </div>
     </div>
 
-    <!-- Script Tampilkan/Sembunyikan Kata Sandi -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const togglePassword = document.getElementById('togglePassword');
