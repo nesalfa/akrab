@@ -53,7 +53,7 @@ class AuthenticatedSessionController extends Controller
 
         if (!$attempt) {
             return back()
-                ->withErrors(['phone_number' => 'Identitas atau kata sandi yang kamu masukkan salah.'])
+                ->withErrors(['phone_number' => 'Identitas yang kamu masukkan salah.'])
                 ->onlyInput('phone_number');
         }
 

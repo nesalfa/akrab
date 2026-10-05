@@ -531,31 +531,36 @@
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
-                                    <li>
-                                        <a class="dropdown-item" href="{{ route('profile.edit') }}">
-                                            <i class="bi bi-person-badge me-2" aria-hidden="true"></i> Profil Saya
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
+
+                                    {{-- Tampilkan "Profil Saya" dan "Materi Belajar" HANYA jika BUKAN admin --}}
+                                    @if(!auth()->user()->isAdmin())
+                                        <li>
+                                            <a class="dropdown-item" href="{{ route('profile.edit') }}">
+                                                <i class="bi bi-person-badge me-2" aria-hidden="true"></i> Profil Saya
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="{{ route('belajar') }}">
+                                                <i class="bi bi-journal-bookmark me-2" aria-hidden="true"></i> Materi Belajar
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                    @endif
+
+                                    {{-- Jika akun adalah Admin, tampilkan Dashboard Admin --}}
                                     @if(auth()->user()->isAdmin())
                                         <li>
                                             <a class="dropdown-item" href="{{ route('admin.dashboard') }}">
                                                 <i class="bi bi-speedometer2 me-2" aria-hidden="true"></i> Dashboard Admin
                                             </a>
                                         </li>
-                                    @else
                                         <li>
-                                            <a class="dropdown-item" href="{{ route('belajar') }}">
-                                                <i class="bi bi-journal-bookmark me-2" aria-hidden="true"></i> Materi
-                                                Belajar
-                                            </a>
+                                            <hr class="dropdown-divider">
                                         </li>
                                     @endif
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
+
                                     <li>
                                         <form method="POST" action="{{ route('logout') }}">
                                             @csrf
